@@ -1,0 +1,5 @@
+_partition,_aspect,_key,_type,_value
+FormType,default,FormType.formType,string,SURVEY
+SurveyUtil,default,SurveyUtil.formId,string,sentinela
+Table,default,defaultViewType,string,SPREADSHEET
+Table,default,displayName,object,"{""text"":""Criacão de Postos Sentinelas para seguimento do paludismo e outras doencas""}"
