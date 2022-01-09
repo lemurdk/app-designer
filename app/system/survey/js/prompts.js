@@ -224,7 +224,10 @@ promptTypes.base = Backbone.View.extend({
                 currElString = currEl[0].innerHTML;
                 currElStringNoSpaces = currElString.replace(/\s/g, '');
             }
-            var toBeDrawnEl = that.template(that.renderContext);
+            var toBeDrawnEl = that.template(that.renderContext, {
+                allowProtoMethodsByDefault: true, // Subverting breaking change in handlebards v. 4.6 (insecure)
+                allowProtoPropertiesByDefault: true // Subverting breaking change in handlebards v. 4.6 (insecure)
+            });
             var tbdString = null;
             if (toBeDrawnEl !== null && toBeDrawnEl !== undefined) {
                 tbdString = toBeDrawnEl.replace(/\s/g, '');
