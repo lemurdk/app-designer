@@ -2,13 +2,12 @@
  * Common functions accessible from the user's Javascript eval environment
  * (for use within their formulas).
  */
- //TODO: These functions need unit testing.
-define(['opendatakit','database','jquery','underscore'],
-function(opendatakit,  database,  $,       _) {
+define(['opendatakit','database','jquery','underscore','survey/js/adateHelpers'],
+function(opendatakit,  database,  $      ,  _         , adateHelpers) {
     /* global odkCommon */
     verifyLoad('formulaFunctions',
         ['opendatakit','database','jquery','underscore'],
-        [opendatakit,  database,   $,      _]);
+        [opendatakit  ,  database, $      , _]);
     return {
         //calculates will be set by the builder
         calculates: {},
