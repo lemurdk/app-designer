@@ -28,9 +28,9 @@
     ],
     "survey": [
       {
-        "type": "select_one",
-        "values_list": "CS",
-        "name": "cs",
+        "type": "select_one_dropdown",
+        "values_list": "centro",
+        "name": "ccc",
         "display": {
           "prompt": {
             "text": "Centro de saude:"
@@ -405,7 +405,7 @@
         "_row_num": 14
       },
       {
-        "choice_list_name": "CS",
+        "choice_list_name": "centro",
         "data_value": "SB",
         "display": {
           "title": {
@@ -415,7 +415,7 @@
         "_row_num": 16
       },
       {
-        "choice_list_name": "CS",
+        "choice_list_name": "centro",
         "data_value": "SH",
         "display": {
           "title": {
@@ -425,8 +425,8 @@
         "_row_num": 17
       },
       {
-        "choice_list_name": "CS",
-        "data_value": "SG",
+        "choice_list_name": "centro",
+        "data_value": "SGC",
         "display": {
           "title": {
             "text": "Gabú (CMI)"
@@ -435,8 +435,8 @@
         "_row_num": 18
       },
       {
-        "choice_list_name": "CS",
-        "data_value": "SG",
+        "choice_list_name": "centro",
+        "data_value": "SGH",
         "display": {
           "title": {
             "text": "Gabú (hospital)"
@@ -445,7 +445,7 @@
         "_row_num": 19
       },
       {
-        "choice_list_name": "CS",
+        "choice_list_name": "centro",
         "data_value": "SBM",
         "display": {
           "title": {
@@ -462,7 +462,7 @@
             "text": "Paludismo (malária)"
           }
         },
-        "_row_num": 41
+        "_row_num": 22
       },
       {
         "choice_list_name": "diagnostico",
@@ -472,7 +472,7 @@
             "text": "Anemia"
           }
         },
-        "_row_num": 42
+        "_row_num": 23
       },
       {
         "choice_list_name": "diagnostico",
@@ -482,7 +482,7 @@
             "text": "Febre Tifoide"
           }
         },
-        "_row_num": 43
+        "_row_num": 24
       },
       {
         "choice_list_name": "diagnostico",
@@ -492,7 +492,7 @@
             "text": "Disenteria"
           }
         },
-        "_row_num": 44
+        "_row_num": 25
       },
       {
         "choice_list_name": "diagnostico",
@@ -502,7 +502,7 @@
             "text": "COVID-19"
           }
         },
-        "_row_num": 45
+        "_row_num": 26
       },
       {
         "choice_list_name": "diagnostico",
@@ -512,7 +512,7 @@
             "text": "Pneumonia"
           }
         },
-        "_row_num": 46
+        "_row_num": 27
       },
       {
         "choice_list_name": "diagnostico",
@@ -522,7 +522,7 @@
             "text": "Diarrea"
           }
         },
-        "_row_num": 47
+        "_row_num": 28
       },
       {
         "choice_list_name": "diagnostico",
@@ -532,7 +532,7 @@
             "text": "Tuberculosis"
           }
         },
-        "_row_num": 48
+        "_row_num": 29
       },
       {
         "choice_list_name": "diagnostico",
@@ -542,7 +542,7 @@
             "text": "HIV"
           }
         },
-        "_row_num": 49
+        "_row_num": 30
       },
       {
         "choice_list_name": "diagnostico",
@@ -552,7 +552,7 @@
             "text": "Gastritis"
           }
         },
-        "_row_num": 50
+        "_row_num": 31
       },
       {
         "choice_list_name": "diagnostico",
@@ -562,7 +562,7 @@
             "text": "Hepatitis"
           }
         },
-        "_row_num": 51
+        "_row_num": 32
       },
       {
         "choice_list_name": "diagnostico",
@@ -572,7 +572,7 @@
             "text": "Conjuntivite"
           }
         },
-        "_row_num": 52
+        "_row_num": 33
       },
       {
         "choice_list_name": "diagnostico",
@@ -582,7 +582,7 @@
             "text": "Gastroentetites"
           }
         },
-        "_row_num": 53
+        "_row_num": 34
       },
       {
         "choice_list_name": "diagnostico",
@@ -592,7 +592,7 @@
             "text": "Hipertensão arterial"
           }
         },
-        "_row_num": 54
+        "_row_num": 35
       },
       {
         "choice_list_name": "diagnostico",
@@ -602,7 +602,7 @@
             "text": "Diabetes"
           }
         },
-        "_row_num": 55
+        "_row_num": 36
       },
       {
         "choice_list_name": "diagnostico",
@@ -612,7 +612,7 @@
             "text": "Infecões de transmissão sexual"
           }
         },
-        "_row_num": 56
+        "_row_num": 37
       },
       {
         "choice_list_name": "diagnostico",
@@ -622,7 +622,7 @@
             "text": "Infecões de tracto urinario"
           }
         },
-        "_row_num": 57
+        "_row_num": 38
       },
       {
         "choice_list_name": "diagnostico",
@@ -632,7 +632,7 @@
             "text": "Doencas inflamatorias pelvicas"
           }
         },
-        "_row_num": 58
+        "_row_num": 39
       },
       {
         "choice_list_name": "diagnostico",
@@ -642,7 +642,7 @@
             "text": "Gravidez"
           }
         },
-        "_row_num": 59
+        "_row_num": 40
       },
       {
         "choice_list_name": "diagnostico",
@@ -652,7 +652,7 @@
             "text": "constipação"
           }
         },
-        "_row_num": 60
+        "_row_num": 41
       },
       {
         "choice_list_name": "diagnostico",
@@ -662,7 +662,7 @@
             "text": "Otitis externa o Media"
           }
         },
-        "_row_num": 61
+        "_row_num": 42
       },
       {
         "choice_list_name": "diagnostico",
@@ -672,7 +672,7 @@
             "text": "Faringoamigdalites"
           }
         },
-        "_row_num": 62
+        "_row_num": 43
       },
       {
         "choice_list_name": "diagnostico",
@@ -682,7 +682,7 @@
             "text": "Atrites"
           }
         },
-        "_row_num": 63
+        "_row_num": 44
       },
       {
         "choice_list_name": "diagnostico",
@@ -692,7 +692,7 @@
             "text": "Traumatismo"
           }
         },
-        "_row_num": 64
+        "_row_num": 45
       },
       {
         "choice_list_name": "diagnostico",
@@ -702,7 +702,7 @@
             "text": "Migranha"
           }
         },
-        "_row_num": 65
+        "_row_num": 46
       },
       {
         "choice_list_name": "diagnostico",
@@ -712,7 +712,7 @@
             "text": "Hemorragia"
           }
         },
-        "_row_num": 66
+        "_row_num": 47
       },
       {
         "choice_list_name": "diagnostico",
@@ -722,7 +722,7 @@
             "text": "Hernias"
           }
         },
-        "_row_num": 67
+        "_row_num": 48
       },
       {
         "choice_list_name": "diagnostico",
@@ -732,7 +732,7 @@
             "text": "Alergia"
           }
         },
-        "_row_num": 68
+        "_row_num": 49
       },
       {
         "choice_list_name": "diagnostico",
@@ -742,7 +742,7 @@
             "text": "Micosis Superficial"
           }
         },
-        "_row_num": 69
+        "_row_num": 50
       },
       {
         "choice_list_name": "diagnostico",
@@ -752,31 +752,10 @@
             "text": "Infeccoes bacterianas da pele e partes blando"
           }
         },
-        "_row_num": 70
+        "_row_num": 51
       }
     ],
     "queries": [
-      {
-        "query_name": "region_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context).pluck('region').uniq().map(function(region){\nreturn {data_value:region, display:{title: {text: region} } };\n}).value()",
-        "_row_num": 2
-      },
-      {
-        "query_name": "sector_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.uniq(function(x){return x.sector;})\n.map(function(place){\n    return {\n        data_value:place.sector, \n        region: place.region,\n        display:{title: {text: place.sector} }\n    } \n    })\n.value()",
-        "_row_num": 3
-      },
-      {
-        "query_name": "local_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.tabanca, \n        region: place.region,\n        sector: place.sector,\n               display:{title: {text: place.tabanca} }\n    } \n    })\n.value()",
-        "_row_num": 4
-      },
       {
         "query_name": "resultado",
         "query_type": "linked_table",
@@ -786,7 +765,7 @@
         "selectionArgs": "[data('id_paciente')]",
         "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
         "openRowInitialElementKeyToValueMap": "{}",
-        "_row_num": 5
+        "_row_num": 2
       }
     ],
     "prompt_types": [
@@ -825,11 +804,6 @@
         "calculation_name": "chill_adult",
         "calculation": "calculates.idade_mes()<216 ? \"C\" : \"A\"",
         "_row_num": 5
-      },
-      {
-        "calculation_name": "letra_codigo",
-        "calculation": "concat(data('cs') , calculates.chill_adult())",
-        "_row_num": 6
       }
     ],
     "model": [
@@ -930,7 +904,7 @@
       },
       {
         "type": "select_one",
-        "name": "cs",
+        "name": "ccc",
         "_row_num": 21
       },
       {
@@ -1130,9 +1104,9 @@
           "_row_num": 14
         }
       ],
-      "CS": [
+      "centro": [
         {
-          "choice_list_name": "CS",
+          "choice_list_name": "centro",
           "data_value": "SB",
           "display": {
             "title": {
@@ -1142,7 +1116,7 @@
           "_row_num": 16
         },
         {
-          "choice_list_name": "CS",
+          "choice_list_name": "centro",
           "data_value": "SH",
           "display": {
             "title": {
@@ -1152,8 +1126,8 @@
           "_row_num": 17
         },
         {
-          "choice_list_name": "CS",
-          "data_value": "SG",
+          "choice_list_name": "centro",
+          "data_value": "SGC",
           "display": {
             "title": {
               "text": "Gabú (CMI)"
@@ -1162,8 +1136,8 @@
           "_row_num": 18
         },
         {
-          "choice_list_name": "CS",
-          "data_value": "SG",
+          "choice_list_name": "centro",
+          "data_value": "SGH",
           "display": {
             "title": {
               "text": "Gabú (hospital)"
@@ -1172,7 +1146,7 @@
           "_row_num": 19
         },
         {
-          "choice_list_name": "CS",
+          "choice_list_name": "centro",
           "data_value": "SBM",
           "display": {
             "title": {
@@ -1191,7 +1165,7 @@
               "text": "Paludismo (malária)"
             }
           },
-          "_row_num": 41
+          "_row_num": 22
         },
         {
           "choice_list_name": "diagnostico",
@@ -1201,7 +1175,7 @@
               "text": "Anemia"
             }
           },
-          "_row_num": 42
+          "_row_num": 23
         },
         {
           "choice_list_name": "diagnostico",
@@ -1211,7 +1185,7 @@
               "text": "Febre Tifoide"
             }
           },
-          "_row_num": 43
+          "_row_num": 24
         },
         {
           "choice_list_name": "diagnostico",
@@ -1221,7 +1195,7 @@
               "text": "Disenteria"
             }
           },
-          "_row_num": 44
+          "_row_num": 25
         },
         {
           "choice_list_name": "diagnostico",
@@ -1231,7 +1205,7 @@
               "text": "COVID-19"
             }
           },
-          "_row_num": 45
+          "_row_num": 26
         },
         {
           "choice_list_name": "diagnostico",
@@ -1241,7 +1215,7 @@
               "text": "Pneumonia"
             }
           },
-          "_row_num": 46
+          "_row_num": 27
         },
         {
           "choice_list_name": "diagnostico",
@@ -1251,7 +1225,7 @@
               "text": "Diarrea"
             }
           },
-          "_row_num": 47
+          "_row_num": 28
         },
         {
           "choice_list_name": "diagnostico",
@@ -1261,7 +1235,7 @@
               "text": "Tuberculosis"
             }
           },
-          "_row_num": 48
+          "_row_num": 29
         },
         {
           "choice_list_name": "diagnostico",
@@ -1271,7 +1245,7 @@
               "text": "HIV"
             }
           },
-          "_row_num": 49
+          "_row_num": 30
         },
         {
           "choice_list_name": "diagnostico",
@@ -1281,7 +1255,7 @@
               "text": "Gastritis"
             }
           },
-          "_row_num": 50
+          "_row_num": 31
         },
         {
           "choice_list_name": "diagnostico",
@@ -1291,7 +1265,7 @@
               "text": "Hepatitis"
             }
           },
-          "_row_num": 51
+          "_row_num": 32
         },
         {
           "choice_list_name": "diagnostico",
@@ -1301,7 +1275,7 @@
               "text": "Conjuntivite"
             }
           },
-          "_row_num": 52
+          "_row_num": 33
         },
         {
           "choice_list_name": "diagnostico",
@@ -1311,7 +1285,7 @@
               "text": "Gastroentetites"
             }
           },
-          "_row_num": 53
+          "_row_num": 34
         },
         {
           "choice_list_name": "diagnostico",
@@ -1321,7 +1295,7 @@
               "text": "Hipertensão arterial"
             }
           },
-          "_row_num": 54
+          "_row_num": 35
         },
         {
           "choice_list_name": "diagnostico",
@@ -1331,7 +1305,7 @@
               "text": "Diabetes"
             }
           },
-          "_row_num": 55
+          "_row_num": 36
         },
         {
           "choice_list_name": "diagnostico",
@@ -1341,7 +1315,7 @@
               "text": "Infecões de transmissão sexual"
             }
           },
-          "_row_num": 56
+          "_row_num": 37
         },
         {
           "choice_list_name": "diagnostico",
@@ -1351,7 +1325,7 @@
               "text": "Infecões de tracto urinario"
             }
           },
-          "_row_num": 57
+          "_row_num": 38
         },
         {
           "choice_list_name": "diagnostico",
@@ -1361,7 +1335,7 @@
               "text": "Doencas inflamatorias pelvicas"
             }
           },
-          "_row_num": 58
+          "_row_num": 39
         },
         {
           "choice_list_name": "diagnostico",
@@ -1371,7 +1345,7 @@
               "text": "Gravidez"
             }
           },
-          "_row_num": 59
+          "_row_num": 40
         },
         {
           "choice_list_name": "diagnostico",
@@ -1381,7 +1355,7 @@
               "text": "constipação"
             }
           },
-          "_row_num": 60
+          "_row_num": 41
         },
         {
           "choice_list_name": "diagnostico",
@@ -1391,7 +1365,7 @@
               "text": "Otitis externa o Media"
             }
           },
-          "_row_num": 61
+          "_row_num": 42
         },
         {
           "choice_list_name": "diagnostico",
@@ -1401,7 +1375,7 @@
               "text": "Faringoamigdalites"
             }
           },
-          "_row_num": 62
+          "_row_num": 43
         },
         {
           "choice_list_name": "diagnostico",
@@ -1411,7 +1385,7 @@
               "text": "Atrites"
             }
           },
-          "_row_num": 63
+          "_row_num": 44
         },
         {
           "choice_list_name": "diagnostico",
@@ -1421,7 +1395,7 @@
               "text": "Traumatismo"
             }
           },
-          "_row_num": 64
+          "_row_num": 45
         },
         {
           "choice_list_name": "diagnostico",
@@ -1431,7 +1405,7 @@
               "text": "Migranha"
             }
           },
-          "_row_num": 65
+          "_row_num": 46
         },
         {
           "choice_list_name": "diagnostico",
@@ -1441,7 +1415,7 @@
               "text": "Hemorragia"
             }
           },
-          "_row_num": 66
+          "_row_num": 47
         },
         {
           "choice_list_name": "diagnostico",
@@ -1451,7 +1425,7 @@
               "text": "Hernias"
             }
           },
-          "_row_num": 67
+          "_row_num": 48
         },
         {
           "choice_list_name": "diagnostico",
@@ -1461,7 +1435,7 @@
               "text": "Alergia"
             }
           },
-          "_row_num": 68
+          "_row_num": 49
         },
         {
           "choice_list_name": "diagnostico",
@@ -1471,7 +1445,7 @@
               "text": "Micosis Superficial"
             }
           },
-          "_row_num": 69
+          "_row_num": 50
         },
         {
           "choice_list_name": "diagnostico",
@@ -1481,32 +1455,11 @@
               "text": "Infeccoes bacterianas da pele e partes blando"
             }
           },
-          "_row_num": 70
+          "_row_num": 51
         }
       ]
     },
     "queries": {
-      "region_csv": {
-        "query_name": "region_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context).pluck('region').uniq().map(function(region){\nreturn {data_value:region, display:{title: {text: region} } };\n}).value()",
-        "_row_num": 2
-      },
-      "sector_csv": {
-        "query_name": "sector_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.uniq(function(x){return x.sector;})\n.map(function(place){\n    return {\n        data_value:place.sector, \n        region: place.region,\n        display:{title: {text: place.sector} }\n    } \n    })\n.value()",
-        "_row_num": 3
-      },
-      "local_csv": {
-        "query_name": "local_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.tabanca, \n        region: place.region,\n        sector: place.sector,\n               display:{title: {text: place.tabanca} }\n    } \n    })\n.value()",
-        "_row_num": 4
-      },
       "resultado": {
         "query_name": "resultado",
         "query_type": "linked_table",
@@ -1516,7 +1469,7 @@
         "selectionArgs": "[data('id_paciente')]",
         "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
         "openRowInitialElementKeyToValueMap": "{}",
-        "_row_num": 5
+        "_row_num": 2
       }
     },
     "calculates": {
@@ -1539,11 +1492,6 @@
         "calculation_name": "chill_adult",
         "calculation": "calculates.idade_mes()<216 ? \"C\" : \"A\"",
         "_row_num": 5
-      },
-      "letra_codigo": {
-        "calculation_name": "letra_codigo",
-        "calculation": "concat(data('cs') , calculates.chill_adult())",
-        "_row_num": 6
       }
     },
     "model": {
@@ -1817,9 +1765,9 @@
         ],
         "elementKey": "tdr_resultado"
       },
-      "cs": {
+      "ccc": {
         "type": "string",
-        "valuesList": "CS",
+        "valuesList": "centro",
         "_defn": [
           {
             "_row_num": 5,
@@ -1830,7 +1778,7 @@
             "section_name": "model"
           }
         ],
-        "elementKey": "cs"
+        "elementKey": "ccc"
       },
       "GE": {
         "type": "number",
@@ -1884,9 +1832,9 @@
         "reachable_sections": {},
         "prompts": [
           {
-            "type": "select_one",
-            "values_list": "CS",
-            "name": "cs",
+            "type": "select_one_dropdown",
+            "values_list": "centro",
+            "name": "ccc",
             "display": {
               "prompt": {
                 "text": "Centro de saude:"
@@ -1895,7 +1843,7 @@
             "_row_num": 5,
             "__rowNum__": 4,
             "_token_type": "prompt",
-            "_type": "select_one",
+            "_type": "select_one_dropdown",
             "_branch_label_enclosing_screen": "survey/_screen5",
             "promptIdx": 0
           },
@@ -2910,9 +2858,9 @@
         "elementSet": "data",
         "elementPath": "tdr_resultado"
       },
-      "cs": {
+      "ccc": {
         "type": "string",
-        "valuesList": "CS",
+        "valuesList": "centro",
         "_defn": [
           {
             "_row_num": 5,
@@ -2923,10 +2871,10 @@
             "section_name": "model"
           }
         ],
-        "elementKey": "cs",
-        "elementName": "cs",
+        "elementKey": "ccc",
+        "elementName": "ccc",
         "elementSet": "data",
-        "elementPath": "cs"
+        "elementPath": "ccc"
       },
       "GE": {
         "type": "number",
