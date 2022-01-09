@@ -12,6 +12,7 @@ function(opendatakit,  database,  $      ,  _         , adateHelpers) {
         //calculates will be set by the builder
         calculates: {},
         opendatakit: opendatakit,
+        adate: adateHelpers,
 		getCurrentLocale: function() {
             'use strict';
 
