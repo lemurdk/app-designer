@@ -28,9 +28,9 @@
     ],
     "survey": [
       {
-        "type": "select_one_dropdown",
+        "type": "select_one",
         "values_list": "centro",
-        "name": "ccc",
+        "name": "cs",
         "display": {
           "prompt": {
             "text": "Centro de saude:"
@@ -904,7 +904,7 @@
       },
       {
         "type": "select_one",
-        "name": "ccc",
+        "name": "cs",
         "_row_num": 21
       },
       {
@@ -1765,7 +1765,7 @@
         ],
         "elementKey": "tdr_resultado"
       },
-      "ccc": {
+      "cs": {
         "type": "string",
         "valuesList": "centro",
         "_defn": [
@@ -1778,7 +1778,7 @@
             "section_name": "model"
           }
         ],
-        "elementKey": "ccc"
+        "elementKey": "cs"
       },
       "GE": {
         "type": "number",
@@ -1832,9 +1832,9 @@
         "reachable_sections": {},
         "prompts": [
           {
-            "type": "select_one_dropdown",
+            "type": "select_one",
             "values_list": "centro",
-            "name": "ccc",
+            "name": "cs",
             "display": {
               "prompt": {
                 "text": "Centro de saude:"
@@ -1843,7 +1843,7 @@
             "_row_num": 5,
             "__rowNum__": 4,
             "_token_type": "prompt",
-            "_type": "select_one_dropdown",
+            "_type": "select_one",
             "_branch_label_enclosing_screen": "survey/_screen5",
             "promptIdx": 0
           },
@@ -2858,7 +2858,7 @@
         "elementSet": "data",
         "elementPath": "tdr_resultado"
       },
-      "ccc": {
+      "cs": {
         "type": "string",
         "valuesList": "centro",
         "_defn": [
@@ -2871,10 +2871,10 @@
             "section_name": "model"
           }
         ],
-        "elementKey": "ccc",
-        "elementName": "ccc",
+        "elementKey": "cs",
+        "elementName": "cs",
         "elementSet": "data",
-        "elementPath": "ccc"
+        "elementPath": "cs"
       },
       "GE": {
         "type": "number",

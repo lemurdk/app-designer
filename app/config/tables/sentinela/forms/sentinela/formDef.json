@@ -682,6 +682,11 @@
         "_row_num": 20
       },
       {
+        "type": "select_one",
+        "name": "cs",
+        "_row_num": 21
+      },
+      {
         "type": "decimal",
         "name": "GE",
         "_row_num": 27
@@ -1488,6 +1493,16 @@
         ],
         "elementKey": "tdr_resultado"
       },
+      "cs": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 21,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "cs"
+      },
       "GE": {
         "type": "number",
         "_defn": [
@@ -2071,6 +2086,19 @@
         "elementName": "tdr_resultado",
         "elementSet": "data",
         "elementPath": "tdr_resultado"
+      },
+      "cs": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 21,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "cs",
+        "elementName": "cs",
+        "elementSet": "data",
+        "elementPath": "cs"
       },
       "GE": {
         "type": "number",
