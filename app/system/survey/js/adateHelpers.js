@@ -1,11 +1,11 @@
-define(['opendatakit','database','jquery','underscore','moment'],
-function(opendatakit,  database,  $,       _, moment) {
+define(['moment'],
+function(moment) {
 return {
     getMoment: function(aDate) {
         if (!aDate || aDate.length<4 || this.yearUnknown(aDate)) {
             return false;
         }
-        aDate = aDate.toUpperCase().replace('D:NS','D:15').replace('M:NS','M:5');
+        aDate = aDate.toUpperCase().replace('D:NS','D:15').replace('M:NS','M:06');
         var d = moment(aDate, '\\D:DD,\\M:MM,\\Y:YYYY');
         if (d.isValid()) {
             return d;
@@ -18,10 +18,10 @@ return {
     yearUnknown: function(aDate) {
         return !aDate || aDate.toUpperCase().indexOf('Y:NS')>-1;
     },
-    monthUnkown: function(aDate) {
+    monthUnknown: function(aDate) {
         return !aDate || aDate.toUpperCase().indexOf('M:NS')>-1;   
     },
-    dayUnkown: function(aDate) {
+    dayUnknown: function(aDate) {
         return !aDate || aDate.toUpperCase().indexOf('D:NS')>-1;
     },
     ageIn: function(aDate, strUnit) {
@@ -47,6 +47,63 @@ return {
             return -9999;
         }
         return b.diff(a,'years');
-    }
+    },
+    diffInDays: function(aDateA,aDateB) {
+        var a = this.getMoment(aDateA);
+        var b = this.getMoment(aDateB);
+        if (!a || !b) {
+            return -9999;
+        }
+        return b.diff(a,'days');
+    },
+    display: function(aDate) {
+        var a = this.getMoment(aDate);
+        var d;
+        if (this.hasUncertainty(aDate)) {
+            if (this.dayUnknown(aDate)) {
+                if (this.monthUnknown(aDate)) {
+                    d = moment(a).format('??/??/YYYY');
+                } else {
+                    d = moment(a).format('??/MM/YYYY');
+                }   
+            } 
+            else if (this.monthUnknown(aDate)) {
+                d = moment(a).format('DD/??/YYYY'); 
+            }
+        } else {
+            d = moment(a).format('DD/MM/YYYY');
+        }
+        return d;
+    },
+    getDay: function(aDate) {
+        var a = this.getMoment(aDate);
+        if (!a) return 0;
+        return a.date();
+    },
+    getMonth: function(aDate) {
+        var a = this.getMoment(aDate);
+        if (!a) return 0;
+        return a.month() + 1;
+    },
+    getYear: function(aDate) {
+        var a = this.getMoment(aDate);
+        if (!a) return 0;
+        return a.year() + 1;
+    },
+    hoursMinutes: function(date) {
+        var d = new Date(date);
+        var h = ("0" + d.getHours()).slice(-2);
+        var m = ("0" + d.getMinutes()).slice(-2);
+        var hourMin = h + ":" + m;
+        return hourMin;
+    },
+    today: function() {
+        var today = new Date();
+        var day = today.getDate();
+        var mon = today.getMonth()+1;
+        var yea = today.getFullYear();
+        var aDate = 'D:' + day + ',M:' + mon + ',Y:' + yea;
+        return aDate;
+    },
 }
 });
