@@ -67,6 +67,7 @@
             "text": "TDR"
           }
         },
+        "required": true,
         "_row_num": 6
       },
       {
@@ -83,6 +84,7 @@
             "text": "Resultado de TDR"
           }
         },
+        "required": "data('tdr')=='1'",
         "_row_num": 8
       },
       {
@@ -90,7 +92,7 @@
         "_row_num": 9
       },
       {
-        "type": "decimal",
+        "type": "integer",
         "name": "GE",
         "display": {
           "prompt": {
@@ -288,112 +290,117 @@
     ],
     "model": [
       {
-        "type": "string",
-        "name": "id_paciente",
-        "_row_num": 2
-      },
-      {
         "type": "assign",
         "name": "data_consulta",
-        "_row_num": 3
-      },
-      {
-        "type": "string",
-        "name": "nome",
-        "_row_num": 4
-      },
-      {
-        "type": "string",
-        "name": "nome_casa",
-        "_row_num": 5
-      },
-      {
-        "type": "select_one",
-        "name": "sexo",
-        "_row_num": 6
-      },
-      {
-        "type": "select_one",
-        "name": "DOB_idade",
-        "_row_num": 7
-      },
-      {
-        "type": "adate",
-        "name": "dn",
-        "_row_num": 8
-      },
-      {
-        "type": "integer",
-        "name": "ano",
-        "_row_num": 9
-      },
-      {
-        "type": "integer",
-        "name": "mes",
-        "_row_num": 10
-      },
-      {
-        "type": "select_one",
-        "name": "gravidez",
-        "_row_num": 11
-      },
-      {
-        "type": "decimal",
-        "name": "peso",
-        "_row_num": 12
-      },
-      {
-        "type": "string",
-        "name": "procedencia",
-        "_row_num": 13
-      },
-      {
-        "type": "select_one",
-        "name": "febre",
-        "_row_num": 14
-      },
-      {
-        "type": "decimal",
-        "name": "temperatura",
-        "_row_num": 15
-      },
-      {
-        "type": "select_one",
-        "name": "diagnostico",
-        "_row_num": 16
-      },
-      {
-        "type": "select_one",
-        "name": "diagno_secund",
-        "_row_num": 17
-      },
-      {
-        "type": "select_one",
-        "name": "hospitaliza",
-        "_row_num": 18
-      },
-      {
-        "type": "select_one",
-        "name": "tdr",
-        "_row_num": 19
-      },
-      {
-        "type": "select_one",
-        "name": "tdr_resultado",
-        "_row_num": 20
+        "_row_num": 2
       },
       {
         "type": "select_one",
         "name": "cs",
-        "_row_num": 21
+        "_row_num": 3
+      },
+      {
+        "type": "select_one",
+        "name": "DOB_idade",
+        "_row_num": 4
+      },
+      {
+        "type": "adate",
+        "name": "dn",
+        "_row_num": 5
+      },
+      {
+        "type": "integer",
+        "name": "ano",
+        "_row_num": 6
+      },
+      {
+        "type": "integer",
+        "name": "mes",
+        "_row_num": 7
+      },
+      {
+        "type": "integer",
+        "name": "id_paciente",
+        "_row_num": 8
+      },
+      {
+        "type": "string",
+        "name": "nome",
+        "_row_num": 9
+      },
+      {
+        "type": "string",
+        "name": "nome_casa",
+        "_row_num": 10
+      },
+      {
+        "type": "select_one",
+        "name": "sexo",
+        "_row_num": 11
+      },
+      {
+        "type": "select_one",
+        "name": "gravidez",
+        "_row_num": 12
+      },
+      {
+        "type": "decimal",
+        "name": "peso",
+        "_row_num": 13
+      },
+      {
+        "type": "string",
+        "name": "procedencia",
+        "_row_num": 14
+      },
+      {
+        "type": "select_one",
+        "name": "febre",
+        "_row_num": 15
+      },
+      {
+        "type": "decimal",
+        "name": "temperatura",
+        "_row_num": 16
+      },
+      {
+        "type": "select_one_dropdown",
+        "name": "diagnostico",
+        "_row_num": 17
+      },
+      {
+        "type": "select_one_dropdown",
+        "name": "diagno_secund",
+        "_row_num": 18
+      },
+      {
+        "type": "select_one",
+        "name": "hospitaliza",
+        "_row_num": 19
+      },
+      {
+        "type": "text",
+        "name": "comentario",
+        "_row_num": 20
       },
       {
         "type": "string",
         "name": "id_formssentinela",
-        "_row_num": 22
+        "_row_num": 21
       },
       {
-        "type": "decimal",
+        "type": "select_one",
+        "name": "tdr",
+        "_row_num": 25
+      },
+      {
+        "type": "select_one",
+        "name": "tdr_resultado",
+        "_row_num": 26
+      },
+      {
+        "type": "integer",
         "name": "GE",
         "_row_num": 27
       },
@@ -411,11 +418,6 @@
         "type": "text",
         "name": "comentario_1",
         "_row_num": 30
-      },
-      {
-        "type": "text",
-        "name": "comentario_2",
-        "_row_num": 31
       }
     ],
     "prompt_types": [
@@ -687,61 +689,31 @@
       }
     },
     "model": {
-      "id_paciente": {
-        "type": "string",
+      "data_consulta": {
         "_defn": [
           {
             "_row_num": 2,
             "section_name": "model"
           }
         ],
-        "elementKey": "id_paciente"
+        "type": "assign",
+        "elementKey": "data_consulta"
       },
-      "data_consulta": {
+      "cs": {
+        "type": "string",
         "_defn": [
           {
             "_row_num": 3,
             "section_name": "model"
           }
         ],
-        "type": "assign",
-        "elementKey": "data_consulta"
-      },
-      "nome": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 4,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "nome"
-      },
-      "nome_casa": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 5,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "nome_casa"
-      },
-      "sexo": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 6,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "sexo"
+        "elementKey": "cs"
       },
       "DOB_idade": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 7,
+            "_row_num": 4,
             "section_name": "model"
           }
         ],
@@ -756,7 +728,7 @@
         "__rowNum__": 2,
         "_defn": [
           {
-            "_row_num": 8,
+            "_row_num": 5,
             "section_name": "model"
           }
         ],
@@ -766,7 +738,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 9,
+            "_row_num": 6,
             "section_name": "model"
           }
         ],
@@ -776,17 +748,57 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 10,
+            "_row_num": 7,
             "section_name": "model"
           }
         ],
         "elementKey": "mes"
       },
-      "gravidez": {
+      "id_paciente": {
+        "type": "integer",
+        "_defn": [
+          {
+            "_row_num": 8,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_paciente"
+      },
+      "nome": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 9,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "nome"
+      },
+      "nome_casa": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 10,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "nome_casa"
+      },
+      "sexo": {
         "type": "string",
         "_defn": [
           {
             "_row_num": 11,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "sexo"
+      },
+      "gravidez": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 12,
             "section_name": "model"
           }
         ],
@@ -796,7 +808,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 12,
+            "_row_num": 13,
             "section_name": "model"
           }
         ],
@@ -806,7 +818,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 13,
+            "_row_num": 14,
             "section_name": "model"
           }
         ],
@@ -816,7 +828,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 14,
+            "_row_num": 15,
             "section_name": "model"
           }
         ],
@@ -826,7 +838,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 15,
+            "_row_num": 16,
             "section_name": "model"
           }
         ],
@@ -836,7 +848,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 16,
+            "_row_num": 17,
             "section_name": "model"
           }
         ],
@@ -846,7 +858,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 17,
+            "_row_num": 18,
             "section_name": "model"
           }
         ],
@@ -856,11 +868,31 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 18,
+            "_row_num": 19,
             "section_name": "model"
           }
         ],
         "elementKey": "hospitaliza"
+      },
+      "comentario": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 20,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "comentario"
+      },
+      "id_formssentinela": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 21,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_formssentinela"
       },
       "tdr": {
         "type": "string",
@@ -871,7 +903,7 @@
             "section_name": "survey"
           },
           {
-            "_row_num": 19,
+            "_row_num": 25,
             "section_name": "model"
           }
         ],
@@ -886,34 +918,14 @@
             "section_name": "survey"
           },
           {
-            "_row_num": 20,
+            "_row_num": 26,
             "section_name": "model"
           }
         ],
         "elementKey": "tdr_resultado"
       },
-      "cs": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 21,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "cs"
-      },
-      "id_formssentinela": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 22,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "id_formssentinela"
-      },
       "GE": {
-        "type": "number",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 11,
@@ -967,16 +979,6 @@
           }
         ],
         "elementKey": "comentario_1"
-      },
-      "comentario_2": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 31,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "comentario_2"
       }
     },
     "section_names": [
@@ -1013,6 +1015,7 @@
                 "text": "TDR"
               }
             },
+            "required": true,
             "_row_num": 6,
             "__rowNum__": 5,
             "_token_type": "prompt",
@@ -1029,6 +1032,7 @@
                 "text": "Resultado de TDR"
               }
             },
+            "required": "data('tdr')=='1'",
             "_row_num": 8,
             "__rowNum__": 7,
             "_token_type": "prompt",
@@ -1037,7 +1041,7 @@
             "promptIdx": 2
           },
           {
-            "type": "decimal",
+            "type": "integer",
             "name": "GE",
             "display": {
               "prompt": {
@@ -1047,7 +1051,7 @@
             "_row_num": 11,
             "__rowNum__": 10,
             "_token_type": "prompt",
-            "_type": "decimal",
+            "_type": "integer",
             "_branch_label_enclosing_screen": "survey/_screen4",
             "promptIdx": 3
           },
@@ -1106,7 +1110,10 @@
           }
         ],
         "validation_tag_map": {
-          "finalize": []
+          "finalize": [
+            1,
+            2
+          ]
         },
         "operations": [
           {
@@ -1337,23 +1344,10 @@
       }
     },
     "dataTableModel": {
-      "id_paciente": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 2,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "id_paciente",
-        "elementName": "id_paciente",
-        "elementSet": "data",
-        "elementPath": "id_paciente"
-      },
       "data_consulta": {
         "_defn": [
           {
-            "_row_num": 3,
+            "_row_num": 2,
             "section_name": "model"
           }
         ],
@@ -1363,50 +1357,24 @@
         "elementSet": "data",
         "elementPath": "data_consulta"
       },
-      "nome": {
+      "cs": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 4,
+            "_row_num": 3,
             "section_name": "model"
           }
         ],
-        "elementKey": "nome",
-        "elementName": "nome",
+        "elementKey": "cs",
+        "elementName": "cs",
         "elementSet": "data",
-        "elementPath": "nome"
-      },
-      "nome_casa": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 5,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "nome_casa",
-        "elementName": "nome_casa",
-        "elementSet": "data",
-        "elementPath": "nome_casa"
-      },
-      "sexo": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 6,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "sexo",
-        "elementName": "sexo",
-        "elementSet": "data",
-        "elementPath": "sexo"
+        "elementPath": "cs"
       },
       "DOB_idade": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 7,
+            "_row_num": 4,
             "section_name": "model"
           }
         ],
@@ -1424,7 +1392,7 @@
         "__rowNum__": 2,
         "_defn": [
           {
-            "_row_num": 8,
+            "_row_num": 5,
             "section_name": "model"
           }
         ],
@@ -1437,7 +1405,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 9,
+            "_row_num": 6,
             "section_name": "model"
           }
         ],
@@ -1450,7 +1418,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 10,
+            "_row_num": 7,
             "section_name": "model"
           }
         ],
@@ -1459,11 +1427,63 @@
         "elementSet": "data",
         "elementPath": "mes"
       },
-      "gravidez": {
+      "id_paciente": {
+        "type": "integer",
+        "_defn": [
+          {
+            "_row_num": 8,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_paciente",
+        "elementName": "id_paciente",
+        "elementSet": "data",
+        "elementPath": "id_paciente"
+      },
+      "nome": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 9,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "nome",
+        "elementName": "nome",
+        "elementSet": "data",
+        "elementPath": "nome"
+      },
+      "nome_casa": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 10,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "nome_casa",
+        "elementName": "nome_casa",
+        "elementSet": "data",
+        "elementPath": "nome_casa"
+      },
+      "sexo": {
         "type": "string",
         "_defn": [
           {
             "_row_num": 11,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "sexo",
+        "elementName": "sexo",
+        "elementSet": "data",
+        "elementPath": "sexo"
+      },
+      "gravidez": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 12,
             "section_name": "model"
           }
         ],
@@ -1476,7 +1496,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 12,
+            "_row_num": 13,
             "section_name": "model"
           }
         ],
@@ -1489,7 +1509,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 13,
+            "_row_num": 14,
             "section_name": "model"
           }
         ],
@@ -1502,7 +1522,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 14,
+            "_row_num": 15,
             "section_name": "model"
           }
         ],
@@ -1515,7 +1535,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 15,
+            "_row_num": 16,
             "section_name": "model"
           }
         ],
@@ -1528,7 +1548,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 16,
+            "_row_num": 17,
             "section_name": "model"
           }
         ],
@@ -1541,7 +1561,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 17,
+            "_row_num": 18,
             "section_name": "model"
           }
         ],
@@ -1554,7 +1574,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 18,
+            "_row_num": 19,
             "section_name": "model"
           }
         ],
@@ -1562,6 +1582,32 @@
         "elementName": "hospitaliza",
         "elementSet": "data",
         "elementPath": "hospitaliza"
+      },
+      "comentario": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 20,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "comentario",
+        "elementName": "comentario",
+        "elementSet": "data",
+        "elementPath": "comentario"
+      },
+      "id_formssentinela": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 21,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_formssentinela",
+        "elementName": "id_formssentinela",
+        "elementSet": "data",
+        "elementPath": "id_formssentinela"
       },
       "tdr": {
         "type": "string",
@@ -1572,7 +1618,7 @@
             "section_name": "survey"
           },
           {
-            "_row_num": 19,
+            "_row_num": 25,
             "section_name": "model"
           }
         ],
@@ -1590,7 +1636,7 @@
             "section_name": "survey"
           },
           {
-            "_row_num": 20,
+            "_row_num": 26,
             "section_name": "model"
           }
         ],
@@ -1599,34 +1645,8 @@
         "elementSet": "data",
         "elementPath": "tdr_resultado"
       },
-      "cs": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 21,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "cs",
-        "elementName": "cs",
-        "elementSet": "data",
-        "elementPath": "cs"
-      },
-      "id_formssentinela": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 22,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "id_formssentinela",
-        "elementName": "id_formssentinela",
-        "elementSet": "data",
-        "elementPath": "id_formssentinela"
-      },
       "GE": {
-        "type": "number",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 11,
@@ -1692,19 +1712,6 @@
         "elementName": "comentario_1",
         "elementSet": "data",
         "elementPath": "comentario_1"
-      },
-      "comentario_2": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 31,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "comentario_2",
-        "elementName": "comentario_2",
-        "elementSet": "data",
-        "elementPath": "comentario_2"
       },
       "_id": {
         "type": "string",
