@@ -807,7 +807,7 @@
       },
       {
         "calculation_name": "idade_mes",
-        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : sc.getMonths(data('ano'), data('mes'))",
+        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10) + parseInt(data('mes'),10)",
         "_row_num": 4
       },
       {
@@ -1515,7 +1515,7 @@
       },
       "idade_mes": {
         "calculation_name": "idade_mes",
-        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : sc.getMonths(data('ano'), data('mes'))",
+        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10) + parseInt(data('mes'),10)",
         "_row_num": 4
       },
       "chill_adult": {
