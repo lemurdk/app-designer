@@ -1302,11 +1302,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return {
 	    properties: {
 	      whitelist: _createNewLookupObject.createNewLookupObject(defaultPropertyWhiteList, runtimeOptions.allowedProtoProperties),
-	      defaultValue: runtimeOptions.allowProtoPropertiesByDefault
+	      defaultValue: true // runtimeOptions.allowProtoPropertiesByDefault
 	    },
 	    methods: {
 	      whitelist: _createNewLookupObject.createNewLookupObject(defaultMethodWhiteList, runtimeOptions.allowedProtoMethods),
-	      defaultValue: runtimeOptions.allowProtoMethodsByDefault
+	      defaultValue: true // runtimeOptions.allowProtoMethodsByDefault
 	    }
 	  };
 	}
