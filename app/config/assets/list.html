@@ -5,23 +5,212 @@
         <script type="text/javascript" src="commonDefinitions.js"></script>
         <script type="text/javascript" src="libs/jquery-3.6.0.js"></script>
         <script type="text/javascript" src="libs/jquery-migrate-3.3.2.js"></script>
+        <script type="text/javascript" src="libs/moment.js"></script>
         <script type="text/javascript" src="../../system/js/odkCommon.js"></script>
         <script type="text/javascript" src="../../system/js/odkData.js"></script>
         <script type="text/javascript" src="../../system/tables/js/odkTables.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script>
-        
-        
+        function addPersonForm(person) {
+            var tableId = "sentinela";
+            var formId = "sentinela"; 
+            var dispatchStruct = null;
+            var screenPath = null;
+            var rowId = person.rowId;
+            //var jsonMap = getJsonMap(person);
+            //odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
+            odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
+            odkTables
+        }
+
+        function getJsonMap(person) {
+
+            // delete person.numRondas;
+            // delete person.region;
+            // delete person.tabanca;
+            // delete person.sector;
+
+            console.log("Sending following data:");
+            console.log(person);      
+
+            return person;
+        }
+
+
+        /* DISPLAY STUFF */
+        function getSexoString(sexo) {
+            if (sexo == "1" || sexo == 1) return "M";
+            if (sexo == "2" || sexo == 2) return "F";
+            return "?";
+        }
+        function getAgeString(person) {
+            var theAdate = person.dn;
+            if (!theAdate) {
+                var res = (person.ano) ? person.ano : "0";
+                if (person.mes) res = res + ("." + person.mes);
+                return res;
+            }    
+            return "" + adateHelper.ageInYears(theAdate) + "." + (adateHelper.ageInMonths(theAdate) % 12);
+        }
+
+        function addPersonDiv(p) {    
+            var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;        
+            var row = "<tr class='lab" +(p.tdr_resultado ? 1 : 0) + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value='&gt;&gt;'></input></td></tr>";
+            $('#theList tr:last').after(row);
+            $('#theList tr:last').on("click",function() { 
+                addPersonForm(p);
+                return false;
+            });
+        }
+
+        function populateList(listOfPersons) {
+            var theList = $("#theList");
+            console.log("Populating list with " + listOfPersons.length + " persons");
+            listOfPersons.forEach(person => {
+                addPersonDiv(person);
+            });
+        }
+        /* /DISPLAY STUFF */
+
+        /* DB LOOKUP */
+        function listRows(cs, visit_date) {
+            var successFn = function( result ) {
+                console.log("Got " + result.getCount() + " forms");
+                var persons = [];
+                for (var row = 0; row < result.getCount(); row++) {
+                    var rowId = result.getData(row,"_id");
+                    var nome =  result.getData(row,"nome");
+                    var nome_casa =  result.getData(row,"nome_casa");
+                    var sexo =  result.getData(row,"sexo");
+                    var id_paciente = result.getData(row,"id_paciente");
+                    var dn =  result.getData(row,"dn");
+                    var p = {
+                        rowId,
+                        id_paciente,
+                        nome,
+                        nome_casa,
+                        sexo,
+                        dn
+                    }
+                    console.log(p);
+                    persons.push(p);
+                }
+                populateList(persons);
+                return;
+            }
+            
+            console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
+            var SQL = 'WITH squashed AS (SELECT s.*, ROW_NUMBER() OVER (PARTITION BY _id ORDER BY _savepoint_timestamp DESC) AS rn FROM sentinela AS s)' +
+            'SELECT _id, nome, nome_casa, sexo, id_paciente, dn, cs, tdr_resultado FROM squashed WHERE cs = "' + cs + '" COLLATE NOCASE AND data_consulta = "' + visit_date + '" COLLATE NOCASE AND rn = 1;';
+            
+            var failureFn = function( errorMsg ) {
+                console.error('Failed to get persons from database: ' + errorMsg);
+                console.error('SQL query used was:');
+                console.error(SQL);
+            }
+            odkData.arbitraryQuery('sentinela', SQL, null, null, null, successFn, failureFn);
+        }
+        /* /DB LOOKUP */
+
 
         // This is the "on load" function
         $(function() {
-            
+            window.adateHelper = getAdateHelper();
             var cs = util.getQueryParameter("cs")
+            if (!cs) cs = "sh";
+            
+            var m = new Date().getMonth()+1;
+            var d = new Date().getDate();
+            var visit_date = "D:" + d + ",M:" + m + ",Y:2022";
+            $("#subheader").text(cs + ' @ ' + visit_date);
 
-            $("#subheader").text(cs);
-           
+            
+            listRows(cs, visit_date);
+            
+            // // TEST WITH MOCK DATA
+            // var persons = [];
+            // for (var i=0;i<10;i++) {
+            //     var p = {
+            //                 rowId : "123132" + i,
+            //                 id_paciente : "159" + i,
+            //                 nome : "Celso",
+            //                 nome_casa : "Pelso",
+            //                 sexo : 1,
+            //                 dn : "D:4,M:10,Y:1991",
+            //                 tdr_resultado : i > 4 ? 'pam2' : ''
+            //             }
+            //     persons.push(p);
+            // }
+            // populateList(persons);
         });
+
+
+                
+        /* adate helper */
+        function getAdateHelper() {return {
+            getMoment: function(aDate) {
+                if (!aDate || aDate.length<4 || this.yearUnknown(aDate)) {
+                    return false;
+                }
+                aDate = aDate.toUpperCase().replace('D:NS','D:15').replace('M:NS','M:5');
+                var d = moment(aDate, '\\D:DD,\\M:MM,\\Y:YYYY');
+                if (d.isValid()) {
+                    return d;
+                }
+                return false;
+            },
+            hasUncertainty: function(aDate) {
+                return !aDate || aDate.toUpperCase().indexOf('NS')>-1;   
+            },
+            yearUnknown: function(aDate) {
+                return !aDate || aDate.toUpperCase().indexOf('Y:NS')>-1;
+            },
+            monthUnkown: function(aDate) {
+                return !aDate || aDate.toUpperCase().indexOf('M:NS')>-1;   
+            },
+            dayUnkown: function(aDate) {
+                return !aDate || aDate.toUpperCase().indexOf('D:NS')>-1;
+            },
+            ageIn: function(aDate, strUnit) {
+                var a = this.getMoment(aDate);
+                if (!a) {
+                    return -9999;
+                }
+                return moment().diff(a,strUnit);
+            },
+            ageInYears: function(aDate) {
+                return this.ageIn(aDate, 'years');
+            },
+            ageInMonths: function(aDate) {
+                return this.ageIn(aDate, 'months');
+            },
+            ageInDays: function(aDate) {
+                return this.ageIn(aDate, 'days');
+            },
+            diffInYears: function(aDateA, aDateB) {
+                var a = this.getMoment(aDateA);
+                var b = this.getMoment(aDateB);
+                if (!a || !b) {
+                    return -9999;
+                }
+                return b.diff(a,'years');
+            }
+        }};
         </script>
+        <style>
+            #subheader {
+                font-size:medium;
+            }
+            tr:nth-of-type(even) {
+                color:gray;
+            }
+            tr.lab0 {
+                background-color: aliceblue;
+            }
+            tr.lab1 {
+                background-color: greenyellow;
+            }
+        </style>
 </head>
 <body id="main"><div id="wrapper"><div class="container">
 
@@ -31,10 +220,16 @@
     <form>
         <div class="form-group">
 
-            HERE WILL BE A LIST
+            <table id="theList">
+<tr>
+    <th>Id</th>
+    <th>Nome</th>
+    <th>Sexo</th>
+    <th>Idade (años.meses)</th>
+</tr>
+            </table>
             
             
-            <button class="btn btn-primary btn-block btn-launch" id="launch-button">OK</button>
         </div>
     </form>
 
