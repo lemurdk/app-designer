@@ -597,7 +597,7 @@
         "_row_num": 3
       },
       {
-        "type": "text",
+        "type": "string",
         "name": "nome",
         "_row_num": 4
       },
@@ -687,6 +687,11 @@
         "_row_num": 21
       },
       {
+        "type": "string",
+        "name": "id_formssentinela",
+        "_row_num": 22
+      },
+      {
         "type": "decimal",
         "name": "GE",
         "_row_num": 27
@@ -700,6 +705,16 @@
         "type": "decimal",
         "name": "hb",
         "_row_num": 29
+      },
+      {
+        "type": "text",
+        "name": "comentario_1",
+        "_row_num": 30
+      },
+      {
+        "type": "text",
+        "name": "comentario_2",
+        "_row_num": 31
       }
     ]
   },
@@ -1503,6 +1518,16 @@
         ],
         "elementKey": "cs"
       },
+      "id_formssentinela": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 22,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_formssentinela"
+      },
       "GE": {
         "type": "number",
         "_defn": [
@@ -1533,14 +1558,28 @@
         ],
         "elementKey": "hb"
       },
+      "comentario_1": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 30,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "comentario_1"
+      },
       "comentario_2": {
+        "type": "string",
         "_defn": [
           {
             "_row_num": 14,
             "section_name": "survey"
+          },
+          {
+            "_row_num": 31,
+            "section_name": "model"
           }
         ],
-        "type": "string",
         "elementKey": "comentario_2"
       }
     },
@@ -2100,6 +2139,19 @@
         "elementSet": "data",
         "elementPath": "cs"
       },
+      "id_formssentinela": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 22,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_formssentinela",
+        "elementName": "id_formssentinela",
+        "elementSet": "data",
+        "elementPath": "id_formssentinela"
+      },
       "GE": {
         "type": "number",
         "_defn": [
@@ -2139,14 +2191,31 @@
         "elementSet": "data",
         "elementPath": "hb"
       },
+      "comentario_1": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 30,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "comentario_1",
+        "elementName": "comentario_1",
+        "elementSet": "data",
+        "elementPath": "comentario_1"
+      },
       "comentario_2": {
+        "type": "string",
         "_defn": [
           {
             "_row_num": 14,
             "section_name": "survey"
+          },
+          {
+            "_row_num": 31,
+            "section_name": "model"
           }
         ],
-        "type": "string",
         "elementKey": "comentario_2",
         "elementName": "comentario_2",
         "elementSet": "data",
