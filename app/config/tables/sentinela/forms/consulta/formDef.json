@@ -770,10 +770,10 @@
         "query_name": "resultado",
         "query_type": "linked_table",
         "linked_form_id": "resultado",
-        "linked_table_id": "sentinela",
-        "selection": "id_paciente=?",
-        "selectionArgs": "[data('id_paciente')]",
-        "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
+        "linked_table_id": "resultado",
+        "selection": "_id=?",
+        "selectionArgs": "[opendatakit.getCurrentInstanceId()]",
+        "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
       }
@@ -925,32 +925,32 @@
       {
         "type": "select_one",
         "name": "tdr",
-        "_row_num": 25
+        "_row_num": 24
       },
       {
         "type": "select_one",
         "name": "tdr_resultado",
-        "_row_num": 26
+        "_row_num": 25
       },
       {
         "type": "integer",
         "name": "GE",
-        "_row_num": 27
+        "_row_num": 26
       },
       {
         "type": "decimal",
         "name": "leuco",
-        "_row_num": 28
+        "_row_num": 27
       },
       {
         "type": "decimal",
         "name": "hb",
-        "_row_num": 29
+        "_row_num": 28
       },
       {
         "type": "text",
         "name": "comentario_1",
-        "_row_num": 30
+        "_row_num": 29
       }
     ]
   },
@@ -1494,10 +1494,10 @@
         "query_name": "resultado",
         "query_type": "linked_table",
         "linked_form_id": "resultado",
-        "linked_table_id": "sentinela",
-        "selection": "id_paciente=?",
-        "selectionArgs": "[data('id_paciente')]",
-        "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
+        "linked_table_id": "resultado",
+        "selection": "_id=?",
+        "selectionArgs": "[opendatakit.getCurrentInstanceId()]",
+        "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
       }
@@ -1819,7 +1819,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 25,
+            "_row_num": 24,
             "section_name": "model"
           }
         ],
@@ -1829,7 +1829,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 25,
             "section_name": "model"
           }
         ],
@@ -1839,7 +1839,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 27,
+            "_row_num": 26,
             "section_name": "model"
           }
         ],
@@ -1849,7 +1849,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 27,
             "section_name": "model"
           }
         ],
@@ -1859,7 +1859,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 28,
             "section_name": "model"
           }
         ],
@@ -1869,7 +1869,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 30,
+            "_row_num": 29,
             "section_name": "model"
           }
         ],
@@ -2850,7 +2850,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 25,
+            "_row_num": 24,
             "section_name": "model"
           }
         ],
@@ -2863,7 +2863,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 25,
             "section_name": "model"
           }
         ],
@@ -2876,7 +2876,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 27,
+            "_row_num": 26,
             "section_name": "model"
           }
         ],
@@ -2889,7 +2889,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 27,
             "section_name": "model"
           }
         ],
@@ -2902,7 +2902,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 28,
             "section_name": "model"
           }
         ],
@@ -2915,7 +2915,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 30,
+            "_row_num": 29,
             "section_name": "model"
           }
         ],
