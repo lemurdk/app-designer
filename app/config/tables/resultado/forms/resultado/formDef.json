@@ -22,7 +22,7 @@
       },
       {
         "setting_name": "table_id",
-        "value": "sentinela",
+        "value": "resultado",
         "_row_num": 5
       },
       {
@@ -476,7 +476,7 @@
       },
       "table_id": {
         "setting_name": "table_id",
-        "value": "sentinela",
+        "value": "resultado",
         "_row_num": 5
       },
       "instance_name": {
@@ -674,6 +674,9 @@
           "_row_num": 20
         }
       ]
+    },
+    "table_specific_definitions": {
+      "_tokens": {}
     },
     "queries": {},
     "calculates": {
@@ -1825,6 +1828,50 @@
         "elementSet": "instanceMetadata",
         "elementPath": "_savepoint_creator"
       }
-    }
+    },
+    "properties": [
+      {
+        "_partition": "Column",
+        "_aspect": "tdr",
+        "_key": "displayChoicesList",
+        "_type": "object",
+        "_value": "[{\"choice_list_name\":\"yesno\",\"data_value\":1,\"display\":{\"title\":{\"text\":\"Sim\"}},\"_row_num\":8},{\"choice_list_name\":\"yesno\",\"data_value\":2,\"display\":{\"title\":{\"text\":\"Não\"}},\"_row_num\":9}]"
+      },
+      {
+        "_partition": "Column",
+        "_aspect": "tdr_resultado",
+        "_key": "displayChoicesList",
+        "_type": "object",
+        "_value": "[{\"choice_list_name\":\"resultado\",\"data_value\":1,\"display\":{\"title\":{\"text\":\"Positivo\"}},\"_row_num\":11},{\"choice_list_name\":\"resultado\",\"data_value\":2,\"display\":{\"title\":{\"text\":\"Negativo\"}},\"_row_num\":12},{\"choice_list_name\":\"resultado\",\"data_value\":3,\"display\":{\"title\":{\"text\":\"Inválido\"}},\"_row_num\":13},{\"choice_list_name\":\"resultado\",\"data_value\":4,\"display\":{\"title\":{\"text\":\"Não Concluente (Indeterminado)\"}},\"_row_num\":14}]"
+      },
+      {
+        "_partition": "FormType",
+        "_aspect": "default",
+        "_key": "FormType.formType",
+        "_type": "string",
+        "_value": "SURVEY"
+      },
+      {
+        "_partition": "SurveyUtil",
+        "_aspect": "default",
+        "_key": "SurveyUtil.formId",
+        "_type": "string",
+        "_value": "resultado"
+      },
+      {
+        "_partition": "Table",
+        "_aspect": "default",
+        "_key": "defaultViewType",
+        "_type": "string",
+        "_value": "SPREADSHEET"
+      },
+      {
+        "_partition": "Table",
+        "_aspect": "default",
+        "_key": "displayName",
+        "_type": "object",
+        "_value": "{\"text\":\"Introducao dos resultados laboratorias\"}"
+      }
+    ]
   }
 }

@@ -1,0 +1,7 @@
+_partition,_aspect,_key,_type,_value
+Column,tdr,displayChoicesList,object,"[{""choice_list_name"":""yesno"",""data_value"":1,""display"":{""title"":{""text"":""Sim""}},""_row_num"":8},{""choice_list_name"":""yesno"",""data_value"":2,""display"":{""title"":{""text"":""Não""}},""_row_num"":9}]"
+Column,tdr_resultado,displayChoicesList,object,"[{""choice_list_name"":""resultado"",""data_value"":1,""display"":{""title"":{""text"":""Positivo""}},""_row_num"":11},{""choice_list_name"":""resultado"",""data_value"":2,""display"":{""title"":{""text"":""Negativo""}},""_row_num"":12},{""choice_list_name"":""resultado"",""data_value"":3,""display"":{""title"":{""text"":""Inválido""}},""_row_num"":13},{""choice_list_name"":""resultado"",""data_value"":4,""display"":{""title"":{""text"":""Não Concluente (Indeterminado)""}},""_row_num"":14}]"
+FormType,default,FormType.formType,string,SURVEY
+SurveyUtil,default,SurveyUtil.formId,string,resultado
+Table,default,defaultViewType,string,SPREADSHEET
+Table,default,displayName,object,"{""text"":""Introducao dos resultados laboratorias""}"

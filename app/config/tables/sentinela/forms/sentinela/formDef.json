@@ -515,36 +515,15 @@
     ],
     "queries": [
       {
-        "query_name": "region_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context).pluck('region').uniq().map(function(region){\nreturn {data_value:region, display:{title: {text: region} } };\n}).value()",
-        "_row_num": 2
-      },
-      {
-        "query_name": "sector_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.uniq(function(x){return x.sector;})\n.map(function(place){\n    return {\n        data_value:place.sector, \n        region: place.region,\n        display:{title: {text: place.sector} }\n    } \n    })\n.value()",
-        "_row_num": 3
-      },
-      {
-        "query_name": "local_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.tabanca, \n        region: place.region,\n        sector: place.sector,\n               display:{title: {text: place.tabanca} }\n    } \n    })\n.value()",
-        "_row_num": 4
-      },
-      {
         "query_name": "resultado",
         "query_type": "linked_table",
         "linked_form_id": "resultado",
-        "linked_table_id": "sentinela",
+        "linked_table_id": "resultado",
         "selection": "id_paciente=?",
         "selectionArgs": "[data('id_paciente')]",
         "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
         "openRowInitialElementKeyToValueMap": "{}",
-        "_row_num": 5
+        "_row_num": 2
       }
     ],
     "prompt_types": [
@@ -682,39 +661,34 @@
         "_row_num": 20
       },
       {
-        "type": "string",
-        "name": "id_formssentinela",
-        "_row_num": 21
-      },
-      {
         "type": "select_one",
         "name": "tdr",
-        "_row_num": 25
+        "_row_num": 24
       },
       {
         "type": "select_one",
         "name": "tdr_resultado",
-        "_row_num": 26
+        "_row_num": 25
       },
       {
         "type": "integer",
         "name": "GE",
-        "_row_num": 27
+        "_row_num": 26
       },
       {
         "type": "decimal",
         "name": "leuco",
-        "_row_num": 28
+        "_row_num": 27
       },
       {
         "type": "decimal",
         "name": "hb",
-        "_row_num": 29
+        "_row_num": 28
       },
       {
         "type": "text",
         "name": "comentario_1",
-        "_row_num": 30
+        "_row_num": 29
       }
     ]
   },
@@ -1257,37 +1231,16 @@
       "_tokens": {}
     },
     "queries": {
-      "region_csv": {
-        "query_name": "region_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context).pluck('region').uniq().map(function(region){\nreturn {data_value:region, display:{title: {text: region} } };\n}).value()",
-        "_row_num": 2
-      },
-      "sector_csv": {
-        "query_name": "sector_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.uniq(function(x){return x.sector;})\n.map(function(place){\n    return {\n        data_value:place.sector, \n        region: place.region,\n        display:{title: {text: place.sector} }\n    } \n    })\n.value()",
-        "_row_num": 3
-      },
-      "local_csv": {
-        "query_name": "local_csv",
-        "query_type": "csv",
-        "uri": "\"tabancas.csv\"",
-        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.tabanca, \n        region: place.region,\n        sector: place.sector,\n               display:{title: {text: place.tabanca} }\n    } \n    })\n.value()",
-        "_row_num": 4
-      },
       "resultado": {
         "query_name": "resultado",
         "query_type": "linked_table",
         "linked_form_id": "resultado",
-        "linked_table_id": "sentinela",
+        "linked_table_id": "resultado",
         "selection": "id_paciente=?",
         "selectionArgs": "[data('id_paciente')]",
         "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
         "openRowInitialElementKeyToValueMap": "{}",
-        "_row_num": 5
+        "_row_num": 2
       }
     },
     "calculates": {
@@ -1508,21 +1461,11 @@
         ],
         "elementKey": "comentario"
       },
-      "id_formssentinela": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 21,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "id_formssentinela"
-      },
       "tdr": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 25,
+            "_row_num": 24,
             "section_name": "model"
           }
         ],
@@ -1532,7 +1475,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 25,
             "section_name": "model"
           }
         ],
@@ -1542,7 +1485,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 27,
+            "_row_num": 26,
             "section_name": "model"
           }
         ],
@@ -1552,7 +1495,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 27,
             "section_name": "model"
           }
         ],
@@ -1562,7 +1505,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 28,
             "section_name": "model"
           }
         ],
@@ -1572,7 +1515,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 30,
+            "_row_num": 29,
             "section_name": "model"
           }
         ],
@@ -2132,24 +2075,11 @@
         "elementSet": "data",
         "elementPath": "comentario"
       },
-      "id_formssentinela": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 21,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "id_formssentinela",
-        "elementName": "id_formssentinela",
-        "elementSet": "data",
-        "elementPath": "id_formssentinela"
-      },
       "tdr": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 25,
+            "_row_num": 24,
             "section_name": "model"
           }
         ],
@@ -2162,7 +2092,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 25,
             "section_name": "model"
           }
         ],
@@ -2175,7 +2105,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 27,
+            "_row_num": 26,
             "section_name": "model"
           }
         ],
@@ -2188,7 +2118,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 27,
             "section_name": "model"
           }
         ],
@@ -2201,7 +2131,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 28,
             "section_name": "model"
           }
         ],
@@ -2214,7 +2144,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 30,
+            "_row_num": 29,
             "section_name": "model"
           }
         ],
