@@ -55,7 +55,7 @@
 
         function addPersonDiv(p) {    
             var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;        
-            var row = "<tr class='lab" +(p.tdr_resultado ? 1 : 0) + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value='&gt;&gt;'></input></td></tr>";
+            var row = "<tr class='lab" +(p.tdr_resultado ? 1 : 0) + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value='&gt;&gt;' class='arrow'></input></td></tr>";
             $('#theList tr:last').after(row);
             $('#theList tr:last').on("click",function() { 
                 addPersonForm(p);
@@ -100,7 +100,7 @@
             }
             
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL = 'WITH squashed AS (SELECT s.*, ROW_NUMBER() OVER (PARTITION BY _id ORDER BY _savepoint_timestamp DESC) AS rn FROM sentinela AS s)' +
+            var SQL = 'WITH squashed AS (SELECT s.*, ROW_NUMBER() OVER (PARTITION BY _id ORDER BY _savepoint_timestamp DESC) AS rn FROM sentinela AS s) ' +
             'SELECT _id, nome, nome_casa, sexo, id_paciente, dn, cs, tdr_resultado FROM squashed WHERE cs = "' + cs + '" COLLATE NOCASE AND data_consulta = "' + visit_date + '" COLLATE NOCASE AND rn = 1;';
             
             var failureFn = function( errorMsg ) {
@@ -125,23 +125,23 @@
             $("#subheader").text(cs + ' @ ' + visit_date);
 
             
-            listRows(cs, visit_date);
+            //listRows(cs, visit_date);
             
-            // // TEST WITH MOCK DATA
-            // var persons = [];
-            // for (var i=0;i<10;i++) {
-            //     var p = {
-            //                 rowId : "123132" + i,
-            //                 id_paciente : "159" + i,
-            //                 nome : "Celso",
-            //                 nome_casa : "Pelso",
-            //                 sexo : 1,
-            //                 dn : "D:4,M:10,Y:1991",
-            //                 tdr_resultado : i > 4 ? 'pam2' : ''
-            //             }
-            //     persons.push(p);
-            // }
-            // populateList(persons);
+            // TEST WITH MOCK DATA
+            var persons = [];
+            for (var i=0;i<10;i++) {
+                var p = {
+                            rowId : "123132" + i,
+                            id_paciente : "159" + i,
+                            nome : "Celso",
+                            nome_casa : "Pelso",
+                            sexo : 1,
+                            dn : "D:4,M:10,Y:1991",
+                            tdr_resultado : i > 4 ? 'pam2' : ''
+                        }
+                persons.push(p);
+            }
+            populateList(persons);
         });
 
 
@@ -198,9 +198,32 @@
         }};
         </script>
         <style>
+            body {
+                background-color: black;
+                color:white;
+                text-align: center;
+            }
             #subheader {
                 font-size:medium;
             }
+            #theList {
+                background-color: white;
+                border:5px solid white;
+                border-radius: 10px;
+                color:black;
+                width:90%;
+                margin:auto;                
+            }
+            #theList td {
+                text-align: left;
+                line-height: 40px;
+                padding:5px 0;
+            }
+            #theList td:last-of-type {
+                text-align: right;
+                padding-right: 10px;
+            }
+
             tr:nth-of-type(even) {
                 color:gray;
             }
@@ -209,6 +232,21 @@
             }
             tr.lab1 {
                 background-color: greenyellow;
+            }
+            .arrow {
+                height: 40px;
+                width:40px;
+                text-indent: -100;
+                background-color:white;
+                border-radius: 50%;
+                display: inline-block;
+                transform: rotate(-90deg);
+                display: inline-block;
+                vertical-align: middle;
+                background-size: contain;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACJSURBVEhL7ZC9CYBADEbP2iEEp7JxAPdwBZex02EcQ/0iBCzC/ZlTkDx4RYrLC+cMwzB+QQ1bRRtYwSAbPJQdoRe6bIbS41x32MEg9NULlJakStEBRqMRT44yFF+htDRkdpTJiT+OMilxtSgTE1ePMr54sSgjxYtHmXv8tShD8Qn212QYxnc4dwKskJKEHrOFUQAAAABJRU5ErkJggg==')
             }
         </style>
 </head>
