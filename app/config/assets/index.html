@@ -6,42 +6,92 @@
         <script type="text/javascript" src="../../system/js/odkCommon.js"></script>
         <script type="text/javascript" src="../../system/js/odkData.js"></script>
         <script type="text/javascript" src="../../system/tables/js/odkTables.js"></script>
-
+        <script type="text/javascript" src="js/util.js"></script>
     <script>
         
         function goToList() {
+            console.log("YOYO");
             var selected_CS = $('#selCS').val();                    
             odkTables.launchHTML(null, 'config/assets/list.html?cs=' + encodeURIComponent(selected_CS));
+            return false;
         }
 
         // This is the "on load" function
         $(function() {
-            
-            $('#launch-button').on('click', goToList);
+            var cs = util.getQueryParameter("cs")
+            if (!cs) cs = "NO_CENTER_SELECTED";
+            if (cs == "NO_CENTER_SELECTED") {
+                cs = "NO_CENTER_SELECTED";
+                console.l
+                $("#btnGo").hide();
+            } else {
+                $('#btnGo').on('click', goToList);
+            }
            
+            $("#selCS").val(cs);
+            $("#selCS").on("change", function() {
+                cs = this.value;
+                console.log(this.url);
+                window.location = window.location.pathname + "?cs=" + cs;
+            })
         });
         </script>
+        <style>
+            body {
+                background-color: black;
+                color:white;
+                text-align: center;
+                font-family: Verdana, sans-serif;
+            }
+            #contentDiv {
+                background-color: white;
+                border:5px solid white;
+                color:black;
+                width:100%;
+                margin:auto;                
+            }
+            select {
+                line-height: 22pt;
+                height: 40px;
+                width:400px;
+                border-radius: 0;
+                font-size: 20pt;
+            }
+            #btnGo {
+                line-height: 22pt;
+                font-size: 22pt;
+                height:40px;
+                border-radius: 4px;
+                width:200px;
+                background-color:lightgreen;
+                margin-top:40px;
+                padding-right:20px;
+                border:none;
+                background-repeat: no-repeat;
+                background-position:90% 0%;
+                background-image:url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>')
+            }
+        </style>
 </head>
-<body id="main"><div id="wrapper"><div class="container">
+<body id="main">
+    <div class="contentDiv">
 
     <h1 id="facilitar-lista-visita">Studo de Sentinela</h1>
     <br/>
     <form>
         <div class="form-group">
-
-            <label class="form-label" for="selCS">Seleciona centro:</label>
-
-            <select class="form-control" id="selCS">
-                <option selected value="">-</option>
-                <option value="GabuCMI">Gabu CMI</option>
-                <option value="GabuHospital">Gabu Hospital</option>
-                <option value="Buba">Buba</option>
-                <option value="Canchungu">Canchungu</option>
+            <select id="selCS">
+                <option selected value="NO_CENTER_SELECTED">Seleccionar Centro</option>
+                <option value="SB">Buba</option>
+                <option value="SH">Canchungo</option>
+                <option value="SGC">Gabú (CMI)</option>
+                <option value="SGH">Gabú (hospital)</option>
+                <option value="SBM">B. Militar</option>
             </select>
-            
-            <button class="btn btn-primary btn-block btn-launch" id="launch-button">Entrar</button>
+            <br/>
+            <button class="btn btn-primary btn-block btn-launch" id="btnGo">Entrar</button>
         </div>
     </form>
 
-</div></div></body>
+</div></body>
 </html>

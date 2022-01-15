@@ -12,25 +12,21 @@
         <script type="text/javascript" src="js/util.js"></script>
         <script>
         function addResult(person) {
+            var dispatchStruct = null;
             var tableId = "resultado";
             var formId = "resultado"; 
-            var dispatchStruct = null;
-            var screenPath = null;
-            var rowId = person.rowId;
+            var screenPath = null;            
             var jsonMap = getJsonMap(person);
             odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
-            //odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
-            odkTables
         }
 
         function editResult(person) {
-            var tableId = "resultado";
-            var formId = "resultado"; 
             var dispatchStruct = null;
-            var screenPath = null;
+            var tableId = "resultado";
             var rowId = person.rowId;
+            var formId = "resultado"; 
+            var screenPath = null;
             odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
-            odkTables
         }
 
         function getJsonMap(person) {
@@ -81,6 +77,10 @@
         }
 
         function populateList(listOfPersons) {
+            if (!listOfPersons || !listOfPersons.length) {
+                
+                return;
+            }
             var theList = $("#theList");
             console.log("Populating list with " + listOfPersons.length + " persons");
             listOfPersons.forEach(person => {
@@ -122,7 +122,7 @@
             }
             
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.data_consulta = "' + visit_date + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             
             var failureFn = function( errorMsg ) {
                 console.error('Failed to get persons from database: ' + errorMsg);
@@ -138,31 +138,40 @@
         $(function() {
             window.adateHelper = getAdateHelper();
             var cs = util.getQueryParameter("cs")
-            if (!cs) cs = "sh";
+            if (!cs) cs = "NO_CENTER_SELECTED";
             
             var m = new Date().getMonth()+1;
             var d = new Date().getDate();
             var visit_date = "D:" + d + ",M:" + m + ",Y:2022";
             $("#subheader").text(cs + ' @ ' + visit_date);
 
-            
+            $("#btnConsulta").on("click", function() {
+                var tableId = "sentinela";
+                var formId = "consulta"; 
+                var dispatchStruct = null;
+                var screenPath = null;
+                var jsonMap = { cs : cs };
+                odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
+                return false;
+            });
             //listRows(cs, visit_date);
-            
-            // TEST WITH MOCK DATA
-            var persons = [];
-            for (var i=0;i<10;i++) {
-                var p = {
-                            rowId : "123132" + i,
-                            id_paciente : "159" + i,
-                            nome : "Celso",
-                            nome_casa : "Pelso",
-                            sexo : 1,
-                            dn : "D:4,M:10,Y:1991",
-                            hasResult : i > 4 ? 1 : 0
-                        }
-                persons.push(p);
-            }
-            populateList(persons);
+            populateList();
+
+            // // TEST WITH MOCK DATA
+            // var persons = [];
+            // for (var i=0;i<10;i++) {
+            //     var p = {
+            //                 rowId : "123132" + i,
+            //                 id_paciente : "159" + i,
+            //                 nome : "Celso",
+            //                 nome_casa : "Pelso",
+            //                 sexo : 1,
+            //                 dn : "D:4,M:10,Y:1991",
+            //                 hasResult : i > 4 ? 1 : 0
+            //             }
+            //     persons.push(p);
+            // }
+            //populateList(persons);
         });
 
 
@@ -223,6 +232,7 @@
                 background-color: black;
                 color:white;
                 text-align: center;
+                font-family: Verdana, sans-serif;
             }
             #subheader {
                 font-size:medium;
@@ -232,7 +242,7 @@
                 border:5px solid white;
                 border-radius: 10px;
                 color:black;
-                width:90%;
+                width:100%;
                 margin:auto;                
             }
             #theList td {
@@ -274,9 +284,24 @@
             #theList > tbody > tr.lab1 > td> .arrow {                
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>')
             }
-            #theList > tbody > tr.lab0 > td> .arrow {
+            #theList > tbody > tr.lab0 > td> .arrow, .addButton {
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>')
             }
+            .addButton {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                font-size: 16px;
+                border-radius: 5px;
+                margin:5px 0 25px 0;
+                float: right;
+                background-repeat: no-repeat;
+                text-indent: 30px;
+                font-size:22pt;
+                }
             /* #theList > tbody > tr.lab1 > td> input {
                 display: none;
                 visibility: hidden;
@@ -288,19 +313,25 @@
     <h1 id="header">Studo de Sentinela</h1>
     <h2 id="subheader"></h2>
     <br/>
-    <form>
+    <form>        
         <div class="form-group">
-
+            <div style="width:100%;text-align: center;">
+                <button type="button" id="btnConsulta" class="addButton">Nobu Consulta</button>
+            </div>
             <table id="theList">
-<tr>
-    <th>Id</th>
-    <th>Nome</th>
-    <th>Sexo</th>
-    <th>Idade (años.meses)</th>
-</tr>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Sexo</th>
+                <th>Idade</th>
+                <th>Resultados</th>
+            </tr>
+            <tr id="emptyRow">
+               <td colspan="5" style="text-align: center;padding:90px 0;">Ninguem consultas fasido aos ...</td>
+            </tr>
             </table>
             
-            
+            <div style="width:99%;text-align:right;"><span style="display: inline-block;background-color: rgb(245, 245, 245);color: black;padding: 2px 10px;font-size: x-small;font-style: italic;content: 'sap';">by Sapiens Consult</span></div>
         </div>
     </form>
 
