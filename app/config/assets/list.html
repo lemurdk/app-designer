@@ -11,14 +11,24 @@
         <script type="text/javascript" src="../../system/tables/js/odkTables.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script>
-        function addPersonForm(person) {
-            var tableId = "sentinela";
-            var formId = "sentinela"; 
+        function addResult(person) {
+            var tableId = "resultado";
+            var formId = "resultado"; 
             var dispatchStruct = null;
             var screenPath = null;
             var rowId = person.rowId;
-            //var jsonMap = getJsonMap(person);
-            //odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
+            var jsonMap = getJsonMap(person);
+            odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
+            //odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
+            odkTables
+        }
+
+        function editResult(person) {
+            var tableId = "resultado";
+            var formId = "resultado"; 
+            var dispatchStruct = null;
+            var screenPath = null;
+            var rowId = person.rowId;
             odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
             odkTables
         }
@@ -28,7 +38,7 @@
             // delete person.numRondas;
             // delete person.region;
             // delete person.tabanca;
-            // delete person.sector;
+            delete person.hasResult;
 
             console.log("Sending following data:");
             console.log(person);      
@@ -55,12 +65,19 @@
 
         function addPersonDiv(p) {    
             var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;        
-            var row = "<tr class='lab" +(p.tdr_resultado ? 1 : 0) + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value='&gt;&gt;' class='arrow'></input></td></tr>";
+            var row = "<tr class='lab" + p.hasResult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' class='arrow'></input></td></tr>";
             $('#theList tr:last').after(row);
-            $('#theList tr:last').on("click",function() { 
-                addPersonForm(p);
-                return false;
-            });
+            if (!p.hasResult) {
+                $('#theList tr:last').on("click",function() { 
+                    addResult(p);
+                    return false;
+                });
+            } else {
+                $('#theList tr:last').on("click",function() { 
+                    editResult(p);
+                    return false;
+                });
+            }
         }
 
         function populateList(listOfPersons) {
@@ -73,24 +90,29 @@
         /* /DISPLAY STUFF */
 
         /* DB LOOKUP */
+
         function listRows(cs, visit_date) {
             var successFn = function( result ) {
                 console.log("Got " + result.getCount() + " forms");
                 var persons = [];
                 for (var row = 0; row < result.getCount(); row++) {
-                    var rowId = result.getData(row,"_id");
+                    var id_formssentinela = result.getData(row,"_id");
+                    var id_paciente = result.getData(row,"id_paciente");
                     var nome =  result.getData(row,"nome");
                     var nome_casa =  result.getData(row,"nome_casa");
                     var sexo =  result.getData(row,"sexo");
-                    var id_paciente = result.getData(row,"id_paciente");
                     var dn =  result.getData(row,"dn");
+                    var cs =  result.getData(row,"cs");
+                    var hasResult =  result.getData(row,"HasResult");
                     var p = {
-                        rowId,
+                        id_formssentinela,
                         id_paciente,
                         nome,
                         nome_casa,
                         sexo,
-                        dn
+                        dn,
+                        cs,
+                        hasResult
                     }
                     console.log(p);
                     persons.push(p);
@@ -100,8 +122,7 @@
             }
             
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL = 'WITH squashed AS (SELECT s.*, ROW_NUMBER() OVER (PARTITION BY _id ORDER BY _savepoint_timestamp DESC) AS rn FROM sentinela AS s) ' +
-            'SELECT _id, nome, nome_casa, sexo, id_paciente, dn, cs, tdr_resultado FROM squashed WHERE cs = "' + cs + '" COLLATE NOCASE AND data_consulta = "' + visit_date + '" COLLATE NOCASE AND rn = 1;';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.data_consulta = "' + visit_date + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             
             var failureFn = function( errorMsg ) {
                 console.error('Failed to get persons from database: ' + errorMsg);
@@ -137,7 +158,7 @@
                             nome_casa : "Pelso",
                             sexo : 1,
                             dn : "D:4,M:10,Y:1991",
-                            tdr_resultado : i > 4 ? 'pam2' : ''
+                            hasResult : i > 4 ? 1 : 0
                         }
                 persons.push(p);
             }
@@ -217,37 +238,49 @@
             #theList td {
                 text-align: left;
                 line-height: 40px;
-                padding:5px 0;
-            }
+                padding: 12px 0 12px 20px;
+                font-size: 24pt;          
+            }            
             #theList td:last-of-type {
                 text-align: right;
                 padding-right: 10px;
             }
-
-            tr:nth-of-type(even) {
-                color:gray;
-            }
             tr.lab0 {
-                background-color: aliceblue;
+                background-color: rgb(162, 213, 243);
+                color:black;
+            }
+            tr.lab0:nth-of-type(even) {
+                background-color:rgb(7, 67, 82);
+                color:white;
             }
             tr.lab1 {
-                background-color: greenyellow;
+                background-color: rgb(47, 255, 220);
+                color:black;
+            }
+            tr.lab1:nth-of-type(even) {
+                background-color:rgb(6, 117, 84);
+                color:white;
             }
             .arrow {
                 height: 40px;
                 width:40px;
-                text-indent: -100;
+                text-indent: 100;
                 background-color:white;
-                border-radius: 50%;
-                display: inline-block;
-                transform: rotate(-90deg);
+                border-color: black;
+                border-radius: 10%;
                 display: inline-block;
                 vertical-align: middle;
-                background-size: contain;
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACJSURBVEhL7ZC9CYBADEbP2iEEp7JxAPdwBZex02EcQ/0iBCzC/ZlTkDx4RYrLC+cMwzB+QQ1bRRtYwSAbPJQdoRe6bIbS41x32MEg9NULlJakStEBRqMRT44yFF+htDRkdpTJiT+OMilxtSgTE1ePMr54sSgjxYtHmXv8tShD8Qn212QYxnc4dwKskJKEHrOFUQAAAABJRU5ErkJggg==')
             }
+            #theList > tbody > tr.lab1 > td> .arrow {                
+                background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>')
+            }
+            #theList > tbody > tr.lab0 > td> .arrow {
+                background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>')
+            }
+            /* #theList > tbody > tr.lab1 > td> input {
+                display: none;
+                visibility: hidden;
+            } */
         </style>
 </head>
 <body id="main"><div id="wrapper"><div class="container">
