@@ -27,7 +27,7 @@
       },
       {
         "setting_name": "instance_name",
-        "value": "nome_formulario",
+        "value": "id_paciente",
         "_row_num": 6
       }
     ],
@@ -320,7 +320,7 @@
         "_row_num": 7
       },
       {
-        "type": "integer",
+        "type": "assign",
         "name": "id_paciente",
         "_row_num": 8
       },
@@ -481,7 +481,7 @@
       },
       "instance_name": {
         "setting_name": "instance_name",
-        "value": "nome_formulario",
+        "value": "id_paciente",
         "_row_num": 6
       },
       "_locales": {
@@ -758,13 +758,13 @@
         "elementKey": "mes"
       },
       "id_paciente": {
-        "type": "integer",
         "_defn": [
           {
             "_row_num": 8,
             "section_name": "model"
           }
         ],
+        "type": "assign",
         "elementKey": "id_paciente"
       },
       "nome": {
@@ -1431,13 +1431,13 @@
         "elementPath": "mes"
       },
       "id_paciente": {
-        "type": "integer",
         "_defn": [
           {
             "_row_num": 8,
             "section_name": "model"
           }
         ],
+        "type": "assign",
         "elementKey": "id_paciente",
         "elementName": "id_paciente",
         "elementSet": "data",
