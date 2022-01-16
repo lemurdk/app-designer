@@ -76,6 +76,7 @@
         }
 
         function populateList(listOfPersons) {
+            $('#theList tr:not(:first)').remove(); // clear
             if (!listOfPersons || !listOfPersons.length) {
                 return;
             }
@@ -94,14 +95,14 @@
         function listRows(cs, visit_date) {
             if (TESTMODE) return;
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
 
         function searchId(strId) {
             if (TESTMODE) return;
             console.log("Querying database for consultas with id_paciente = " + strId);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
         
@@ -213,10 +214,11 @@
 
         function Search() {
             var searchText = $("#patientId").val();
-                if (!searchText.length) return false;
-                $("#divSearch").hide();
-                $("#divClearSearch").show();
-                $("#searchedText").val(searchText);                
+            if (!searchText.length) return false;
+            $("#divSearch").hide();
+            $("#divClearSearch").show();
+            $("#searchedText").val(searchText);
+            searchId(searchText);  
         }
 
         function ClearSearch() {
@@ -230,7 +232,7 @@
             switch (strCs) {
                 case "SB": return "Buba";
                 case "SH": return "Canchungo";
-                case "SGC": return "Gabú (CMI";
+                case "SGC": return "Gabú (CMI)";
                 case "SGH": return "Gabú (hospital";
                 case "SBM": return "B. Militar";
                 default: return strCs;
@@ -296,7 +298,7 @@
                 font-family: Verdana, sans-serif;
             }
             #subheader {
-                font-size:medium;
+                font-size:22pt;
             }
             #theList {
                 background-color: white;
@@ -362,52 +364,52 @@
                 float: right;
                 background-repeat: no-repeat;
                 text-indent: 30px;
-                font-size:22pt;
+                font-size:12pt;
             }
             .searchButton {
-                background-color: #657265; 
+                background-color: #657265;
                 border: none;
                 color: white;
                 padding: 15px 42px;
                 text-align: center;
                 text-decoration: none;
-                font-size: 16px;
+                /* font-size: 16px; */
                 border-radius: 5px;
-                margin:5px 0 25px 5px;
+                margin: 5px 0 25px 5px;
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>');
                 background-repeat: no-repeat;
                 text-indent: 30px;
-                font-size:22pt;
+                font-size: 12pt;
                 background-position: 8px 0;
             }
             .txtSearch {
                 border-radius: 5px;
-                height: 30px;
-                font-size: 20px;
+                height: 14px;
+                font-size: 11pt;
                 border: none;
                 color: black;
                 margin: 5px -9px 25px 2px;
-                padding: 19px 0px 13px 42px;
-                width:222px;
+                padding: 17px 0px 18px 42px;
+                width: 125px;
             }
             .txtSearch:disabled {
                 background-color: gray;
             }
             #btnRefresh {
-                background-color: #657265; 
+                background-color: #657265;
                 border: none;
                 color: white;
                 padding: 15px 42px;
                 text-align: center;
                 text-decoration: none;
-                font-size: 16px;
+                /* font-size: 16px; */
                 border-radius: 5px;
-                margin:15px 0 25px 5px;
+                margin: 5px 0 25px 5px;
+                background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>');
                 background-repeat: no-repeat;
                 text-indent: 30px;
-                font-size:22pt;
+                font-size: 12pt;
                 background-position: 8px 0;
-                background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>');
             }
             #btnRefresh:disabled {
                 color:silver;
@@ -417,7 +419,7 @@
 </head>
 <body id="main"><div id="wrapper"><div class="container">
 
-    <h1 id="header">Criação de Postos Sentinelas para seguimento do paludismo e outras doenças</h1>
+    <h1 id="header">Sentinela</h1>
     <h2 id="subheader"></h2>
     <br/>
     <form>        
