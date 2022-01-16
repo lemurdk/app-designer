@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script type="text/javascript" src="commonDefinitions.js"></script>
         <script type="text/javascript" src="libs/jquery-3.6.0.js"></script>
-        <script type="text/javascript" src="libs/jquery-migrate-3.3.2.js"></script>
+        <!-- <script type="text/javascript" src="libs/jquery-migrate-3.3.2.js"></script> -->
         <script type="text/javascript" src="libs/moment.js"></script>
         <script type="text/javascript" src="../../system/js/odkCommon.js"></script>
         <script type="text/javascript" src="../../system/js/odkData.js"></script>
@@ -90,8 +90,22 @@
         /* /DISPLAY STUFF */
 
         /* DB LOOKUP */
-
+        var TESTMODE = false;
         function listRows(cs, visit_date) {
+            if (TESTMODE) return;
+            console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            performQuery(SQL);            
+        }
+
+        function searchId(strId) {
+            if (TESTMODE) return;
+            console.log("Querying database for consultas with id_paciente = " + strId);
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            performQuery(SQL);            
+        }
+        
+        function performQuery(SQL) {
             var successFn = function( result ) {
                 console.log("Got " + result.getCount() + " forms");
                 var persons = [];
@@ -128,9 +142,6 @@
                 return;
             }
             
-            console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.ano, s.mes, s.cs, r._id as resultId, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE" ORDER BY HasResult, s._savepoint_timestamp DESC';
-            
             var failureFn = function( errorMsg ) {
                 console.error('Failed to get persons from database: ' + errorMsg);
                 console.error('SQL query used was:');
@@ -138,51 +149,94 @@
             }
             odkData.arbitraryQuery('sentinela', SQL, null, null, null, successFn, failureFn);
         }
+
         /* /DB LOOKUP */
 
 
         // This is the "on load" function
+        window.cs = "NO_CENTER_SELECTED";
+        window.visit_date = "";
         $(function() {
             window.adateHelper = getAdateHelper();
-            var cs = util.getQueryParameter("cs")
-            if (!cs) cs = "NO_CENTER_SELECTED";
+            window.cs = util.getQueryParameter("cs")
+            if (!window.cs) window.cs = "NO_CENTER_SELECTED";
             
             var m = new Date().getMonth()+1;
             var d = new Date().getDate();
-            var visit_date = "D:" + d + ",M:" + m + ",Y:2022";
-            $("#subheader").text(cs + ' @ ' + visit_date);
+            window.visit_date = "D:" + d + ",M:" + m + ",Y:2022";
+            $("#subheader").text(getCenterName(cs) + ' @ ' + adateHelper.getMoment(visit_date).format('DD/MM/YYYY'));
 
-            $("#btnConsulta").on("click", function() {
-                var tableId = "sentinela";
-                var formId = "consulta"; 
-                var dispatchStruct = null;
-                var screenPath = null;
-                var jsonMap = { cs : cs };
-                odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
-                return false;
-            });
-            
-            listRows(cs, visit_date);
-            
-            // // TEST WITH MOCK DATA
-            // var persons = [];
-            // for (var i=0;i<10;i++) {
-            //     var p = {
-            //                 rowId : "123132" + i,
-            //                 id_paciente : "159" + i,
-            //                 nome : "Celso",
-            //                 nome_casa : "Pelso",
-            //                 sexo : 1,
-            //                 dn : "D:4,M:10,Y:1991",
-            //                 hasResult : i > 4 ? 1 : 0
-            //             }
-            //     persons.push(p);
-            // }
-            //populateList(persons);
+
+            $("#btnConsulta").on("click", NewConsulta);
+            $("#btnSearch").on("click", Search);
+            $("#btnClearSearch").on("click", ClearSearch);
+            $("#btnRefresh").on("click", Sync);
+
+            listRows(window.cs, window.visit_date);
+
+            // TEST WITH MOCK DATA
+            if (TESTMODE) {
+                var persons = [];
+                for (var i=0;i<10;i++) {
+                    var p = {
+                        rowId : "123132" + i,
+                        id_paciente : "159" + i,
+                        nome : "Celso",
+                        nome_casa : "Pelso",
+                        sexo : 1,
+                        dn : "D:4,M:10,Y:1991",
+                        hasResult : i > 4 ? 1 : 0
+                    }
+                    persons.push(p);
+                }
+                populateList(persons);
+            }
         });
 
+        function Sync() {
+            $("#btnRefresh").attr("disabled","disabled");
+            
+            alert("BOB");
 
-                
+            setTimeout(function() {$("#btnRefresh").removeAttr("disabled");}, 10000);
+        }
+
+        function NewConsulta() {
+            var tableId = "sentinela";
+            var formId = "consulta"; 
+            var dispatchStruct = null;
+            var screenPath = null;
+            var jsonMap = { cs : cs };
+            odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
+            return false;
+        }
+
+        function Search() {
+            var searchText = $("#patientId").val();
+                if (!searchText.length) return false;
+                $("#divSearch").hide();
+                $("#divClearSearch").show();
+                $("#searchedText").val(searchText);                
+        }
+
+        function ClearSearch() {
+            $("#divSearch").show();
+            $("#divClearSearch").hide();
+            $("#patientId").val("");
+            listRows(window.cs, window.visit_date);
+        }
+             
+        function getCenterName(strCs) {
+            switch (strCs) {
+                case "SB": return "Buba";
+                case "SH": return "Canchungo";
+                case "SGC": return "Gabú (CMI";
+                case "SGH": return "Gabú (hospital";
+                case "SBM": return "B. Militar";
+                default: return strCs;
+            }
+        }
+
         /* adate helper */
         function getAdateHelper() {return {
             getMoment: function(aDate) {
@@ -294,6 +348,7 @@
             #theList > tbody > tr.labfalse > td> .arrow, .addButton {
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>')
             }
+            
             .addButton {
                 background-color: #4CAF50; /* Green */
                 border: none;
@@ -308,11 +363,56 @@
                 background-repeat: no-repeat;
                 text-indent: 30px;
                 font-size:22pt;
-                }
-            /* #theList > tbody > tr.labtrue > td> input {
-                display: none;
-                visibility: hidden;
-            } */
+            }
+            .searchButton {
+                background-color: #657265; 
+                border: none;
+                color: white;
+                padding: 15px 42px;
+                text-align: center;
+                text-decoration: none;
+                font-size: 16px;
+                border-radius: 5px;
+                margin:5px 0 25px 5px;
+                background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>');
+                background-repeat: no-repeat;
+                text-indent: 30px;
+                font-size:22pt;
+                background-position: 8px 0;
+            }
+            .txtSearch {
+                border-radius: 5px;
+                height: 30px;
+                font-size: 20px;
+                border: none;
+                color: black;
+                margin: 5px -9px 25px 2px;
+                padding: 19px 0px 13px 42px;
+                width:222px;
+            }
+            .txtSearch:disabled {
+                background-color: gray;
+            }
+            #btnRefresh {
+                background-color: #657265; 
+                border: none;
+                color: white;
+                padding: 15px 42px;
+                text-align: center;
+                text-decoration: none;
+                font-size: 16px;
+                border-radius: 5px;
+                margin:15px 0 25px 5px;
+                background-repeat: no-repeat;
+                text-indent: 30px;
+                font-size:22pt;
+                background-position: 8px 0;
+                background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>');
+            }
+            #btnRefresh:disabled {
+                color:silver;
+                background-color: #4b4e4b; 
+            }
         </style>
 </head>
 <body id="main"><div id="wrapper"><div class="container">
@@ -322,8 +422,18 @@
     <br/>
     <form>        
         <div class="form-group">
-            <div style="width:100%;text-align: center;">
-                <button type="button" id="btnConsulta" class="addButton">Nova Consulta</button>
+            <div style="width:100%;">                
+                <div style="float:left;width:50%;text-align: left;">
+                    <div id="divSearch">
+                        <input type="text" id="patientId" class="txtSearch" placeholder="ID paciente" /><button type="button" id="btnSearch" class="searchButton">Buscar</button>
+                    </div>
+                    <div id="divClearSearch" style="display: none;">
+                        <input type="text" id="searchedText" disabled="disabled" class="txtSearch" value=""><button type="button" id="btnClearSearch" class="searchButton">Limpar</button>
+                    </div>
+                </div>
+                <div style="float:right;width:50%;">
+                    <button type="button" id="btnConsulta" class="addButton">Nova Consulta</button>
+                </div>
             </div>
             <table id="theList">
             <tr>
@@ -337,8 +447,8 @@
                <td colspan="5" style="text-align: center;padding:90px 0;">Nenhuma consulta feita hoje</td>
             </tr>
             </table>
-            
             <div style="width:99%;text-align:right;"><span style="display: inline-block;background-color: rgb(245, 245, 245);color: black;padding: 2px 10px;font-size: x-small;font-style: italic;content: 'sap';">by Sapiens Consult</span></div>
+            <button id="btnRefresh">Sincronizar con Servidor</button>
         </div>
     </form>
 
