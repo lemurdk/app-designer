@@ -54,6 +54,7 @@ function(opendatakit,  database,  $      ,  _         , adateHelpers) {
             // it is a select_one...
             //Using double equals here because I suspect the type coercion will prevent more
             //user errors that it will cause when comparing numbers and strings.
+            console.log("We gotta select_one with", promptValue, qValue);
             return promptValue == qValue;
         },
         countSelected: function(promptValue){

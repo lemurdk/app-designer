@@ -520,8 +520,8 @@
         "linked_form_id": "resultado",
         "linked_table_id": "resultado",
         "selection": "id_paciente=?",
-        "selectionArgs": "[data('id_paciente')]",
-        "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
+        "selectionArgs": "[opendatakit.getCurrentInstanceId()]",
+        "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
       }
@@ -596,7 +596,7 @@
         "_row_num": 7
       },
       {
-        "type": "integer",
+        "type": "assign",
         "name": "id_paciente",
         "_row_num": 8
       },
@@ -659,6 +659,16 @@
         "type": "text",
         "name": "comentario",
         "_row_num": 20
+      },
+      {
+        "type": "string",
+        "name": "id_formssentinela",
+        "_row_num": 21
+      },
+      {
+        "type": "integer",
+        "name": "numero_codigo",
+        "_row_num": 22
       },
       {
         "type": "select_one",
@@ -1237,8 +1247,8 @@
         "linked_form_id": "resultado",
         "linked_table_id": "resultado",
         "selection": "id_paciente=?",
-        "selectionArgs": "[data('id_paciente')]",
-        "newRowInitialElementKeyToValueMap": "{id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes'), af: data('af'), id_formssentinela: data('_id')}",
+        "selectionArgs": "[opendatakit.getCurrentInstanceId()]",
+        "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
       }
@@ -1332,13 +1342,13 @@
         "elementKey": "mes"
       },
       "id_paciente": {
-        "type": "integer",
         "_defn": [
           {
             "_row_num": 8,
             "section_name": "model"
           }
         ],
+        "type": "assign",
         "elementKey": "id_paciente"
       },
       "nome": {
@@ -1460,6 +1470,26 @@
           }
         ],
         "elementKey": "comentario"
+      },
+      "id_formssentinela": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 21,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_formssentinela"
+      },
+      "numero_codigo": {
+        "type": "integer",
+        "_defn": [
+          {
+            "_row_num": 22,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "numero_codigo"
       },
       "tdr": {
         "type": "string",
@@ -1907,13 +1937,13 @@
         "elementPath": "mes"
       },
       "id_paciente": {
-        "type": "integer",
         "_defn": [
           {
             "_row_num": 8,
             "section_name": "model"
           }
         ],
+        "type": "assign",
         "elementKey": "id_paciente",
         "elementName": "id_paciente",
         "elementSet": "data",
@@ -2074,6 +2104,32 @@
         "elementName": "comentario",
         "elementSet": "data",
         "elementPath": "comentario"
+      },
+      "id_formssentinela": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 21,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "id_formssentinela",
+        "elementName": "id_formssentinela",
+        "elementSet": "data",
+        "elementPath": "id_formssentinela"
+      },
+      "numero_codigo": {
+        "type": "integer",
+        "_defn": [
+          {
+            "_row_num": 22,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "numero_codigo",
+        "elementName": "numero_codigo",
+        "elementSet": "data",
+        "elementPath": "numero_codigo"
       },
       "tdr": {
         "type": "string",

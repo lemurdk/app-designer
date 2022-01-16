@@ -11,22 +11,20 @@
         <script type="text/javascript" src="../../system/tables/js/odkTables.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script>
-        function addResult(person) {
+        function rowClick(person) {
             var dispatchStruct = null;
             var tableId = "resultado";
-            var formId = "resultado"; 
             var screenPath = null;            
-            var jsonMap = getJsonMap(person);
-            odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
-        }
-
-        function editResult(person) {
-            var dispatchStruct = null;
-            var tableId = "resultado";
-            var rowId = person.rowId;
             var formId = "resultado"; 
-            var screenPath = null;
-            odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
+            if (person.hasResult) {
+                var rowId = person.resultId;
+                console.log("EDIT form with row id:" + rowId);
+                odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
+            } else {
+                var jsonMap = getJsonMap(person);
+                console.log("Adding NEW form with following info", jsonMap);
+                odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
+            }
         }
 
         function getJsonMap(person) {
@@ -35,6 +33,10 @@
             // delete person.region;
             // delete person.tabanca;
             delete person.hasResult;
+            delete person.resultId;
+            delete person.ano;
+            delete person.mes;
+            
 
             console.log("Sending following data:");
             console.log(person);      
@@ -60,32 +62,30 @@
         }
 
         function addPersonDiv(p) {    
-            var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;        
-            var row = "<tr class='lab" + p.hasResult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' class='arrow'></input></td></tr>";
+            var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;  
+            var idButton = "btnRow_" + p.id_formssentinela.replaceAll("uuid:","").replaceAll("-","");
+            var row = "<tr class='lab" + p.hasResult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' id='" + idButton + "' class='arrow'></input></td></tr>";
+            
             $('#theList tr:last').after(row);
-            if (!p.hasResult) {
-                $('#theList tr:last').on("click",function() { 
-                    addResult(p);
-                    return false;
-                });
-            } else {
-                $('#theList tr:last').on("click",function() { 
-                    editResult(p);
-                    return false;
-                });
-            }
+            $("#" + idButton).on("click",function () {
+                console.log("WOWOWO");
+                console.log(p);
+                rowClick(p);
+                return false;
+            });
         }
 
         function populateList(listOfPersons) {
             if (!listOfPersons || !listOfPersons.length) {
-                
                 return;
             }
+            $("#emptyRow").hide();
             var theList = $("#theList");
             console.log("Populating list with " + listOfPersons.length + " persons");
             listOfPersons.forEach(person => {
                 addPersonDiv(person);
             });
+            
         }
         /* /DISPLAY STUFF */
 
@@ -116,8 +116,12 @@
                     var nome_casa =  result.getData(row,"nome_casa");
                     var sexo =  result.getData(row,"sexo");
                     var dn =  result.getData(row,"dn");
+                    var ano = result.getData(row,"ano");
+                    var mes = result.getData(row,"mes");
+
                     var cs =  result.getData(row,"cs");
-                    var hasResult =  result.getData(row,"HasResult");
+                    var hasResult =  result.getData(row,"HasResult") == "1";
+                    var resultId = result.getData(row, "resultId");
                     var p = {
                         id_formssentinela,
                         id_paciente,
@@ -125,8 +129,11 @@
                         nome_casa,
                         sexo,
                         dn,
+                        ano,
+                        mes,
                         cs,
-                        hasResult
+                        hasResult,
+                        resultId
                     }
                     console.log(p);
                     persons.push(p);
@@ -309,19 +316,19 @@
                 text-align: right;
                 padding-right: 10px;
             }
-            tr.lab0 {
+            tr.labfalse {
                 background-color: rgb(162, 213, 243);
                 color:black;
             }
-            tr.lab0:nth-of-type(even) {
+            tr.labfalse:nth-of-type(even) {
                 background-color:rgb(7, 67, 82);
                 color:white;
             }
-            tr.lab1 {
+            tr.labtrue {
                 background-color: rgb(47, 255, 220);
                 color:black;
             }
-            tr.lab1:nth-of-type(even) {
+            tr.labtrue:nth-of-type(even) {
                 background-color:rgb(6, 117, 84);
                 color:white;
             }
@@ -335,10 +342,10 @@
                 display: inline-block;
                 vertical-align: middle;
             }
-            #theList > tbody > tr.lab1 > td> .arrow {                
+            #theList > tbody > tr.labtrue > td> .arrow {                
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>')
             }
-            #theList > tbody > tr.lab0 > td> .arrow, .addButton {
+            #theList > tbody > tr.labfalse > td> .arrow, .addButton {
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>')
             }
             
