@@ -196,7 +196,7 @@
         function Sync() {
             $("#btnRefresh").attr("disabled","disabled");
             
-            alert("BOB");
+            odkCommon.doAction(null, "org.opendatakit.services.sync.actions.activities.SyncActivity", {"componentPackage": "org.opendatakit.services", "componentActivity": "org.opendatakit.services.sync.actions.activities.SyncActivity"});
 
             setTimeout(function() {$("#btnRefresh").removeAttr("disabled");}, 10000);
         }
