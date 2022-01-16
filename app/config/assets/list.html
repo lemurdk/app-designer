@@ -207,7 +207,7 @@
             var formId = "consulta"; 
             var dispatchStruct = null;
             var screenPath = null;
-            var jsonMap = { cs : cs };
+            var jsonMap = { cs : cs, csname : getCenterName(cs) };
             odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
             return false;
         }
