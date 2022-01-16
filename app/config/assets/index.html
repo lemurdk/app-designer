@@ -10,7 +10,6 @@
     <script>
         
         function goToList() {
-            console.log("YOYO");
             var selected_CS = $('#selCS').val();                    
             odkTables.launchHTML(null, 'config/assets/list.html?cs=' + encodeURIComponent(selected_CS));
             return false;

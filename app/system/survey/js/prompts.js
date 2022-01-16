@@ -1561,6 +1561,8 @@ promptTypes.select_one_integer = promptTypes.select_one.extend({
         // Just dynamically reRender
         odkCommon.log('D',"prompts." + that.type + ".modification: reRender", "px: " + that.promptIdx);
         that.reRender(evt);
+
+        console.log("ODKX RENDERING SELEcT_OnE with FormValue: " + formValue);
     },
     /**
      * Parse a saved string value into the format
@@ -1610,6 +1612,7 @@ promptTypes.select_one_grid = promptTypes.select_one.extend({
     templatePath: "templates/select_grid.handlebars",
     updateRenderValue: function(formValue) {
         var that = this;
+        console.log("RENDERING SELEcT_OnE with FormValue: " + formValue);
         //that.renderContext.value = formValue;
         var filteredChoices = _.filter(that.renderContext.choices, function(choice) {
             return that.choice_filter(choice);
