@@ -92,17 +92,17 @@
 
         /* DB LOOKUP */
         var TESTMODE = false;
-        function listRows(cs, visit_date) {
+        function listRows(cs, consultor, visit_date) {
             if (TESTMODE) return;
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.consultor = "' + consultor + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
 
         function searchId(strId) {
             if (TESTMODE) return;
             console.log("Querying database for consultas with id_paciente = " + strId);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
         
@@ -121,6 +121,7 @@
                     var mes = result.getData(row,"mes");
 
                     var cs =  result.getData(row,"cs");
+                    var consultor = result.getData(row, "consultor");
                     var hasResult =  result.getData(row,"HasResult") == "1";
                     var resultId = result.getData(row, "resultId");
                     var p = {
@@ -133,6 +134,7 @@
                         ano,
                         mes,
                         cs,
+                        consultor,
                         hasResult,
                         resultId
                     }
@@ -156,16 +158,24 @@
 
         // This is the "on load" function
         window.cs = "NO_CENTER_SELECTED";
+        window.consultor = "NO_CONSULTOR_SELECTED";
         window.visit_date = "";
+
         $(function() {
             window.adateHelper = getAdateHelper();
+
+            // Load query string params
             window.cs = util.getQueryParameter("cs")
             if (!window.cs) window.cs = "NO_CENTER_SELECTED";
-            
+            window.consultor =  util.getQueryParameter("consultor");
+            if (!consultor) window.consultor = "NO_CONSULTOR_SELECTED";
+
+
+            // Set date
             var m = new Date().getMonth()+1;
             var d = new Date().getDate();
             window.visit_date = "D:" + d + ",M:" + m + ",Y:2022";
-            $("#subheader").text(getCenterName(cs) + ' @ ' + adateHelper.getMoment(visit_date).format('DD/MM/YYYY'));
+            $("#subheader").text(getCenterName(cs, consultor) + ' @ ' + adateHelper.getMoment(visit_date).format('DD/MM/YYYY'));
 
 
             $("#btnConsulta").on("click", NewConsulta);
@@ -173,7 +183,7 @@
             $("#btnClearSearch").on("click", ClearSearch);
             $("#btnRefresh").on("click", Sync);
 
-            listRows(window.cs, window.visit_date);
+            listRows(window.cs, window.consultor, window.visit_date);
 
             // TEST WITH MOCK DATA
             if (TESTMODE) {
@@ -225,18 +235,25 @@
             $("#divSearch").show();
             $("#divClearSearch").hide();
             $("#patientId").val("");
-            listRows(window.cs, window.visit_date);
+            listRows(window.cs, window.consultor, window.visit_date);
         }
              
-        function getCenterName(strCs) {
+        function getCenterName(strCs, strConsultor) {
+            var con = (strConsultor) ? " (" + getConsultorName(strConsultor) + ")" : "";
             switch (strCs) {
-                case "SB": return "Buba";
-                case "SH": return "Canchungo";
-                case "SGC": return "Gabú (CMI)";
-                case "SGH": return "Gabú (hospital";
-                case "SBM": return "B. Militar";
-                default: return strCs;
+                case "SB": return "Buba" + con;
+                case "SH": return "Canchungo" + con;
+                case "SGC": return "Gabú (CMI)" + con;
+                case "SGH": return "Gabú (hospital" + con;
+                case "SBM": return "B. Militar" + con;
+                default: return strCs + con;
             }
+        }
+
+        function getConsultorName(strConsultor) {
+            return (strConsultor.length === 2)
+                ?  strConsultor.replace("C","Consultor ")
+                : strConsultor;                
         }
 
         /* adate helper */

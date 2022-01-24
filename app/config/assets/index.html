@@ -17,21 +17,36 @@
 
         // This is the "on load" function
         $(function() {
-            var cs = util.getQueryParameter("cs")
+            var cs = util.getQueryParameter("cs");
+            var consultor =  util.getQueryParameter("consultor");
             if (!cs) cs = "NO_CENTER_SELECTED";
-            if (cs == "NO_CENTER_SELECTED") {
-                cs = "NO_CENTER_SELECTED";
-                console.l
+            if (!consultor) consultor = "NO_CONSULTOR_SELECTED";
+
+            if (cs == "NO_CENTER_SELECTED" || consultor == "NO_CONSULTOR_SELECTED") {
                 $("#btnGo").hide();
+                if (cs == "NO_CENTER_SELECTED") {
+                    $("#selConsultorio").hide();
+                    consultor = "NO_CONSULTOR_SELECTED";
+                }
             } else {
                 $('#btnGo').on('click', goToList);
             }
            
+            // Pre-select values
             $("#selCS").val(cs);
+            $("#selConsultorio").val(consultor);
+
+            // Hook up change events
             $("#selCS").on("change", function() {
                 cs = this.value;
+                consultor = "NO_CONSULTOR_SELECTED";
                 console.log(this.url);
-                window.location = window.location.pathname + "?cs=" + cs;
+                window.location = window.location.pathname + "?cs=" + cs + "&consultor=" + consultor;
+            })
+            $("#selConsultorio").on("change", function() {
+                consultor = this.value;
+                console.log(this.url);
+                window.location = window.location.pathname + "?cs=" + cs + "&consultor=" + consultor;
             })
         });
         </script>
@@ -89,6 +104,18 @@
                 <option value="SGC">Gabú (CMI)</option>
                 <option value="SGH">Gabú (hospital)</option>
                 <option value="SBM">B. Militar</option>
+            </select>
+            <br/>
+            <br/>
+            <select id="selConsultorio">
+                <option selected value="NO_CONSULTOR_SELECTED">Seleciona consultorio</option>
+                <option value="C1">Consulta 1</option>
+                <option value="C2">Consulta 2</option>
+                <option value="C3">Consulta 3</option>
+                <option value="C4">Consulta 4</option>
+                <option value="C5">Consulta 5</option>
+                <option value="C6">Consulta 6</option>
+                <option value="C7">Consulta 7</option>
             </select>
             <br/>
             <button class="btn btn-primary btn-block btn-launch" id="btnGo">Entrar</button>
