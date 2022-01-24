@@ -181,7 +181,7 @@
       },
       {
         "clause": "if",
-        "condition": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
+        "condition": "data('sexo')=='2' && calculates.idade_mes() >= 144 && calculates.idade_mes() <= 660",
         "_row_num": 25
       },
       {
@@ -229,7 +229,7 @@
         "name": "procedencia",
         "display": {
           "prompt": {
-            "text": "Procedencia"
+            "text": "Proveniência"
           }
         },
         "_row_num": 33
@@ -821,17 +821,17 @@
       },
       {
         "calculation_name": "idade_mes",
-        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10) + parseInt(data('mes'),10)",
+        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10)",
         "_row_num": 4
       },
       {
-        "calculation_name": "chill_adult",
+        "calculation_name": "child_adult",
         "calculation": "calculates.idade_mes()<216 ? \"C\" : \"A\"",
         "_row_num": 5
       },
       {
         "calculation_name": "letra_codigo",
-        "calculation": "data('cs') + calculates.chill_adult()",
+        "calculation": "data('cs') + calculates.child_adult()",
         "_row_num": 6
       }
     ],
@@ -1519,17 +1519,17 @@
       },
       "idade_mes": {
         "calculation_name": "idade_mes",
-        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10) + parseInt(data('mes'),10)",
+        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10)",
         "_row_num": 4
       },
-      "chill_adult": {
-        "calculation_name": "chill_adult",
+      "child_adult": {
+        "calculation_name": "child_adult",
         "calculation": "calculates.idade_mes()<216 ? \"C\" : \"A\"",
         "_row_num": 5
       },
       "letra_codigo": {
         "calculation_name": "letra_codigo",
-        "calculation": "data('cs') + calculates.chill_adult()",
+        "calculation": "data('cs') + calculates.child_adult()",
         "_row_num": 6
       }
     },
@@ -2047,7 +2047,7 @@
             "name": "procedencia",
             "display": {
               "prompt": {
-                "text": "Procedencia"
+                "text": "Proveniência"
               }
             },
             "_row_num": 33,
@@ -2225,7 +2225,7 @@
               "__rowNum__": 27,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nif (data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)) {\nactivePromptIndicies.push(9);\n}\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nif (data('sexo')=='2' && calculates.idade_mes() >= 144 && calculates.idade_mes() <= 660) {\nactivePromptIndicies.push(9);\n}\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 1
           },
           {
