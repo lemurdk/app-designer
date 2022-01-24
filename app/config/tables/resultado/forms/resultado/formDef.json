@@ -100,6 +100,7 @@
             "text": "Gota espessa"
           }
         },
+        "required": true,
         "_row_num": 11
       },
       {
@@ -110,6 +111,7 @@
             "text": "Leucocitos"
           }
         },
+        "required": true,
         "_row_num": 12
       },
       {
@@ -120,6 +122,7 @@
             "text": "Hemoglobina (mg/dl)"
           }
         },
+        "required": true,
         "_row_num": 13
       },
       {
@@ -888,6 +891,7 @@
                 "text": "Gota espessa"
               }
             },
+            "required": true,
             "_row_num": 11,
             "__rowNum__": 10,
             "_token_type": "prompt",
@@ -903,6 +907,7 @@
                 "text": "Leucocitos"
               }
             },
+            "required": true,
             "_row_num": 12,
             "__rowNum__": 11,
             "_token_type": "prompt",
@@ -918,6 +923,7 @@
                 "text": "Hemoglobina (mg/dl)"
               }
             },
+            "required": true,
             "_row_num": 13,
             "__rowNum__": 12,
             "_token_type": "prompt",
@@ -952,7 +958,10 @@
         "validation_tag_map": {
           "finalize": [
             1,
-            2
+            2,
+            3,
+            4,
+            5
           ]
         },
         "operations": [

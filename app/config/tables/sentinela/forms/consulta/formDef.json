@@ -193,6 +193,7 @@
             "text": "Gravida"
           }
         },
+        "required": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
         "_row_num": 26
       },
       {
@@ -222,6 +223,7 @@
           }
         },
         "constraint": "data('peso')<250",
+        "required": true,
         "_row_num": 32
       },
       {
@@ -232,6 +234,7 @@
             "text": "Proveniência"
           }
         },
+        "required": true,
         "_row_num": 33
       },
       {
@@ -243,6 +246,7 @@
             "text": "Febre"
           }
         },
+        "required": true,
         "_row_num": 34
       },
       {
@@ -254,6 +258,7 @@
           }
         },
         "constraint": "data('temperatura')<46 & data('temperatura')>25",
+        "required": true,
         "_row_num": 35
       },
       {
@@ -265,6 +270,7 @@
             "text": "Diagnóstico Principal"
           }
         },
+        "required": true,
         "_row_num": 36
       },
       {
@@ -287,6 +293,7 @@
             "text": "Hospitalização"
           }
         },
+        "required": true,
         "_row_num": 38
       },
       {
@@ -2019,6 +2026,7 @@
                 "text": "Gravida"
               }
             },
+            "required": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
             "_row_num": 26,
             "__rowNum__": 25,
             "_token_type": "prompt",
@@ -2035,6 +2043,7 @@
               }
             },
             "constraint": "data('peso')<250",
+            "required": true,
             "_row_num": 32,
             "__rowNum__": 31,
             "_token_type": "prompt",
@@ -2050,6 +2059,7 @@
                 "text": "Proveniência"
               }
             },
+            "required": true,
             "_row_num": 33,
             "__rowNum__": 32,
             "_token_type": "prompt",
@@ -2066,6 +2076,7 @@
                 "text": "Febre"
               }
             },
+            "required": true,
             "_row_num": 34,
             "__rowNum__": 33,
             "_token_type": "prompt",
@@ -2082,6 +2093,7 @@
               }
             },
             "constraint": "data('temperatura')<46 & data('temperatura')>25",
+            "required": true,
             "_row_num": 35,
             "__rowNum__": 34,
             "_token_type": "prompt",
@@ -2098,6 +2110,7 @@
                 "text": "Diagnóstico Principal"
               }
             },
+            "required": true,
             "_row_num": 36,
             "__rowNum__": 35,
             "_token_type": "prompt",
@@ -2130,6 +2143,7 @@
                 "text": "Hospitalização"
               }
             },
+            "required": true,
             "_row_num": 38,
             "__rowNum__": 37,
             "_token_type": "prompt",
@@ -2195,8 +2209,13 @@
             5,
             6,
             8,
+            9,
             10,
-            13
+            11,
+            12,
+            13,
+            14,
+            16
           ]
         },
         "operations": [
