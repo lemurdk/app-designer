@@ -217,7 +217,7 @@
             var formId = "consulta"; 
             var dispatchStruct = null;
             var screenPath = null;
-            var jsonMap = { cs : cs, csname : getCenterName(cs) };
+            var jsonMap = { cs : cs, consultor : consultor, csname : getCenterName(cs, false) };            
             odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
             return false;
         }
@@ -252,7 +252,7 @@
 
         function getConsultorName(strConsultor) {
             return (strConsultor.length === 2)
-                ?  strConsultor.replace("C","Consultor ")
+                ?  strConsultor.replace("C","Consultorio ")
                 : strConsultor;                
         }
 

@@ -48,7 +48,7 @@
         "name": "nota_1",
         "display": {
           "prompt": {
-            "text": "Centro: {{data('csname')}} Data: {{calculates.hoje_display}}"
+            "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}"
           }
         },
         "_row_num": 7
@@ -1864,7 +1864,7 @@
             "name": "nota_1",
             "display": {
               "prompt": {
-                "text": "Centro: {{data('csname')}} Data: {{calculates.hoje_display}}"
+                "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}"
               }
             },
             "_row_num": 7,

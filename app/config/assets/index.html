@@ -12,7 +12,7 @@
         function goToList() {
             var selected_CS = $('#selCS').val();
             var selected_Consultor = $("#selConsultorio").val();
-            odkTables.launchHTML(null, 'config/assets/list.html?cs=' + encodeURIComponent(selected_CS)) + '&consultor=' + encodeURIComponent(selected_Consultor);
+            odkTables.launchHTML(null, 'config/assets/list.html?cs=' + encodeURIComponent(selected_CS) + '&consultor=' + encodeURIComponent(selected_Consultor));
             return false;
         }
 
