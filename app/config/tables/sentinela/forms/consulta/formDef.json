@@ -181,7 +181,7 @@
       },
       {
         "clause": "if",
-        "condition": "data('sexo')=='2' && calculates.idade_mes() >= 144 && calculates.idade_mes() <= 660",
+        "condition": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
         "_row_num": 25
       },
       {
@@ -2225,7 +2225,7 @@
               "__rowNum__": 27,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nif (data('sexo')=='2' && calculates.idade_mes() >= 144 && calculates.idade_mes() <= 660) {\nactivePromptIndicies.push(9);\n}\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nif (data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)) {\nactivePromptIndicies.push(9);\n}\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 1
           },
           {
