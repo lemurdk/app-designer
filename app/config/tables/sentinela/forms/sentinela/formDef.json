@@ -671,34 +671,14 @@
         "_row_num": 22
       },
       {
-        "type": "select_one",
-        "name": "tdr",
+        "type": "string",
+        "name": "csname",
+        "_row_num": 23
+      },
+      {
+        "type": "string",
+        "name": "consultor",
         "_row_num": 24
-      },
-      {
-        "type": "select_one",
-        "name": "tdr_resultado",
-        "_row_num": 25
-      },
-      {
-        "type": "integer",
-        "name": "GE",
-        "_row_num": 26
-      },
-      {
-        "type": "decimal",
-        "name": "leuco",
-        "_row_num": 27
-      },
-      {
-        "type": "decimal",
-        "name": "hb",
-        "_row_num": 28
-      },
-      {
-        "type": "text",
-        "name": "comentario_1",
-        "_row_num": 29
       }
     ]
   },
@@ -1491,7 +1471,17 @@
         ],
         "elementKey": "numero_codigo"
       },
-      "tdr": {
+      "csname": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 23,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "csname"
+      },
+      "consultor": {
         "type": "string",
         "_defn": [
           {
@@ -1499,57 +1489,7 @@
             "section_name": "model"
           }
         ],
-        "elementKey": "tdr"
-      },
-      "tdr_resultado": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 25,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "tdr_resultado"
-      },
-      "GE": {
-        "type": "integer",
-        "_defn": [
-          {
-            "_row_num": 26,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "GE"
-      },
-      "leuco": {
-        "type": "number",
-        "_defn": [
-          {
-            "_row_num": 27,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "leuco"
-      },
-      "hb": {
-        "type": "number",
-        "_defn": [
-          {
-            "_row_num": 28,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "hb"
-      },
-      "comentario_1": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 29,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "comentario_1"
+        "elementKey": "consultor"
       },
       "comentario_2": {
         "_defn": [
@@ -2131,7 +2071,20 @@
         "elementSet": "data",
         "elementPath": "numero_codigo"
       },
-      "tdr": {
+      "csname": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 23,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "csname",
+        "elementName": "csname",
+        "elementSet": "data",
+        "elementPath": "csname"
+      },
+      "consultor": {
         "type": "string",
         "_defn": [
           {
@@ -2139,75 +2092,10 @@
             "section_name": "model"
           }
         ],
-        "elementKey": "tdr",
-        "elementName": "tdr",
+        "elementKey": "consultor",
+        "elementName": "consultor",
         "elementSet": "data",
-        "elementPath": "tdr"
-      },
-      "tdr_resultado": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 25,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "tdr_resultado",
-        "elementName": "tdr_resultado",
-        "elementSet": "data",
-        "elementPath": "tdr_resultado"
-      },
-      "GE": {
-        "type": "integer",
-        "_defn": [
-          {
-            "_row_num": 26,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "GE",
-        "elementName": "GE",
-        "elementSet": "data",
-        "elementPath": "GE"
-      },
-      "leuco": {
-        "type": "number",
-        "_defn": [
-          {
-            "_row_num": 27,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "leuco",
-        "elementName": "leuco",
-        "elementSet": "data",
-        "elementPath": "leuco"
-      },
-      "hb": {
-        "type": "number",
-        "_defn": [
-          {
-            "_row_num": 28,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "hb",
-        "elementName": "hb",
-        "elementSet": "data",
-        "elementPath": "hb"
-      },
-      "comentario_1": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 29,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "comentario_1",
-        "elementName": "comentario_1",
-        "elementSet": "data",
-        "elementPath": "comentario_1"
+        "elementPath": "consultor"
       },
       "comentario_2": {
         "_defn": [
