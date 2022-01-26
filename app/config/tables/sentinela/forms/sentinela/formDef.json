@@ -679,6 +679,16 @@
         "type": "string",
         "name": "consultor",
         "_row_num": 24
+      },
+      {
+        "type": "string",
+        "name": "esp_diagnostico",
+        "_row_num": 25
+      },
+      {
+        "type": "string",
+        "name": "esp_diagnostico_secudario",
+        "_row_num": 26
       }
     ]
   },
@@ -1491,6 +1501,26 @@
         ],
         "elementKey": "consultor"
       },
+      "esp_diagnostico": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 25,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "esp_diagnostico"
+      },
+      "esp_diagnostico_secudario": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 26,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "esp_diagnostico_secudario"
+      },
       "comentario_2": {
         "_defn": [
           {
@@ -2096,6 +2126,32 @@
         "elementName": "consultor",
         "elementSet": "data",
         "elementPath": "consultor"
+      },
+      "esp_diagnostico": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 25,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "esp_diagnostico",
+        "elementName": "esp_diagnostico",
+        "elementSet": "data",
+        "elementPath": "esp_diagnostico"
+      },
+      "esp_diagnostico_secudario": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 26,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "esp_diagnostico_secudario",
+        "elementName": "esp_diagnostico_secudario",
+        "elementSet": "data",
+        "elementPath": "esp_diagnostico_secudario"
       },
       "comentario_2": {
         "_defn": [

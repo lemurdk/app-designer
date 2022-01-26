@@ -97,9 +97,10 @@
         "name": "GE",
         "display": {
           "prompt": {
-            "text": "Gota espessa"
+            "text": "Gota espessa: incontavel por (88888)"
           }
         },
+        "constraint": "data('GE')<10000 || data('GE')==88888",
         "required": true,
         "_row_num": 11
       },
@@ -888,9 +889,10 @@
             "name": "GE",
             "display": {
               "prompt": {
-                "text": "Gota espessa"
+                "text": "Gota espessa: incontavel por (88888)"
               }
             },
+            "constraint": "data('GE')<10000 || data('GE')==88888",
             "required": true,
             "_row_num": 11,
             "__rowNum__": 10,
