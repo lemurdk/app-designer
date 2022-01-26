@@ -244,16 +244,26 @@
                 case "SB": return "Buba" + con;
                 case "SH": return "Canchungo" + con;
                 case "SGC": return "Gabú (CMI)" + con;
-                case "SGH": return "Gabú (hospital" + con;
+                case "SGH": return "Gabú (hospital)" + con;
                 case "SBM": return "B. Militar" + con;
                 default: return strCs + con;
             }
         }
 
-        function getConsultorName(strConsultor) {
+       /* function getConsultorName(strConsultor) {
             return (strConsultor.length === 2)
-                ?  strConsultor.replace("C","Consultorio ")
+                ?  strConsultor.replace("C","Consultotio")
                 : strConsultor;                
+        } */
+
+        function getConsultorName(strConsultor) {
+            switch (strConsultor) {
+                case "CEP": return "Consulta Externa Pediatria";
+                case "CUP": return "Urgência Pediatria";
+                case "CEA": return "Consulta externa Adulto";
+                case "CUA": return "Urgência Adulto";
+                default: return strConsultor;
+            }
         }
 
         /* adate helper */
