@@ -1,16 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script type="text/javascript" src="commonDefinitions.js"></script>
-        <script type="text/javascript" src="libs/jquery-3.6.0.js"></script>
-        <!-- <script type="text/javascript" src="libs/jquery-migrate-3.3.2.js"></script> -->
-        <script type="text/javascript" src="libs/moment.js"></script>
-        <script type="text/javascript" src="../../system/js/odkCommon.js"></script>
-        <script type="text/javascript" src="../../system/js/odkData.js"></script>
-        <script type="text/javascript" src="js/odkTables.js"></script>
-        <script type="text/javascript" src="js/util.js"></script>
-        <script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="commonDefinitions.js"></script>
+    <script type="text/javascript" src="libs/jquery-3.6.0.js"></script>
+    <!-- <script type="text/javascript" src="libs/jquery-migrate-3.3.2.js"></script> -->
+    <script type="text/javascript" src="libs/moment.js"></script>
+    <script type="text/javascript" src="../../system/js/odkCommon.js"></script>
+    <script type="text/javascript" src="../../system/js/odkData.js"></script>
+    <script type="text/javascript" src="js/odkTables.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script>
+
+        function editEntry(person) {
+            if (!confirm("Editar formulario de consulta?","Sim","Nao tonto")) return;
+
+            var dispatchStruct = null;
+            var tableId = "sentinela";
+            var screenPath = null;            
+            var formId = "consulta"; 
+            var rowId = String(person.id_formssentinela);
+            console.log("EDIT consulta with row id:" + rowId);
+            odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
+        }
+
         function rowClick(person) {
             var dispatchStruct = null;
             var tableId = "resultado";
@@ -63,7 +76,7 @@
 
         function addPersonDiv(p) {    
             var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;  
-            var idButton = "btnRow_" + p.id_formssentinela.replaceAll("uuid:","").replaceAll("-","");
+            var idButton = "btnRow_" + String(p.id_formssentinela).replaceAll("uuid:","").replaceAll("-","");
             var row = "<tr class='lab" + p.hasResult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' id='" + idButton + "' class='arrow'></input></td></tr>";
             
             $('#theList tr:last').after(row);
@@ -72,6 +85,9 @@
                 console.log(p);
                 rowClick(p);
                 return false;
+            });
+            $('#theList tr:last td:first').on("click",function(){
+                editEntry(p);
             });
         }
 
@@ -85,13 +101,12 @@
             console.log("Populating list with " + listOfPersons.length + " persons");
             listOfPersons.forEach(person => {
                 addPersonDiv(person);
-            });
-            
+            });                        
         }
         /* /DISPLAY STUFF */
 
         /* DB LOOKUP */
-        var TESTMODE = false;
+        var TESTMODE = true;
         function listRows(cs, consultor, visit_date) {
             if (TESTMODE) return;
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
@@ -196,6 +211,7 @@
                         nome_casa : "Pelso",
                         sexo : 1,
                         dn : "D:4,M:10,Y:1991",
+                        id_formssentinela: Math.round(Math.random()*100000000000,0),
                         hasResult : i > 4 ? 1 : 0
                     }
                     persons.push(p);
