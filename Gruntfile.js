@@ -182,6 +182,11 @@ module.exports = function (grunt) {
                     return 'adb pull ' + src + ' ' + dest;
                 }
             },
+            pulldb: {
+                cmd: function(dest) {
+                    return 'adb pull /sdcard/opendatakit/default/data/webDb/sqlite.db ' + dest
+                }                
+            },            
             adbshell: {
                 cmd: function(str) {
                     return 'adb shell ' + str;
@@ -191,7 +196,30 @@ module.exports = function (grunt) {
 				cmd: function(str, formDefFile) {
 					return 'node macGenConverter.js ' + str + ' > ' + formDefFile; 
 				}
-			}
+			},
+            pushchangedappfiles: {
+                cmd: function() { 
+                    //return 'git status --porcelain'
+                    grunt.log.writeln('Getting list of modified files in app/config:');
+                    grunt.log.writeln('---');
+                    return 'git ls-files -mo --exclude-standard app/config/**'
+                },
+                callback: function(err, stdout, stderr) {
+                    grunt.log.writeln('---');
+                    grunt.log.writeln('Executing adp push commands:')
+                    var files = stdout.split('\n');
+                    files.forEach(f => {
+                        var fileName = f.trim();
+                        if (fileName.length<1 || !grunt.file.isFile(f)) 
+                            return;
+                        
+                        var src = fileName;
+                        var dest = tablesConfig.deviceMount + '/' + tablesConfig.appName + '/' + fileName.replace('app/','');
+                        grunt.log.writeln('adb push ' + src + ' ' + dest);
+                        grunt.task.run('exec:adbpush:' + src + ':' + dest);
+                    });           
+                }
+            }            
         },
 
         tables: tablesConfig,
@@ -579,6 +607,13 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
             // required by the adbpush-collect task, that is ok.
             grunt.task.run('adbpush-collect');
 
+        });
+
+    grunt.registerTask(
+        'minipush',
+        'Push js/html/css in the app/config/assets directory (except system) to the device',
+        function() {            
+            grunt.task.run('exec:pushchangedappfiles');
         });
 
     grunt.registerTask(
