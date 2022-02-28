@@ -18,7 +18,7 @@
             var dispatchStruct = null;
             var tableId = "sentinela";
             var screenPath = null;            
-            var formId = "consulta"; 
+            var formId = "sentinela"; 
             var rowId = String(person.id_formssentinela);
             console.log("EDIT consulta with row id:" + rowId);
             odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
@@ -26,9 +26,9 @@
 
         function rowClick(person) {
             var dispatchStruct = null;
-            var tableId = "resultado";
+            var tableId = "sentinela";
             var screenPath = null;            
-            var formId = "resultado"; 
+            var formId = "consulta"; 
             if (person.hasResult) {
                 var rowId = person.resultId;
                 console.log("EDIT form with row id:" + rowId);
@@ -199,7 +199,7 @@
             $("#subheader").text(getCenterName(cs, consultor) + ' @ ' + adateHelper.getMoment(visit_date).format('DD/MM/YYYY'));
 
 
-            $("#btnConsulta").on("click", NewConsulta);
+            $("#btnNewSentinela").on("click", NewSentinela);
             $("#btnSearch").on("click", Search);
             $("#btnClearSearch").on("click", ClearSearch);
             $("#btnRefresh").on("click", Sync);
@@ -236,9 +236,9 @@
             setTimeout(function() {$("#btnRefresh").removeAttr("disabled");}, 10000);
         }
 
-        function NewConsulta() {
+        function NewSentinela() {
             var tableId = "sentinela";
-            var formId = "consulta"; 
+            var formId = "sentinela"; 
             var dispatchStruct = null;
             var screenPath = null;
             var jsonMap = { cs : cs, consultor : consultor, csname : getCenterName(cs, false) };            
@@ -485,7 +485,7 @@
                     </div>
                 </div>
                 <div style="float:right;width:50%;">
-                    <button type="button" id="btnConsulta" class="addButton">Nova Consulta</button>
+                    <button type="button" id="btnNewSentinela" class="addButton">Triagem</button>
                 </div>
             </div>
             <table id="theList">
@@ -494,7 +494,7 @@
                 <th>Nome</th>
                 <th>Sexo</th>
                 <th>Idade</th>
-                <th>Resultados</th>
+                <th>Consulta</th>
             </tr>
             <tr id="emptyRow">
                <td colspan="5" style="text-align: center;padding:90px 0;">Nenhuma consulta feita hoje</td>

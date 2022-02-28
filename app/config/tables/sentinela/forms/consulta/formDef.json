@@ -99,12 +99,12 @@
           }
         },
         "required": true,
-        "_row_num": 14
+        "_row_num": 16
       },
       {
         "clause": "if",
         "condition": "data('diagnostico')=='outro'",
-        "_row_num": 15
+        "_row_num": 17
       },
       {
         "type": "string",
@@ -115,16 +115,16 @@
           }
         },
         "required": "data('diagnostico')=='outro'",
-        "_row_num": 16
+        "_row_num": 18
       },
       {
         "clause": "end if",
-        "_row_num": 17
+        "_row_num": 19
       },
       {
         "clause": "if",
-        "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagnostico'))<0",
-        "_row_num": 19
+        "condition": "calculates.ysubdx() == 1",
+        "_row_num": 21
       },
       {
         "type": "select_one",
@@ -136,14 +136,14 @@
           }
         },
         "choice_filter": "choice_item.diagnostico === data('diagnostico')",
-        "_row_num": 20
+        "_row_num": 22
       },
       {
         "clause": "end if",
-        "_row_num": 21
+        "_row_num": 23
       },
       {
-        "type": "select_one_dropdown",
+        "type": "select_one",
         "values_list": "dx_csv",
         "name": "diagno_secund",
         "display": {
@@ -151,12 +151,12 @@
             "text": "Diagnósticos secundarios"
           }
         },
-        "_row_num": 24
+        "_row_num": 28
       },
       {
         "clause": "if",
         "condition": "data('diagno_secund')=='outro'",
-        "_row_num": 25
+        "_row_num": 30
       },
       {
         "type": "string",
@@ -167,18 +167,32 @@
           }
         },
         "required": "data('diagno_secund')=='outro'",
-        "_row_num": 26
+        "_row_num": 31
       },
       {
         "clause": "end if",
-        "_row_num": 27
+        "_row_num": 32
+      },
+      {
+        "clause": "if",
+        "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagno_secund'))<0",
+        "_row_num": 34
       },
       {
         "type": "select_one",
-        "values_list": "subdx",
+        "values_list": "subdx_csv",
         "name": "sub_dx2",
+        "display": {
+          "prompt": {
+            "text": "Especifique"
+          }
+        },
         "choice_filter": "choice_item.diagnostico === data('diagno_secund')",
-        "_row_num": 28
+        "_row_num": 35
+      },
+      {
+        "clause": "end if",
+        "_row_num": 36
       },
       {
         "type": "select_one",
@@ -190,12 +204,16 @@
           }
         },
         "required": true,
-        "_row_num": 30
+        "_row_num": 40
+      },
+      {
+        "clause": "begin screen",
+        "_row_num": 41
       },
       {
         "clause": "if",
         "condition": "data('hospitaliza')==2",
-        "_row_num": 32
+        "_row_num": 42
       },
       {
         "type": "select_one",
@@ -203,18 +221,22 @@
         "name": "saida",
         "display": {
           "prompt": {
-            "text": "Paciente foi:"
+            "text": "Paciente foi {{data.hospitaliza}}:"
           }
         },
-        "_row_num": 33
+        "_row_num": 43
       },
       {
         "clause": "end if",
-        "_row_num": 34
+        "_row_num": 44
+      },
+      {
+        "clause": "end screen",
+        "_row_num": 45
       },
       {
         "clause": "begin screen",
-        "_row_num": 37
+        "_row_num": 47
       },
       {
         "type": "note",
@@ -224,26 +246,16 @@
             "text": "Introducão dos resultados de laboratorio"
           }
         },
-        "_row_num": 38
+        "_row_num": 48
       },
       {
         "type": "linked_table",
         "values_list": "resultado",
-        "_row_num": 39
+        "_row_num": 49
       },
       {
         "clause": "end screen",
-        "_row_num": 40
-      },
-      {
-        "type": "string",
-        "name": "lab",
-        "display": {
-          "prompt": {
-            "text": "Inicias de Laboratorista"
-          }
-        },
-        "_row_num": 41
+        "_row_num": 50
       },
       {
         "type": "string",
@@ -253,7 +265,7 @@
             "text": "inicias de medico assistente"
           }
         },
-        "_row_num": 42
+        "_row_num": 52
       },
       {
         "type": "text",
@@ -263,7 +275,7 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 43
+        "_row_num": 53
       }
     ],
     "choices": [
@@ -418,697 +430,6 @@
         "_row_num": 20
       },
       {
-        "choice_list_name": "diagnostico",
-        "data_value": "1B75",
-        "display": {
-          "title": {
-            "text": "Abcesso"
-          }
-        },
-        "_row_num": 22
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "MA01",
-        "display": {
-          "title": {
-            "text": "Adenopatias"
-          }
-        },
-        "_row_num": 23
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "PJ20",
-        "display": {
-          "title": {
-            "text": "Agressão física"
-          }
-        },
-        "_row_num": 24
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "4A8Z",
-        "display": {
-          "title": {
-            "text": "Alergia"
-          }
-        },
-        "_row_num": 25
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "JA40.0",
-        "display": {
-          "title": {
-            "text": "Ameaça de aborto"
-          }
-        },
-        "_row_num": 26
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA03020Y",
-        "display": {
-          "title": {
-            "text": "Amigdalites/Faringite/Faringamidalites"
-          }
-        },
-        "_row_num": 27
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "3A9Z",
-        "display": {
-          "title": {
-            "text": "Anemia (ligeira, moderada e grave)"
-          }
-        },
-        "_row_num": 28
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA23",
-        "display": {
-          "title": {
-            "text": "Asma Bronquial"
-          }
-        },
-        "_row_num": 29
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA20",
-        "display": {
-          "title": {
-            "text": "Bronquites"
-          }
-        },
-        "_row_num": 30
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA07",
-        "display": {
-          "title": {
-            "text": "IRA"
-          }
-        },
-        "_row_num": 31
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA20.Y",
-        "display": {
-          "title": {
-            "text": "Broncopneumonia"
-          }
-        },
-        "_row_num": 32
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA40.Z",
-        "display": {
-          "title": {
-            "text": "Pneumonia"
-          }
-        },
-        "_row_num": 33
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA41",
-        "display": {
-          "title": {
-            "text": "Bronquiolites"
-          }
-        },
-        "_row_num": 34
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA00",
-        "display": {
-          "title": {
-            "text": "Gripe /Catarro comum/ Resfriado/Constipação"
-          }
-        },
-        "_row_num": 35
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1F23.0",
-        "display": {
-          "title": {
-            "text": "Candidíase oral"
-          }
-        },
-        "_row_num": 36
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1F23.10",
-        "display": {
-          "title": {
-            "text": "Candidíase vaginal"
-          }
-        },
-        "_row_num": 37
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "MD81.4",
-        "display": {
-          "title": {
-            "text": "Cólicas abdominal"
-          }
-        },
-        "_row_num": 38
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "9A60.Z",
-        "display": {
-          "title": {
-            "text": "Conjuntivites (Alérgica, Bacteriana, Viral)"
-          }
-        },
-        "_row_num": 39
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "EB7Y",
-        "display": {
-          "title": {
-            "text": "Dermatose"
-          }
-        },
-        "_row_num": 40
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A40.Z",
-        "display": {
-          "title": {
-            "text": "Disenteria (Basilar. Amebiana)"
-          }
-        },
-        "_row_num": 41
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "ME05.1",
-        "display": {
-          "title": {
-            "text": "Diarreia /EDA (Ligeira ou Plano A, Moderada ou Plano B, Grave ou Plano C)"
-          }
-        },
-        "_row_num": 42
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "5A14",
-        "display": {
-          "title": {
-            "text": "Diabetes Melitos (Tipo I, Tipo II)"
-          }
-        },
-        "_row_num": 43
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "GA34.3",
-        "display": {
-          "title": {
-            "text": "Dismenorreia"
-          }
-        },
-        "_row_num": 44
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A40.Z",
-        "display": {
-          "title": {
-            "text": "Enterites"
-          }
-        },
-        "_row_num": 45
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "DA01",
-        "display": {
-          "title": {
-            "text": "Estomatites"
-          }
-        },
-        "_row_num": 46
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1G04",
-        "display": {
-          "title": {
-            "text": "Escabiose"
-          }
-        },
-        "_row_num": 47
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A07.Z",
-        "display": {
-          "title": {
-            "text": "Febre Tifoide"
-          }
-        },
-        "_row_num": 48
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A7Z",
-        "display": {
-          "title": {
-            "text": "Gonorreia"
-          }
-        },
-        "_row_num": 49
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "BA00.Z",
-        "display": {
-          "title": {
-            "text": "Hipertensão Arterial"
-          }
-        },
-        "_row_num": 50
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "BA2Z",
-        "display": {
-          "title": {
-            "text": "Hipotensão Arterial"
-          }
-        },
-        "_row_num": 51
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "JA60.Z",
-        "display": {
-          "title": {
-            "text": "Hiperémese Gravídica"
-          }
-        },
-        "_row_num": 52
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "FB.ME",
-        "display": {
-          "title": {
-            "text": "Mialgia/ Lombalgia"
-          }
-        },
-        "_row_num": 53
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "AAZ1.90",
-        "display": {
-          "title": {
-            "text": "Otites (Externo, Media, Purulenta)"
-          }
-        },
-        "_row_num": 54
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1F4Z",
-        "display": {
-          "title": {
-            "text": "Paludismo/Malaria (Simples, Grave)"
-          }
-        },
-        "_row_num": 55
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A36.0Z",
-        "display": {
-          "title": {
-            "text": "Parasitismo Intestinal"
-          }
-        },
-        "_row_num": 56
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1B7Y",
-        "display": {
-          "title": {
-            "text": "Pio dermites"
-          }
-        },
-        "_row_num": 57
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1F03",
-        "display": {
-          "title": {
-            "text": "Sarampo (suspeita)"
-          }
-        },
-        "_row_num": 58
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "MG26",
-        "display": {
-          "title": {
-            "text": "Síndrome Febril"
-          }
-        },
-        "_row_num": 59
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1B1Z",
-        "display": {
-          "title": {
-            "text": "Tuberculose (Suspeita)"
-          }
-        },
-        "_row_num": 60
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "DA60",
-        "display": {
-          "title": {
-            "text": "Ulcera Gástrica"
-          }
-        },
-        "_row_num": 61
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "GC02",
-        "display": {
-          "title": {
-            "text": "Uretrites"
-          }
-        },
-        "_row_num": 62
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A92",
-        "display": {
-          "title": {
-            "text": "Tricomoníase"
-          }
-        },
-        "_row_num": 63
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1E90",
-        "display": {
-          "title": {
-            "text": "Varicela"
-          }
-        },
-        "_row_num": 64
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1C62.Z",
-        "display": {
-          "title": {
-            "text": "VIH/Sida"
-          }
-        },
-        "_row_num": 65
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "otro",
-        "display": {
-          "title": {
-            "text": "Outras"
-          }
-        },
-        "_row_num": 66
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "CA03",
-        "display": {
-          "title": {
-            "text": "Amigdalites"
-          }
-        },
-        "diagnostico": "CA03020Y",
-        "_row_num": 70
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "CA02",
-        "display": {
-          "title": {
-            "text": "Faringite"
-          }
-        },
-        "diagnostico": "CA03020Y",
-        "_row_num": 71
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "CA0Y",
-        "display": {
-          "title": {
-            "text": "Faringamidalites"
-          }
-        },
-        "diagnostico": "CA03020Y",
-        "_row_num": 72
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "XS5W",
-        "display": {
-          "title": {
-            "text": "Anemia ligeira"
-          }
-        },
-        "diagnostico": "3A9Z",
-        "_row_num": 73
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "XS0T",
-        "display": {
-          "title": {
-            "text": "Anemia moderada"
-          }
-        },
-        "diagnostico": "3A9Z",
-        "_row_num": 74
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "XS25",
-        "display": {
-          "title": {
-            "text": "Anemia grave"
-          }
-        },
-        "diagnostico": "3A9Z",
-        "_row_num": 75
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "9A60.02",
-        "display": {
-          "title": {
-            "text": "Conjuntivites Alérgica"
-          }
-        },
-        "diagnostico": "9A60.Z",
-        "_row_num": 76
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "9A60.Y",
-        "display": {
-          "title": {
-            "text": "Conjuntivites Bacteriana"
-          }
-        },
-        "diagnostico": "9A60.Z",
-        "_row_num": 77
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "1D84",
-        "display": {
-          "title": {
-            "text": "Conjuntivites Viral"
-          }
-        },
-        "diagnostico": "9A60.Z",
-        "_row_num": 78
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "PA",
-        "display": {
-          "title": {
-            "text": "Diarreia /EDA Ligeira ou Plano A"
-          }
-        },
-        "diagnostico": "ME05.1",
-        "_row_num": 79
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "PB",
-        "display": {
-          "title": {
-            "text": "Diarreia /EDA  Moderada ou Plano B"
-          }
-        },
-        "diagnostico": "ME05.1",
-        "_row_num": 80
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "PC",
-        "display": {
-          "title": {
-            "text": "Diarreia /EDA Grave ou Plano C"
-          }
-        },
-        "diagnostico": "ME05.1",
-        "_row_num": 81
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "5A10",
-        "display": {
-          "title": {
-            "text": "Diabetes Melitos Tipo I"
-          }
-        },
-        "diagnostico": "5A14",
-        "_row_num": 82
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "5A11",
-        "display": {
-          "title": {
-            "text": "Diabetes MelitosTipo II"
-          }
-        },
-        "diagnostico": "5A14",
-        "_row_num": 83
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "FB56.2",
-        "display": {
-          "title": {
-            "text": "Mialgia"
-          }
-        },
-        "diagnostico": "FB.ME",
-        "_row_num": 84
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "ME84.2",
-        "display": {
-          "title": {
-            "text": "Lombalgia"
-          }
-        },
-        "diagnostico": "FB.ME",
-        "_row_num": 85
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "AA1Z",
-        "display": {
-          "title": {
-            "text": "Otites Externo"
-          }
-        },
-        "diagnostico": "AAZ1.90",
-        "_row_num": 86
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "AA80",
-        "display": {
-          "title": {
-            "text": "Otites Media"
-          }
-        },
-        "diagnostico": "AAZ1.90",
-        "_row_num": 87
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "AA90",
-        "display": {
-          "title": {
-            "text": "Otites  Purulenta"
-          }
-        },
-        "diagnostico": "AAZ1.90",
-        "_row_num": 88
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "1F4.S",
-        "display": {
-          "title": {
-            "text": "Paludismo/Malaria Simples"
-          }
-        },
-        "diagnostico": "1F4Z",
-        "_row_num": 89
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "1F4.G",
-        "display": {
-          "title": {
-            "text": "Paludismo/Malaria Grave"
-          }
-        },
-        "diagnostico": "1F4Z",
-        "_row_num": 90
-      },
-      {
-        "choice_list_name": "subdx",
-        "data_value": "esp",
-        "display": {
-          "title": {
-            "text": "Especifique"
-          }
-        },
-        "_row_num": 91
-      },
-      {
         "choice_list_name": "saida",
         "data_value": 1,
         "display": {
@@ -1116,7 +437,7 @@
             "text": "Alta"
           }
         },
-        "_row_num": 95
+        "_row_num": 24
       },
       {
         "choice_list_name": "saida",
@@ -1126,7 +447,7 @@
             "text": "Transferido"
           }
         },
-        "_row_num": 96
+        "_row_num": 25
       },
       {
         "choice_list_name": "saida",
@@ -1136,7 +457,7 @@
             "text": "Fuga"
           }
         },
-        "_row_num": 97
+        "_row_num": 26
       },
       {
         "choice_list_name": "saida",
@@ -1146,7 +467,7 @@
             "text": "Óbito"
           }
         },
-        "_row_num": 98
+        "_row_num": 27
       },
       {
         "choice_list_name": "saida",
@@ -1156,7 +477,7 @@
             "text": "Desconhecido"
           }
         },
-        "_row_num": 99
+        "_row_num": 28
       }
     ],
     "queries": [
@@ -1227,6 +548,11 @@
         "calculation_name": "letra_codigo",
         "calculation": "data('cs') + calculates.child_adult()",
         "_row_num": 6
+      },
+      {
+        "calculation_name": "ysubdx",
+        "calculation": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagnostico'))<0 ? 1 : 0",
+        "_row_num": 8
       }
     ],
     "model": [
@@ -1306,12 +632,12 @@
         "_row_num": 16
       },
       {
-        "type": "select_one_dropdown",
+        "type": "select_one",
         "name": "diagnostico",
         "_row_num": 17
       },
       {
-        "type": "select_one_dropdown",
+        "type": "select_one",
         "name": "diagno_secund",
         "_row_num": 18
       },
@@ -1367,13 +693,23 @@
       },
       {
         "type": "string",
-        "name": "lab",
+        "name": "med",
         "_row_num": 30
       },
       {
-        "type": "string",
-        "name": "med",
-        "_row_num": 31
+        "type": "select_one",
+        "name": "sub_dx",
+        "_row_num": 32
+      },
+      {
+        "type": "select_one",
+        "name": "sub_dx2",
+        "_row_num": 33
+      },
+      {
+        "type": "select_one",
+        "name": "saida",
+        "_row_num": 35
       }
     ]
   },
@@ -1614,701 +950,6 @@
           "_row_num": 20
         }
       ],
-      "diagnostico": [
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1B75",
-          "display": {
-            "title": {
-              "text": "Abcesso"
-            }
-          },
-          "_row_num": 22
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "MA01",
-          "display": {
-            "title": {
-              "text": "Adenopatias"
-            }
-          },
-          "_row_num": 23
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "PJ20",
-          "display": {
-            "title": {
-              "text": "Agressão física"
-            }
-          },
-          "_row_num": 24
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "4A8Z",
-          "display": {
-            "title": {
-              "text": "Alergia"
-            }
-          },
-          "_row_num": 25
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "JA40.0",
-          "display": {
-            "title": {
-              "text": "Ameaça de aborto"
-            }
-          },
-          "_row_num": 26
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA03020Y",
-          "display": {
-            "title": {
-              "text": "Amigdalites/Faringite/Faringamidalites"
-            }
-          },
-          "_row_num": 27
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "3A9Z",
-          "display": {
-            "title": {
-              "text": "Anemia (ligeira, moderada e grave)"
-            }
-          },
-          "_row_num": 28
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA23",
-          "display": {
-            "title": {
-              "text": "Asma Bronquial"
-            }
-          },
-          "_row_num": 29
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA20",
-          "display": {
-            "title": {
-              "text": "Bronquites"
-            }
-          },
-          "_row_num": 30
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA07",
-          "display": {
-            "title": {
-              "text": "IRA"
-            }
-          },
-          "_row_num": 31
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA20.Y",
-          "display": {
-            "title": {
-              "text": "Broncopneumonia"
-            }
-          },
-          "_row_num": 32
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA40.Z",
-          "display": {
-            "title": {
-              "text": "Pneumonia"
-            }
-          },
-          "_row_num": 33
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA41",
-          "display": {
-            "title": {
-              "text": "Bronquiolites"
-            }
-          },
-          "_row_num": 34
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA00",
-          "display": {
-            "title": {
-              "text": "Gripe /Catarro comum/ Resfriado/Constipação"
-            }
-          },
-          "_row_num": 35
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1F23.0",
-          "display": {
-            "title": {
-              "text": "Candidíase oral"
-            }
-          },
-          "_row_num": 36
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1F23.10",
-          "display": {
-            "title": {
-              "text": "Candidíase vaginal"
-            }
-          },
-          "_row_num": 37
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "MD81.4",
-          "display": {
-            "title": {
-              "text": "Cólicas abdominal"
-            }
-          },
-          "_row_num": 38
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "9A60.Z",
-          "display": {
-            "title": {
-              "text": "Conjuntivites (Alérgica, Bacteriana, Viral)"
-            }
-          },
-          "_row_num": 39
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "EB7Y",
-          "display": {
-            "title": {
-              "text": "Dermatose"
-            }
-          },
-          "_row_num": 40
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A40.Z",
-          "display": {
-            "title": {
-              "text": "Disenteria (Basilar. Amebiana)"
-            }
-          },
-          "_row_num": 41
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "ME05.1",
-          "display": {
-            "title": {
-              "text": "Diarreia /EDA (Ligeira ou Plano A, Moderada ou Plano B, Grave ou Plano C)"
-            }
-          },
-          "_row_num": 42
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "5A14",
-          "display": {
-            "title": {
-              "text": "Diabetes Melitos (Tipo I, Tipo II)"
-            }
-          },
-          "_row_num": 43
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "GA34.3",
-          "display": {
-            "title": {
-              "text": "Dismenorreia"
-            }
-          },
-          "_row_num": 44
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A40.Z",
-          "display": {
-            "title": {
-              "text": "Enterites"
-            }
-          },
-          "_row_num": 45
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "DA01",
-          "display": {
-            "title": {
-              "text": "Estomatites"
-            }
-          },
-          "_row_num": 46
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1G04",
-          "display": {
-            "title": {
-              "text": "Escabiose"
-            }
-          },
-          "_row_num": 47
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A07.Z",
-          "display": {
-            "title": {
-              "text": "Febre Tifoide"
-            }
-          },
-          "_row_num": 48
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A7Z",
-          "display": {
-            "title": {
-              "text": "Gonorreia"
-            }
-          },
-          "_row_num": 49
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "BA00.Z",
-          "display": {
-            "title": {
-              "text": "Hipertensão Arterial"
-            }
-          },
-          "_row_num": 50
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "BA2Z",
-          "display": {
-            "title": {
-              "text": "Hipotensão Arterial"
-            }
-          },
-          "_row_num": 51
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "JA60.Z",
-          "display": {
-            "title": {
-              "text": "Hiperémese Gravídica"
-            }
-          },
-          "_row_num": 52
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "FB.ME",
-          "display": {
-            "title": {
-              "text": "Mialgia/ Lombalgia"
-            }
-          },
-          "_row_num": 53
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "AAZ1.90",
-          "display": {
-            "title": {
-              "text": "Otites (Externo, Media, Purulenta)"
-            }
-          },
-          "_row_num": 54
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1F4Z",
-          "display": {
-            "title": {
-              "text": "Paludismo/Malaria (Simples, Grave)"
-            }
-          },
-          "_row_num": 55
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A36.0Z",
-          "display": {
-            "title": {
-              "text": "Parasitismo Intestinal"
-            }
-          },
-          "_row_num": 56
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1B7Y",
-          "display": {
-            "title": {
-              "text": "Pio dermites"
-            }
-          },
-          "_row_num": 57
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1F03",
-          "display": {
-            "title": {
-              "text": "Sarampo (suspeita)"
-            }
-          },
-          "_row_num": 58
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "MG26",
-          "display": {
-            "title": {
-              "text": "Síndrome Febril"
-            }
-          },
-          "_row_num": 59
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1B1Z",
-          "display": {
-            "title": {
-              "text": "Tuberculose (Suspeita)"
-            }
-          },
-          "_row_num": 60
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "DA60",
-          "display": {
-            "title": {
-              "text": "Ulcera Gástrica"
-            }
-          },
-          "_row_num": 61
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "GC02",
-          "display": {
-            "title": {
-              "text": "Uretrites"
-            }
-          },
-          "_row_num": 62
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A92",
-          "display": {
-            "title": {
-              "text": "Tricomoníase"
-            }
-          },
-          "_row_num": 63
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1E90",
-          "display": {
-            "title": {
-              "text": "Varicela"
-            }
-          },
-          "_row_num": 64
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1C62.Z",
-          "display": {
-            "title": {
-              "text": "VIH/Sida"
-            }
-          },
-          "_row_num": 65
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "otro",
-          "display": {
-            "title": {
-              "text": "Outras"
-            }
-          },
-          "_row_num": 66
-        }
-      ],
-      "subdx": [
-        {
-          "choice_list_name": "subdx",
-          "data_value": "CA03",
-          "display": {
-            "title": {
-              "text": "Amigdalites"
-            }
-          },
-          "diagnostico": "CA03020Y",
-          "_row_num": 70
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "CA02",
-          "display": {
-            "title": {
-              "text": "Faringite"
-            }
-          },
-          "diagnostico": "CA03020Y",
-          "_row_num": 71
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "CA0Y",
-          "display": {
-            "title": {
-              "text": "Faringamidalites"
-            }
-          },
-          "diagnostico": "CA03020Y",
-          "_row_num": 72
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "XS5W",
-          "display": {
-            "title": {
-              "text": "Anemia ligeira"
-            }
-          },
-          "diagnostico": "3A9Z",
-          "_row_num": 73
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "XS0T",
-          "display": {
-            "title": {
-              "text": "Anemia moderada"
-            }
-          },
-          "diagnostico": "3A9Z",
-          "_row_num": 74
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "XS25",
-          "display": {
-            "title": {
-              "text": "Anemia grave"
-            }
-          },
-          "diagnostico": "3A9Z",
-          "_row_num": 75
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "9A60.02",
-          "display": {
-            "title": {
-              "text": "Conjuntivites Alérgica"
-            }
-          },
-          "diagnostico": "9A60.Z",
-          "_row_num": 76
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "9A60.Y",
-          "display": {
-            "title": {
-              "text": "Conjuntivites Bacteriana"
-            }
-          },
-          "diagnostico": "9A60.Z",
-          "_row_num": 77
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "1D84",
-          "display": {
-            "title": {
-              "text": "Conjuntivites Viral"
-            }
-          },
-          "diagnostico": "9A60.Z",
-          "_row_num": 78
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "PA",
-          "display": {
-            "title": {
-              "text": "Diarreia /EDA Ligeira ou Plano A"
-            }
-          },
-          "diagnostico": "ME05.1",
-          "_row_num": 79
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "PB",
-          "display": {
-            "title": {
-              "text": "Diarreia /EDA  Moderada ou Plano B"
-            }
-          },
-          "diagnostico": "ME05.1",
-          "_row_num": 80
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "PC",
-          "display": {
-            "title": {
-              "text": "Diarreia /EDA Grave ou Plano C"
-            }
-          },
-          "diagnostico": "ME05.1",
-          "_row_num": 81
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "5A10",
-          "display": {
-            "title": {
-              "text": "Diabetes Melitos Tipo I"
-            }
-          },
-          "diagnostico": "5A14",
-          "_row_num": 82
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "5A11",
-          "display": {
-            "title": {
-              "text": "Diabetes MelitosTipo II"
-            }
-          },
-          "diagnostico": "5A14",
-          "_row_num": 83
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "FB56.2",
-          "display": {
-            "title": {
-              "text": "Mialgia"
-            }
-          },
-          "diagnostico": "FB.ME",
-          "_row_num": 84
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "ME84.2",
-          "display": {
-            "title": {
-              "text": "Lombalgia"
-            }
-          },
-          "diagnostico": "FB.ME",
-          "_row_num": 85
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "AA1Z",
-          "display": {
-            "title": {
-              "text": "Otites Externo"
-            }
-          },
-          "diagnostico": "AAZ1.90",
-          "_row_num": 86
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "AA80",
-          "display": {
-            "title": {
-              "text": "Otites Media"
-            }
-          },
-          "diagnostico": "AAZ1.90",
-          "_row_num": 87
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "AA90",
-          "display": {
-            "title": {
-              "text": "Otites  Purulenta"
-            }
-          },
-          "diagnostico": "AAZ1.90",
-          "_row_num": 88
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "1F4.S",
-          "display": {
-            "title": {
-              "text": "Paludismo/Malaria Simples"
-            }
-          },
-          "diagnostico": "1F4Z",
-          "_row_num": 89
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "1F4.G",
-          "display": {
-            "title": {
-              "text": "Paludismo/Malaria Grave"
-            }
-          },
-          "diagnostico": "1F4Z",
-          "_row_num": 90
-        },
-        {
-          "choice_list_name": "subdx",
-          "data_value": "esp",
-          "display": {
-            "title": {
-              "text": "Especifique"
-            }
-          },
-          "_row_num": 91
-        }
-      ],
       "saida": [
         {
           "choice_list_name": "saida",
@@ -2318,7 +959,7 @@
               "text": "Alta"
             }
           },
-          "_row_num": 95
+          "_row_num": 24
         },
         {
           "choice_list_name": "saida",
@@ -2328,7 +969,7 @@
               "text": "Transferido"
             }
           },
-          "_row_num": 96
+          "_row_num": 25
         },
         {
           "choice_list_name": "saida",
@@ -2338,7 +979,7 @@
               "text": "Fuga"
             }
           },
-          "_row_num": 97
+          "_row_num": 26
         },
         {
           "choice_list_name": "saida",
@@ -2348,7 +989,7 @@
               "text": "Óbito"
             }
           },
-          "_row_num": 98
+          "_row_num": 27
         },
         {
           "choice_list_name": "saida",
@@ -2358,7 +999,7 @@
               "text": "Desconhecido"
             }
           },
-          "_row_num": 99
+          "_row_num": 28
         }
       ]
     },
@@ -2414,6 +1055,11 @@
         "calculation_name": "letra_codigo",
         "calculation": "data('cs') + calculates.child_adult()",
         "_row_num": 6
+      },
+      "ysubdx": {
+        "calculation_name": "ysubdx",
+        "calculation": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagnostico'))<0 ? 1 : 0",
+        "_row_num": 8
       }
     },
     "model": {
@@ -2595,7 +1241,7 @@
         "valuesList": "dx_csv",
         "_defn": [
           {
-            "_row_num": 14,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -2610,7 +1256,7 @@
         "valuesList": "dx_csv",
         "_defn": [
           {
-            "_row_num": 24,
+            "_row_num": 28,
             "section_name": "survey"
           },
           {
@@ -2625,7 +1271,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 30,
+            "_row_num": 40,
             "section_name": "survey"
           },
           {
@@ -2639,7 +1285,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 43,
+            "_row_num": 53,
             "section_name": "survey"
           },
           {
@@ -2693,7 +1339,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 16,
+            "_row_num": 18,
             "section_name": "survey"
           },
           {
@@ -2707,7 +1353,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 31,
             "section_name": "survey"
           },
           {
@@ -2737,11 +1383,11 @@
         ],
         "elementKey": "inq"
       },
-      "lab": {
+      "med": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 41,
+            "_row_num": 52,
             "section_name": "survey"
           },
           {
@@ -2749,53 +1395,51 @@
             "section_name": "model"
           }
         ],
-        "elementKey": "lab"
-      },
-      "med": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 42,
-            "section_name": "survey"
-          },
-          {
-            "_row_num": 31,
-            "section_name": "model"
-          }
-        ],
         "elementKey": "med"
       },
       "sub_dx": {
-        "_defn": [
-          {
-            "_row_num": 20,
-            "section_name": "survey"
-          }
-        ],
         "type": "string",
         "valuesList": "subdx_csv",
+        "_defn": [
+          {
+            "_row_num": 22,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 32,
+            "section_name": "model"
+          }
+        ],
         "elementKey": "sub_dx"
       },
       "sub_dx2": {
+        "type": "string",
+        "valuesList": "subdx_csv",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 35,
             "section_name": "survey"
+          },
+          {
+            "_row_num": 33,
+            "section_name": "model"
           }
         ],
-        "type": "string",
-        "valuesList": "subdx",
         "elementKey": "sub_dx2"
       },
       "saida": {
-        "_defn": [
-          {
-            "_row_num": 33,
-            "section_name": "survey"
-          }
-        ],
         "type": "string",
         "valuesList": "saida",
+        "_defn": [
+          {
+            "_row_num": 43,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 35,
+            "section_name": "model"
+          }
+        ],
         "elementKey": "saida"
       }
     },
@@ -2868,11 +1512,11 @@
               }
             },
             "required": true,
-            "_row_num": 14,
-            "__rowNum__": 13,
+            "_row_num": 16,
+            "__rowNum__": 15,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen14",
+            "_branch_label_enclosing_screen": "survey/_screen16",
             "promptIdx": 3
           },
           {
@@ -2884,11 +1528,11 @@
               }
             },
             "required": "data('diagnostico')=='outro'",
-            "_row_num": 16,
-            "__rowNum__": 15,
+            "_row_num": 18,
+            "__rowNum__": 17,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen16",
+            "_branch_label_enclosing_screen": "survey/_screen18",
             "promptIdx": 4
           },
           {
@@ -2901,15 +1545,15 @@
               }
             },
             "choice_filter": "choice_item.diagnostico === data('diagnostico')",
-            "_row_num": 20,
-            "__rowNum__": 19,
+            "_row_num": 22,
+            "__rowNum__": 21,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen20",
+            "_branch_label_enclosing_screen": "survey/_screen22",
             "promptIdx": 5
           },
           {
-            "type": "select_one_dropdown",
+            "type": "select_one",
             "values_list": "dx_csv",
             "name": "diagno_secund",
             "display": {
@@ -2917,11 +1561,11 @@
                 "text": "Diagnósticos secundarios"
               }
             },
-            "_row_num": 24,
-            "__rowNum__": 23,
+            "_row_num": 28,
+            "__rowNum__": 27,
             "_token_type": "prompt",
-            "_type": "select_one_dropdown",
-            "_branch_label_enclosing_screen": "survey/_screen24",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "survey/_screen28",
             "promptIdx": 6
           },
           {
@@ -2933,23 +1577,28 @@
               }
             },
             "required": "data('diagno_secund')=='outro'",
-            "_row_num": 26,
-            "__rowNum__": 25,
+            "_row_num": 31,
+            "__rowNum__": 30,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen26",
+            "_branch_label_enclosing_screen": "survey/_screen31",
             "promptIdx": 7
           },
           {
             "type": "select_one",
-            "values_list": "subdx",
+            "values_list": "subdx_csv",
             "name": "sub_dx2",
+            "display": {
+              "prompt": {
+                "text": "Especifique"
+              }
+            },
             "choice_filter": "choice_item.diagnostico === data('diagno_secund')",
-            "_row_num": 28,
-            "__rowNum__": 27,
+            "_row_num": 35,
+            "__rowNum__": 34,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen28",
+            "_branch_label_enclosing_screen": "survey/_screen35",
             "promptIdx": 8
           },
           {
@@ -2962,11 +1611,11 @@
               }
             },
             "required": true,
-            "_row_num": 30,
-            "__rowNum__": 29,
+            "_row_num": 40,
+            "__rowNum__": 39,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen30",
+            "_branch_label_enclosing_screen": "survey/_screen40",
             "promptIdx": 9
           },
           {
@@ -2975,14 +1624,14 @@
             "name": "saida",
             "display": {
               "prompt": {
-                "text": "Paciente foi:"
+                "text": "Paciente foi {{data.hospitaliza}}:"
               }
             },
-            "_row_num": 33,
-            "__rowNum__": 32,
+            "_row_num": 43,
+            "__rowNum__": 42,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen33",
+            "_branch_label_enclosing_screen": "survey/_screen41",
             "promptIdx": 10
           },
           {
@@ -2993,37 +1642,22 @@
                 "text": "Introducão dos resultados de laboratorio"
               }
             },
-            "_row_num": 38,
-            "__rowNum__": 37,
+            "_row_num": 48,
+            "__rowNum__": 47,
             "_token_type": "prompt",
             "_type": "note",
-            "_branch_label_enclosing_screen": "survey/_screen37",
+            "_branch_label_enclosing_screen": "survey/_screen47",
             "promptIdx": 11
           },
           {
             "type": "linked_table",
             "values_list": "resultado",
-            "_row_num": 39,
-            "__rowNum__": 38,
+            "_row_num": 49,
+            "__rowNum__": 48,
             "_token_type": "prompt",
             "_type": "linked_table",
-            "_branch_label_enclosing_screen": "survey/_screen37",
+            "_branch_label_enclosing_screen": "survey/_screen47",
             "promptIdx": 12
-          },
-          {
-            "type": "string",
-            "name": "lab",
-            "display": {
-              "prompt": {
-                "text": "Inicias de Laboratorista"
-              }
-            },
-            "_row_num": 41,
-            "__rowNum__": 40,
-            "_token_type": "prompt",
-            "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen41",
-            "promptIdx": 13
           },
           {
             "type": "string",
@@ -3033,12 +1667,12 @@
                 "text": "inicias de medico assistente"
               }
             },
-            "_row_num": 42,
-            "__rowNum__": 41,
+            "_row_num": 52,
+            "__rowNum__": 51,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen42",
-            "promptIdx": 14
+            "_branch_label_enclosing_screen": "survey/_screen52",
+            "promptIdx": 13
           },
           {
             "type": "text",
@@ -3048,20 +1682,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 43,
-            "__rowNum__": 42,
+            "_row_num": 53,
+            "__rowNum__": 52,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen43",
-            "promptIdx": 15
+            "_branch_label_enclosing_screen": "survey/_screen53",
+            "promptIdx": 14
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 44,
-            "_branch_label_enclosing_screen": "survey/_screen44",
-            "promptIdx": 16
+            "_row_num": 54,
+            "_branch_label_enclosing_screen": "survey/_screen54",
+            "promptIdx": 15
           }
         ],
         "validation_tag_map": {
@@ -3099,7 +1733,7 @@
             "operationIdx": 1
           },
           {
-            "_row_num": 14,
+            "_row_num": 16,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 2
@@ -3107,21 +1741,21 @@
           {
             "clause": "if",
             "condition": "data('diagnostico')=='outro'",
-            "_row_num": 15,
-            "__rowNum__": 14,
+            "_row_num": 17,
+            "__rowNum__": 16,
             "_token_type": "goto_label",
-            "_branch_label": "_then15",
+            "_branch_label": "_then17",
             "operationIdx": 3
           },
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_else17",
-            "_row_num": 17,
+            "_branch_label": "_else19",
+            "_row_num": 19,
             "operationIdx": 4
           },
           {
-            "_row_num": 16,
+            "_row_num": 18,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(4);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 5
@@ -3129,28 +1763,28 @@
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_endif17",
-            "_row_num": 17,
+            "_branch_label": "_endif19",
+            "_row_num": 19,
             "operationIdx": 6
           },
           {
             "clause": "if",
-            "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagnostico'))<0",
-            "_row_num": 19,
-            "__rowNum__": 18,
+            "condition": "calculates.ysubdx() == 1",
+            "_row_num": 21,
+            "__rowNum__": 20,
             "_token_type": "goto_label",
-            "_branch_label": "_then19",
+            "_branch_label": "_then21",
             "operationIdx": 7
           },
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_else21",
-            "_row_num": 21,
+            "_branch_label": "_else23",
+            "_row_num": 23,
             "operationIdx": 8
           },
           {
-            "_row_num": 20,
+            "_row_num": 22,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 9
@@ -3158,12 +1792,12 @@
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_endif21",
-            "_row_num": 21,
+            "_branch_label": "_endif23",
+            "_row_num": 23,
             "operationIdx": 10
           },
           {
-            "_row_num": 24,
+            "_row_num": 28,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(6);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 11
@@ -3171,21 +1805,21 @@
           {
             "clause": "if",
             "condition": "data('diagno_secund')=='outro'",
-            "_row_num": 25,
-            "__rowNum__": 24,
+            "_row_num": 30,
+            "__rowNum__": 29,
             "_token_type": "goto_label",
-            "_branch_label": "_then25",
+            "_branch_label": "_then30",
             "operationIdx": 12
           },
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_else27",
-            "_row_num": 27,
+            "_branch_label": "_else32",
+            "_row_num": 32,
             "operationIdx": 13
           },
           {
-            "_row_num": 26,
+            "_row_num": 31,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 14
@@ -3193,133 +1827,134 @@
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_endif27",
-            "_row_num": 27,
+            "_branch_label": "_endif32",
+            "_row_num": 32,
             "operationIdx": 15
           },
           {
-            "_row_num": 28,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
+            "clause": "if",
+            "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagno_secund'))<0",
+            "_row_num": 34,
+            "__rowNum__": 33,
+            "_token_type": "goto_label",
+            "_branch_label": "_then34",
             "operationIdx": 16
           },
           {
-            "_row_num": 30,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(9);\n\nreturn activePromptIndicies;\n}\n",
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else36",
+            "_row_num": 36,
             "operationIdx": 17
           },
           {
-            "clause": "if",
-            "condition": "data('hospitaliza')==2",
-            "_row_num": 32,
-            "__rowNum__": 31,
-            "_token_type": "goto_label",
-            "_branch_label": "_then32",
+            "_row_num": 35,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 18
           },
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_else34",
-            "_row_num": 34,
+            "_branch_label": "_endif36",
+            "_row_num": 36,
             "operationIdx": 19
           },
           {
-            "_row_num": 33,
+            "_row_num": 40,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(10);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(9);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 20
           },
           {
-            "clause": "end if",
-            "_token_type": "goto_label",
-            "_branch_label": "_endif34",
-            "_row_num": 34,
+            "clause": "begin screen",
+            "_row_num": 41,
+            "__rowNum__": 40,
+            "_token_type": "begin_screen",
+            "_end_screen_clause": {
+              "clause": "end screen",
+              "_row_num": 45,
+              "__rowNum__": 44,
+              "_token_type": "end_screen"
+            },
+            "_screen_block": "function() {var activePromptIndicies = [];\nif (data('hospitaliza')==2) {\nactivePromptIndicies.push(10);\n}\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 21
           },
           {
             "clause": "begin screen",
-            "_row_num": 37,
-            "__rowNum__": 36,
+            "_row_num": 47,
+            "__rowNum__": 46,
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 40,
-              "__rowNum__": 39,
+              "_row_num": 50,
+              "__rowNum__": 49,
               "_token_type": "end_screen"
             },
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(11);\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 22
           },
           {
-            "_row_num": 41,
+            "_row_num": 52,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 23
           },
           {
-            "_row_num": 42,
+            "_row_num": 53,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 24
           },
           {
-            "_row_num": 43,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 54,
             "operationIdx": 25
           },
           {
-            "_token_type": "exit_section",
-            "clause": "exit section",
-            "_row_num": 44,
-            "operationIdx": 26
-          },
-          {
-            "_row_num": 44,
+            "_row_num": 54,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(16);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 27
+            "operationIdx": 26
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 44,
-            "operationIdx": 28
+            "_row_num": 54,
+            "operationIdx": 27
           }
         ],
         "branch_label_map": {
           "_screen6": 1,
-          "_screen14": 2,
-          "_then15": 5,
-          "_screen16": 5,
-          "_else17": 7,
-          "_endif17": 7,
-          "_then19": 9,
-          "_screen20": 9,
-          "_else21": 11,
-          "_endif21": 11,
-          "_screen24": 11,
-          "_then25": 14,
-          "_screen26": 14,
-          "_else27": 16,
-          "_endif27": 16,
-          "_screen28": 16,
-          "_screen30": 17,
-          "_then32": 20,
-          "_screen33": 20,
-          "_else34": 22,
-          "_endif34": 22,
-          "_screen37": 22,
-          "_screen41": 23,
-          "_screen42": 24,
-          "_screen43": 25,
-          "_contents": 27,
-          "_screen44": 27
+          "_screen16": 2,
+          "_then17": 5,
+          "_screen18": 5,
+          "_else19": 7,
+          "_endif19": 7,
+          "_then21": 9,
+          "_screen22": 9,
+          "_else23": 11,
+          "_endif23": 11,
+          "_screen28": 11,
+          "_then30": 14,
+          "_screen31": 14,
+          "_else32": 16,
+          "_endif32": 16,
+          "_then34": 18,
+          "_screen35": 18,
+          "_else36": 20,
+          "_endif36": 20,
+          "_screen40": 20,
+          "_screen41": 21,
+          "_screen47": 22,
+          "_screen52": 23,
+          "_screen53": 24,
+          "_contents": 26,
+          "_screen54": 26
         }
       },
       "initial": {
@@ -3724,7 +2359,7 @@
         "valuesList": "dx_csv",
         "_defn": [
           {
-            "_row_num": 14,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -3742,7 +2377,7 @@
         "valuesList": "dx_csv",
         "_defn": [
           {
-            "_row_num": 24,
+            "_row_num": 28,
             "section_name": "survey"
           },
           {
@@ -3760,7 +2395,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 30,
+            "_row_num": 40,
             "section_name": "survey"
           },
           {
@@ -3777,7 +2412,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 43,
+            "_row_num": 53,
             "section_name": "survey"
           },
           {
@@ -3846,7 +2481,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 16,
+            "_row_num": 18,
             "section_name": "survey"
           },
           {
@@ -3863,7 +2498,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 31,
             "section_name": "survey"
           },
           {
@@ -3902,32 +2537,15 @@
         "elementSet": "data",
         "elementPath": "inq"
       },
-      "lab": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 41,
-            "section_name": "survey"
-          },
-          {
-            "_row_num": 30,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "lab",
-        "elementName": "lab",
-        "elementSet": "data",
-        "elementPath": "lab"
-      },
       "med": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 42,
+            "_row_num": 52,
             "section_name": "survey"
           },
           {
-            "_row_num": 31,
+            "_row_num": 30,
             "section_name": "model"
           }
         ],
@@ -3937,42 +2555,54 @@
         "elementPath": "med"
       },
       "sub_dx": {
-        "_defn": [
-          {
-            "_row_num": 20,
-            "section_name": "survey"
-          }
-        ],
         "type": "string",
         "valuesList": "subdx_csv",
+        "_defn": [
+          {
+            "_row_num": 22,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 32,
+            "section_name": "model"
+          }
+        ],
         "elementKey": "sub_dx",
         "elementName": "sub_dx",
         "elementSet": "data",
         "elementPath": "sub_dx"
       },
       "sub_dx2": {
+        "type": "string",
+        "valuesList": "subdx_csv",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 35,
             "section_name": "survey"
+          },
+          {
+            "_row_num": 33,
+            "section_name": "model"
           }
         ],
-        "type": "string",
-        "valuesList": "subdx",
         "elementKey": "sub_dx2",
         "elementName": "sub_dx2",
         "elementSet": "data",
         "elementPath": "sub_dx2"
       },
       "saida": {
-        "_defn": [
-          {
-            "_row_num": 33,
-            "section_name": "survey"
-          }
-        ],
         "type": "string",
         "valuesList": "saida",
+        "_defn": [
+          {
+            "_row_num": 43,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 35,
+            "section_name": "model"
+          }
+        ],
         "elementKey": "saida",
         "elementName": "saida",
         "elementSet": "data",

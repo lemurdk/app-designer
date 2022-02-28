@@ -706,27 +706,6 @@
         "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
-      },
-      {
-        "query_name": "dx_csv",
-        "query_type": "csv",
-        "uri": "\"dx.csv\"",
-        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
-        "_row_num": 3
-      },
-      {
-        "query_name": "sub_csv",
-        "query_type": "csv",
-        "uri": "\"dx.csv\"",
-        "callback": "_.chain(context)\n.uniq(function(x){return x.sub;})\n.map(function(place){\n    return {\n        data_value:place.sub, \n        diagnostico: place.diagnostico,\n        display:{title: {text: place.sub} }\n    } \n    })\n.value()",
-        "_row_num": 4
-      },
-      {
-        "query_name": "subdx_csv",
-        "query_type": "csv",
-        "uri": "\"dx.csv\"",
-        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.subdx, \n        diagnostico: place.diagnostico,\n        sub: place.sub,\n               display:{title: {text: place.subdx_label} }\n    } \n    })\n.value()",
-        "_row_num": 5
       }
     ],
     "prompt_types": [
@@ -765,6 +744,16 @@
         "calculation_name": "texto_display",
         "calculation": "calculates.idade_mes()<3 ? (\"Menor que 3 meses\") : calculates.idade_mes()>59 ? (\"Maior de 59 meses\") : (\"\")",
         "_row_num": 5
+      },
+      {
+        "calculation_name": "child_adult",
+        "calculation": "calculates.idade_mes()<216 ? \"C\" : \"A\"",
+        "_row_num": 6
+      },
+      {
+        "calculation_name": "letra_codigo",
+        "calculation": "data('cs') + calculates.child_adult()",
+        "_row_num": 7
       }
     ],
     "model": [
@@ -844,12 +833,12 @@
         "_row_num": 16
       },
       {
-        "type": "select_one_dropdown",
+        "type": "select_one",
         "name": "diagnostico",
         "_row_num": 17
       },
       {
-        "type": "select_one_dropdown",
+        "type": "select_one",
         "name": "diagno_secund",
         "_row_num": 18
       },
@@ -902,6 +891,26 @@
         "type": "string",
         "name": "inq",
         "_row_num": 29
+      },
+      {
+        "type": "string",
+        "name": "med",
+        "_row_num": 30
+      },
+      {
+        "type": "select_one",
+        "name": "sub_dx",
+        "_row_num": 32
+      },
+      {
+        "type": "select_one",
+        "name": "sub_dx2",
+        "_row_num": 33
+      },
+      {
+        "type": "select_one",
+        "name": "saida",
+        "_row_num": 35
       }
     ]
   },
@@ -1454,27 +1463,6 @@
         "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
-      },
-      "dx_csv": {
-        "query_name": "dx_csv",
-        "query_type": "csv",
-        "uri": "\"dx.csv\"",
-        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
-        "_row_num": 3
-      },
-      "sub_csv": {
-        "query_name": "sub_csv",
-        "query_type": "csv",
-        "uri": "\"dx.csv\"",
-        "callback": "_.chain(context)\n.uniq(function(x){return x.sub;})\n.map(function(place){\n    return {\n        data_value:place.sub, \n        diagnostico: place.diagnostico,\n        display:{title: {text: place.sub} }\n    } \n    })\n.value()",
-        "_row_num": 4
-      },
-      "subdx_csv": {
-        "query_name": "subdx_csv",
-        "query_type": "csv",
-        "uri": "\"dx.csv\"",
-        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.subdx, \n        diagnostico: place.diagnostico,\n        sub: place.sub,\n               display:{title: {text: place.subdx_label} }\n    } \n    })\n.value()",
-        "_row_num": 5
       }
     },
     "calculates": {
@@ -1497,6 +1485,16 @@
         "calculation_name": "texto_display",
         "calculation": "calculates.idade_mes()<3 ? (\"Menor que 3 meses\") : calculates.idade_mes()>59 ? (\"Maior de 59 meses\") : (\"\")",
         "_row_num": 5
+      },
+      "child_adult": {
+        "calculation_name": "child_adult",
+        "calculation": "calculates.idade_mes()<216 ? \"C\" : \"A\"",
+        "_row_num": 6
+      },
+      "letra_codigo": {
+        "calculation_name": "letra_codigo",
+        "calculation": "data('cs') + calculates.child_adult()",
+        "_row_num": 7
       }
     },
     "model": {
@@ -1829,6 +1827,46 @@
           }
         ],
         "elementKey": "inq"
+      },
+      "med": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 30,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "med"
+      },
+      "sub_dx": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 32,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "sub_dx"
+      },
+      "sub_dx2": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 33,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "sub_dx2"
+      },
+      "saida": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 35,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "saida"
       },
       "comentario_2": {
         "_defn": [
@@ -2779,6 +2817,58 @@
         "elementName": "inq",
         "elementSet": "data",
         "elementPath": "inq"
+      },
+      "med": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 30,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "med",
+        "elementName": "med",
+        "elementSet": "data",
+        "elementPath": "med"
+      },
+      "sub_dx": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 32,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "sub_dx",
+        "elementName": "sub_dx",
+        "elementSet": "data",
+        "elementPath": "sub_dx"
+      },
+      "sub_dx2": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 33,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "sub_dx2",
+        "elementName": "sub_dx2",
+        "elementSet": "data",
+        "elementPath": "sub_dx2"
+      },
+      "saida": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 35,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "saida",
+        "elementName": "saida",
+        "elementSet": "data",
+        "elementPath": "saida"
       },
       "comentario_2": {
         "_defn": [

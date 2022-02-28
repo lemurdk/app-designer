@@ -132,7 +132,6 @@
             "text": "Leucocitos"
           }
         },
-        "required": true,
         "_row_num": 15
       },
       {
@@ -143,12 +142,21 @@
             "text": "Hemoglobina (mg/dl)"
           }
         },
-        "required": true,
         "_row_num": 16
       },
       {
         "clause": "end screen",
         "_row_num": 17
+      },
+      {
+        "type": "string",
+        "name": "lab",
+        "display": {
+          "prompt": {
+            "text": "Inicias de Laboratorista"
+          }
+        },
+        "_row_num": 18
       },
       {
         "type": "text",
@@ -852,6 +860,16 @@
         ],
         "type": "integer",
         "elementKey": "campo"
+      },
+      "lab": {
+        "_defn": [
+          {
+            "_row_num": 18,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementKey": "lab"
       }
     },
     "section_names": [
@@ -958,7 +976,6 @@
                 "text": "Leucocitos"
               }
             },
-            "required": true,
             "_row_num": 15,
             "__rowNum__": 14,
             "_token_type": "prompt",
@@ -974,13 +991,27 @@
                 "text": "Hemoglobina (mg/dl)"
               }
             },
-            "required": true,
             "_row_num": 16,
             "__rowNum__": 15,
             "_token_type": "prompt",
             "_type": "decimal",
             "_branch_label_enclosing_screen": "survey/_screen4",
             "promptIdx": 6
+          },
+          {
+            "type": "string",
+            "name": "lab",
+            "display": {
+              "prompt": {
+                "text": "Inicias de Laboratorista"
+              }
+            },
+            "_row_num": 18,
+            "__rowNum__": 17,
+            "_token_type": "prompt",
+            "_type": "string",
+            "_branch_label_enclosing_screen": "survey/_screen18",
+            "promptIdx": 7
           },
           {
             "type": "text",
@@ -995,7 +1026,7 @@
             "_token_type": "prompt",
             "_type": "text",
             "_branch_label_enclosing_screen": "survey/_screen19",
-            "promptIdx": 7
+            "promptIdx": 8
           },
           {
             "_token_type": "prompt",
@@ -1003,7 +1034,7 @@
             "_type": "contents",
             "_row_num": 20,
             "_branch_label_enclosing_screen": "survey/_screen20",
-            "promptIdx": 8
+            "promptIdx": 9
           }
         ],
         "validation_tag_map": {
@@ -1011,9 +1042,7 @@
             1,
             2,
             3,
-            4,
-            5,
-            6
+            4
           ]
         },
         "operations": [
@@ -1032,38 +1061,45 @@
             "operationIdx": 0
           },
           {
-            "_row_num": 19,
+            "_row_num": 18,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 1
           },
           {
+            "_row_num": 19,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 2
+          },
+          {
             "_token_type": "exit_section",
             "clause": "exit section",
             "_row_num": 20,
-            "operationIdx": 2
+            "operationIdx": 3
           },
           {
             "_row_num": 20,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(9);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 3
+            "operationIdx": 4
           },
           {
             "_token_type": "resume",
             "clause": "resume",
             "_row_num": 20,
-            "operationIdx": 4
+            "operationIdx": 5
           }
         ],
         "branch_label_map": {
           "_screen4": 0,
-          "_screen19": 1,
-          "_contents": 3,
-          "_screen20": 3
+          "_screen18": 1,
+          "_screen19": 2,
+          "_contents": 4,
+          "_screen20": 4
         }
       },
       "initial": {
@@ -1483,6 +1519,19 @@
         "elementName": "campo",
         "elementSet": "data",
         "elementPath": "campo"
+      },
+      "lab": {
+        "_defn": [
+          {
+            "_row_num": 18,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementKey": "lab",
+        "elementName": "lab",
+        "elementSet": "data",
+        "elementPath": "lab"
       },
       "_id": {
         "type": "string",
