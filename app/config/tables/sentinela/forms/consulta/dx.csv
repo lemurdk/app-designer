@@ -4,57 +4,57 @@ MA01,Adenopatias,,,0
 PJ20,Agressao fisica,,,0
 4A8Z,Alergia,,,0
 JA40_0,Ameaca de aborto,,,0
-CA23,Asma Bronquial,,,0
-CA20,Bronquites,,,0
-CA07,IRA,,,0
-CA20_Y,Broncopneumonia,,,0
-CA40_Z,Pneumonia,,,0
-CA41,Bronquiolites,,,0
-CA00,Gripe /Catarro comum/ Resfriado/Constipacao,,,0
-1F23_0,Candidiase oral,,,0
-1F23_10,Candidiase vaginal,,,0
-MD81_4,Cólicas abdominal,,,0
-EB7Y,Dermatose,,,0
-1A40_Z,Disenteria (Basilar_ Amebiana),,,0
-GA34_3,Dismenorreia,,,0
-1A40_Z,Enterites,,,0
-DA01,Estomatites,,,0
-1G04,Escabiose,,,0
-1A07_Z,Febre Tifoide,,,0
-1A7Z,Gonorreia,,,0
-BA00_Z,Hipertensao Arterial,,,0
-BA2Z,Hipotensao Arterial,,,0
-JA60_Z,Hiperemese Gravidica,,,0
-AAZ1_90,Otites (Externo Media Purulenta),,,0
-1A36_0Z,Parasitismo Intestinal,,,0
-1B7Y,Pio dermites,,,0
-1F03,Sarampo (suspeita),,,0
-MG26,Sindrome Febril,,,0
-1B1Z,Tuberculose (Suspeita),,,0
-DA60,Ulcera Gastrica,,,0
-GC02,Uretrites,,,0
-1A92 ,Tricomoniase,,,0
-1E90,Varicela,,,0
-1C62_Z,VIH/Sida,,,0
-otro,Outras,,,0
 CA03020Y,Amigdalites/Faringite/Faringamidalites,CA03,Amigdalites,1
 CA03020Y,Amigdalites/Faringite/Faringamidalites,CA02,Faringite,1
 CA03020Y,Amigdalites/Faringite/Faringamidalites,CA0Y,Faringamidalites,1
 3A9Z,Anemia (ligeira moderada e grave),XS5W,Anemia ligeira,1
 3A9Z,Anemia (ligeira moderada e grave),XS0T,Anemia moderada,1
 3A9Z,Anemia (ligeira moderada e grave),XS25,Anemia grave,1
+CA23,Asma Bronquial,,,0
+CA20_Y,Broncopneumonia,,,0
+CA41,Bronquiolites,,,0
+CA20,Bronquites,,,0
+1F23_0,Candidiase oral,,,0
+1F23_10,Candidiase vaginal,,,0
+MD81_4,Cólicas abdominal,,,0
 9A60_Z,Conjuntivites (Alergica Bacteriana Viral),9A60_02,Conjuntivites Alergica,1
 9A60_Z,Conjuntivites (Alergica Bacteriana Viral),9A60_Y,Conjuntivites Bacteriana,1
 9A60_Z,Conjuntivites (Alergica Bacteriana Viral),1D84,Conjuntivites Viral,1
+EB7Y,Dermatose,,,0
+5A14,Diabetes Melitos,5A10,Diabetes Melitos Tipo I,1
+5A14,Diabetes Melitos,5A11,Diabetes Melitos Tipo II,1
 ME05_1,Diarreia /EDA,PA,Diarreia /EDA Ligeira ou Plano A ,1
 ME05_1,Diarreia /EDA,PB,Diarreia /EDA  Moderada ou Plano B,1
 ME05_1,Diarreia /EDA,PC,Diarreia /EDA Grave ou Plano C,1
-5A14,Diabetes Melitos,5A10,Diabetes Melitos Tipo I,1
-5A14,Diabetes Melitos,5A11,Diabetes Melitos Tipo II,1
+1A40_Z,Disenteria (Basilar_ Amebiana),,,0
+GA34_3,Dismenorreia,,,0
+1A40_Z,Enterites,,,0
+1G04,Escabiose,,,0
+DA01,Estomatites,,,0
+1A07_Z,Febre Tifoide,,,0
+1A7Z,Gonorreia,,,0
+CA00,Gripe /Catarro comum/ Resfriado/Constipacao,,,0
+JA60_Z,Hiperemese Gravidica,,,0
+BA00_Z,Hipertensao Arterial,,,0
+BA2Z,Hipotensao Arterial,,,0
+CA07,IRA,,,0
 FB_ME,Mialgia/ Lombalgia,FB56_2,Mialgia,1
 FB_ME,Mialgia/ Lombalgia,ME84_2,Lombalgia,1
+AAZ1_90,Otites (Externo Media Purulenta),,,0
 AAZ1_90,Otites (Externo Media Purulenta),AA1Z,Otites Externo,1
 AAZ1_90,Otites (Externo Media Purulenta),AA80,Otites Media,1
 AAZ1_90,Otites (Externo Media Purulenta),AA90,Otites  Purulenta,1
+outro,outro,,,0
 1F4Z,Paludismo/Malaria,1F4_S,Paludismo/Malaria Simples ,1
 1F4Z,Paludismo/Malaria,1F4_G,Paludismo/Malaria Grave,1
+1A36_0Z,Parasitismo Intestinal,,,0
+1B7Y,Pio dermites,,,0
+CA40_Z,Pneumonia,,,0
+1F03,Sarampo (suspeita),,,0
+MG26,Sindrome Febril,,,0
+1A92 ,Tricomoniase,,,0
+1B1Z,Tuberculose (Suspeita),,,0
+DA60,Ulcera Gastrica,,,0
+GC02,Uretrites,,,0
+1.00E+90,Varicela,,,0
+1C62_Z,VIH/Sida,,,0

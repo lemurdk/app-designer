@@ -737,7 +737,7 @@
       },
       {
         "calculation_name": "idade_mes",
-        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : sc.getMonths(data('ano'), data('mes'))",
+        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10)",
         "_row_num": 4
       },
       {
@@ -841,11 +841,6 @@
         "type": "select_one",
         "name": "diagno_secund",
         "_row_num": 18
-      },
-      {
-        "type": "select_one",
-        "name": "hospitaliza",
-        "_row_num": 19
       },
       {
         "type": "text",
@@ -1478,7 +1473,7 @@
       },
       "idade_mes": {
         "calculation_name": "idade_mes",
-        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : sc.getMonths(data('ano'), data('mes'))",
+        "calculation": "data('DOB_idade')=='1' ? adate.ageInMonths(data('dn')) : 12 * parseInt(data('ano'),10)",
         "_row_num": 4
       },
       "texto_display": {
@@ -1714,16 +1709,6 @@
           }
         ],
         "elementKey": "diagno_secund"
-      },
-      "hospitaliza": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 19,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "hospitaliza"
       },
       "comentario": {
         "type": "string",
@@ -2674,19 +2659,6 @@
         "elementName": "diagno_secund",
         "elementSet": "data",
         "elementPath": "diagno_secund"
-      },
-      "hospitaliza": {
-        "type": "string",
-        "_defn": [
-          {
-            "_row_num": 19,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "hospitaliza",
-        "elementName": "hospitaliza",
-        "elementSet": "data",
-        "elementPath": "hospitaliza"
       },
       "comentario": {
         "type": "string",

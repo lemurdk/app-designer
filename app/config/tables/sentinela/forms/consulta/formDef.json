@@ -175,7 +175,7 @@
       },
       {
         "clause": "if",
-        "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagno_secund'))<0",
+        "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"outro\"].indexOf(data('diagno_secund'))<0",
         "_row_num": 34
       },
       {
@@ -196,47 +196,18 @@
       },
       {
         "type": "select_one",
-        "values_list": "yesno",
-        "name": "hospitaliza",
+        "values_list": "saida",
+        "name": "saida",
         "display": {
           "prompt": {
-            "text": "Hospitalização"
+            "text": "Paciente foi"
           }
         },
-        "required": true,
         "_row_num": 40
       },
       {
         "clause": "begin screen",
         "_row_num": 41
-      },
-      {
-        "clause": "if",
-        "condition": "data('hospitaliza')==2",
-        "_row_num": 42
-      },
-      {
-        "type": "select_one",
-        "values_list": "saida",
-        "name": "saida",
-        "display": {
-          "prompt": {
-            "text": "Paciente foi {{data.hospitaliza}}:"
-          }
-        },
-        "_row_num": 43
-      },
-      {
-        "clause": "end if",
-        "_row_num": 44
-      },
-      {
-        "clause": "end screen",
-        "_row_num": 45
-      },
-      {
-        "clause": "begin screen",
-        "_row_num": 47
       },
       {
         "type": "note",
@@ -246,16 +217,12 @@
             "text": "Introducão dos resultados de laboratorio"
           }
         },
-        "_row_num": 48
+        "_row_num": 42
       },
       {
         "type": "linked_table",
         "values_list": "resultado",
-        "_row_num": 49
-      },
-      {
-        "clause": "end screen",
-        "_row_num": 50
+        "_row_num": 43
       },
       {
         "type": "string",
@@ -265,7 +232,7 @@
             "text": "inicias de medico assistente"
           }
         },
-        "_row_num": 52
+        "_row_num": 44
       },
       {
         "type": "text",
@@ -275,7 +242,11 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 53
+        "_row_num": 45
+      },
+      {
+        "clause": "end screen",
+        "_row_num": 46
       }
     ],
     "choices": [
@@ -431,6 +402,16 @@
       },
       {
         "choice_list_name": "saida",
+        "data_value": 0,
+        "display": {
+          "title": {
+            "text": "Hospitalizado"
+          }
+        },
+        "_row_num": 23
+      },
+      {
+        "choice_list_name": "saida",
         "data_value": 1,
         "display": {
           "title": {
@@ -551,7 +532,7 @@
       },
       {
         "calculation_name": "ysubdx",
-        "calculation": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagnostico'))<0 ? 1 : 0",
+        "calculation": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"outro\"].indexOf(data('diagnostico'))<0 ? 1 : 0",
         "_row_num": 8
       }
     ],
@@ -640,11 +621,6 @@
         "type": "select_one",
         "name": "diagno_secund",
         "_row_num": 18
-      },
-      {
-        "type": "select_one",
-        "name": "hospitaliza",
-        "_row_num": 19
       },
       {
         "type": "text",
@@ -953,6 +929,16 @@
       "saida": [
         {
           "choice_list_name": "saida",
+          "data_value": 0,
+          "display": {
+            "title": {
+              "text": "Hospitalizado"
+            }
+          },
+          "_row_num": 23
+        },
+        {
+          "choice_list_name": "saida",
           "data_value": 1,
           "display": {
             "title": {
@@ -1058,7 +1044,7 @@
       },
       "ysubdx": {
         "calculation_name": "ysubdx",
-        "calculation": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagnostico'))<0 ? 1 : 0",
+        "calculation": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"outro\"].indexOf(data('diagnostico'))<0 ? 1 : 0",
         "_row_num": 8
       }
     },
@@ -1266,26 +1252,11 @@
         ],
         "elementKey": "diagno_secund"
       },
-      "hospitaliza": {
-        "type": "string",
-        "valuesList": "yesno",
-        "_defn": [
-          {
-            "_row_num": 40,
-            "section_name": "survey"
-          },
-          {
-            "_row_num": 19,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "hospitaliza"
-      },
       "comentario": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 53,
+            "_row_num": 45,
             "section_name": "survey"
           },
           {
@@ -1387,7 +1358,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 52,
+            "_row_num": 44,
             "section_name": "survey"
           },
           {
@@ -1432,7 +1403,7 @@
         "valuesList": "saida",
         "_defn": [
           {
-            "_row_num": 43,
+            "_row_num": 40,
             "section_name": "survey"
           },
           {
@@ -1603,36 +1574,19 @@
           },
           {
             "type": "select_one",
-            "values_list": "yesno",
-            "name": "hospitaliza",
+            "values_list": "saida",
+            "name": "saida",
             "display": {
               "prompt": {
-                "text": "Hospitalização"
+                "text": "Paciente foi"
               }
             },
-            "required": true,
             "_row_num": 40,
             "__rowNum__": 39,
             "_token_type": "prompt",
             "_type": "select_one",
             "_branch_label_enclosing_screen": "survey/_screen40",
             "promptIdx": 9
-          },
-          {
-            "type": "select_one",
-            "values_list": "saida",
-            "name": "saida",
-            "display": {
-              "prompt": {
-                "text": "Paciente foi {{data.hospitaliza}}:"
-              }
-            },
-            "_row_num": 43,
-            "__rowNum__": 42,
-            "_token_type": "prompt",
-            "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen41",
-            "promptIdx": 10
           },
           {
             "type": "note",
@@ -1642,22 +1596,22 @@
                 "text": "Introducão dos resultados de laboratorio"
               }
             },
-            "_row_num": 48,
-            "__rowNum__": 47,
+            "_row_num": 42,
+            "__rowNum__": 41,
             "_token_type": "prompt",
             "_type": "note",
-            "_branch_label_enclosing_screen": "survey/_screen47",
-            "promptIdx": 11
+            "_branch_label_enclosing_screen": "survey/_screen41",
+            "promptIdx": 10
           },
           {
             "type": "linked_table",
             "values_list": "resultado",
-            "_row_num": 49,
-            "__rowNum__": 48,
+            "_row_num": 43,
+            "__rowNum__": 42,
             "_token_type": "prompt",
             "_type": "linked_table",
-            "_branch_label_enclosing_screen": "survey/_screen47",
-            "promptIdx": 12
+            "_branch_label_enclosing_screen": "survey/_screen41",
+            "promptIdx": 11
           },
           {
             "type": "string",
@@ -1667,12 +1621,12 @@
                 "text": "inicias de medico assistente"
               }
             },
-            "_row_num": 52,
-            "__rowNum__": 51,
+            "_row_num": 44,
+            "__rowNum__": 43,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen52",
-            "promptIdx": 13
+            "_branch_label_enclosing_screen": "survey/_screen41",
+            "promptIdx": 12
           },
           {
             "type": "text",
@@ -1682,20 +1636,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 53,
-            "__rowNum__": 52,
+            "_row_num": 45,
+            "__rowNum__": 44,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen53",
-            "promptIdx": 14
+            "_branch_label_enclosing_screen": "survey/_screen41",
+            "promptIdx": 13
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 54,
-            "_branch_label_enclosing_screen": "survey/_screen54",
-            "promptIdx": 15
+            "_row_num": 47,
+            "_branch_label_enclosing_screen": "survey/_screen47",
+            "promptIdx": 14
           }
         ],
         "validation_tag_map": {
@@ -1704,8 +1658,7 @@
             2,
             3,
             4,
-            7,
-            9
+            7
           ]
         },
         "operations": [
@@ -1833,7 +1786,7 @@
           },
           {
             "clause": "if",
-            "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"otro\"].indexOf(data('diagno_secund'))<0",
+            "condition": "[\"1B75\", \"MA01\", \"PJ20\", \"4A8Z\", \"JA40_0\", \"CA23\", \"CA20\", \"CA07\", \"CA20_Y\", \"CA40_Z\", \"CA41\", \"CA00\", \"1F23_0\", \"1F23_10\", \"MD81_4\", \"EB7Y\", \"1A40_Z\", \"GA34_3\", \"1A40_Z\", \"DA01\", \"1G04\", \"1A07_Z\", \"1A7Z\", \"BA00_Z\", \"BA2Z\", \"JA60_Z\", \"AAZ1_90\", \"1A36_0Z\", \"1B7Y\", \"1F03\", \"MG26\", \"1B1Z\", \"DA60\", \"GC02\", \"1A92\", \"1E90\", \"1C62_Z\", \"outro\"].indexOf(data('diagno_secund'))<0",
             "_row_num": 34,
             "__rowNum__": 33,
             "_token_type": "goto_label",
@@ -1873,59 +1826,33 @@
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 45,
-              "__rowNum__": 44,
+              "_row_num": 46,
+              "__rowNum__": 45,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nif (data('hospitaliza')==2) {\nactivePromptIndicies.push(10);\n}\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(10);\nactivePromptIndicies.push(11);\nactivePromptIndicies.push(12);\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 21
-          },
-          {
-            "clause": "begin screen",
-            "_row_num": 47,
-            "__rowNum__": 46,
-            "_token_type": "begin_screen",
-            "_end_screen_clause": {
-              "clause": "end screen",
-              "_row_num": 50,
-              "__rowNum__": 49,
-              "_token_type": "end_screen"
-            },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(11);\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 22
-          },
-          {
-            "_row_num": 52,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 23
-          },
-          {
-            "_row_num": 53,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 24
           },
           {
             "_token_type": "exit_section",
             "clause": "exit section",
-            "_row_num": 54,
-            "operationIdx": 25
+            "_row_num": 47,
+            "operationIdx": 22
           },
           {
-            "_row_num": 54,
+            "_row_num": 47,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 26
+            "operationIdx": 23
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 54,
-            "operationIdx": 27
+            "_row_num": 47,
+            "operationIdx": 24
           }
         ],
         "branch_label_map": {
@@ -1950,11 +1877,8 @@
           "_endif36": 20,
           "_screen40": 20,
           "_screen41": 21,
-          "_screen47": 22,
-          "_screen52": 23,
-          "_screen53": 24,
-          "_contents": 26,
-          "_screen54": 26
+          "_contents": 23,
+          "_screen47": 23
         }
       },
       "initial": {
@@ -2390,29 +2314,11 @@
         "elementSet": "data",
         "elementPath": "diagno_secund"
       },
-      "hospitaliza": {
-        "type": "string",
-        "valuesList": "yesno",
-        "_defn": [
-          {
-            "_row_num": 40,
-            "section_name": "survey"
-          },
-          {
-            "_row_num": 19,
-            "section_name": "model"
-          }
-        ],
-        "elementKey": "hospitaliza",
-        "elementName": "hospitaliza",
-        "elementSet": "data",
-        "elementPath": "hospitaliza"
-      },
       "comentario": {
         "type": "string",
         "_defn": [
           {
-            "_row_num": 53,
+            "_row_num": 45,
             "section_name": "survey"
           },
           {
@@ -2541,7 +2447,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 52,
+            "_row_num": 44,
             "section_name": "survey"
           },
           {
@@ -2595,7 +2501,7 @@
         "valuesList": "saida",
         "_defn": [
           {
-            "_row_num": 43,
+            "_row_num": 40,
             "section_name": "survey"
           },
           {

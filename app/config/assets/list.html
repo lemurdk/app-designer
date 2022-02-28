@@ -13,14 +13,14 @@
     <script>
 
         function editEntry(person) {
-            if (!confirm("Editar formulario de consulta?","Sim","Nao tonto")) return;
+            if (!confirm("Editar formulario de registro?","Sim","Nao tonto")) return;
 
             var dispatchStruct = null;
             var tableId = "sentinela";
             var screenPath = null;            
             var formId = "sentinela"; 
             var rowId = String(person.id_formssentinela);
-            console.log("EDIT consulta with row id:" + rowId);
+            console.log("EDIT registro with row id:" + rowId);
             odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
         }
 
