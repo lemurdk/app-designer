@@ -97,7 +97,7 @@
         "name": "GE",
         "display": {
           "prompt": {
-            "text": "Gota espessa: incontavel por (88888)"
+            "text": "Gota espessa: N/200 campo"
           }
         },
         "constraint": "data('GE')<10000 || data('GE')==88888",
@@ -109,11 +109,20 @@
         "name": "campo",
         "display": {
           "prompt": {
-            "text": "N campo"
+            "text": "N campo: Somente se o campo contado é menor que 200"
+          },
+          "constraint_message": {
+            "text": "Somente en caso que é menor que 200"
           }
         },
-        "default": "data('campo')==200",
-        "_row_num": 12
+        "constraint": "data('campo') <200",
+        "_row_num": 13
+      },
+      {
+        "type": "assign",
+        "name": "ncampo",
+        "calculation": "data('campo')==\"\" ? 200 : data('campo')",
+        "_row_num": 14
       },
       {
         "type": "decimal",
@@ -124,7 +133,7 @@
           }
         },
         "required": true,
-        "_row_num": 13
+        "_row_num": 15
       },
       {
         "type": "decimal",
@@ -135,11 +144,11 @@
           }
         },
         "required": true,
-        "_row_num": 14
+        "_row_num": 16
       },
       {
         "clause": "end screen",
-        "_row_num": 15
+        "_row_num": 17
       },
       {
         "type": "text",
@@ -149,7 +158,7 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 17
+        "_row_num": 19
       }
     ],
     "choices": [
@@ -796,7 +805,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 13,
+            "_row_num": 15,
             "section_name": "survey"
           },
           {
@@ -810,7 +819,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 14,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -824,7 +833,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 17,
+            "_row_num": 19,
             "section_name": "survey"
           },
           {
@@ -837,7 +846,7 @@
       "campo": {
         "_defn": [
           {
-            "_row_num": 12,
+            "_row_num": 13,
             "section_name": "survey"
           }
         ],
@@ -910,7 +919,7 @@
             "name": "GE",
             "display": {
               "prompt": {
-                "text": "Gota espessa: incontavel por (88888)"
+                "text": "Gota espessa: N/200 campo"
               }
             },
             "constraint": "data('GE')<10000 || data('GE')==88888",
@@ -927,12 +936,15 @@
             "name": "campo",
             "display": {
               "prompt": {
-                "text": "N campo"
+                "text": "N campo: Somente se o campo contado é menor que 200"
+              },
+              "constraint_message": {
+                "text": "Somente en caso que é menor que 200"
               }
             },
-            "default": "data('campo')==200",
-            "_row_num": 12,
-            "__rowNum__": 11,
+            "constraint": "data('campo') <200",
+            "_row_num": 13,
+            "__rowNum__": 12,
             "_token_type": "prompt",
             "_type": "integer",
             "_branch_label_enclosing_screen": "survey/_screen4",
@@ -947,8 +959,8 @@
               }
             },
             "required": true,
-            "_row_num": 13,
-            "__rowNum__": 12,
+            "_row_num": 15,
+            "__rowNum__": 14,
             "_token_type": "prompt",
             "_type": "decimal",
             "_branch_label_enclosing_screen": "survey/_screen4",
@@ -963,8 +975,8 @@
               }
             },
             "required": true,
-            "_row_num": 14,
-            "__rowNum__": 13,
+            "_row_num": 16,
+            "__rowNum__": 15,
             "_token_type": "prompt",
             "_type": "decimal",
             "_branch_label_enclosing_screen": "survey/_screen4",
@@ -978,19 +990,19 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 17,
-            "__rowNum__": 16,
+            "_row_num": 19,
+            "__rowNum__": 18,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen17",
+            "_branch_label_enclosing_screen": "survey/_screen19",
             "promptIdx": 7
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 18,
-            "_branch_label_enclosing_screen": "survey/_screen18",
+            "_row_num": 20,
+            "_branch_label_enclosing_screen": "survey/_screen20",
             "promptIdx": 8
           }
         ],
@@ -999,6 +1011,7 @@
             1,
             2,
             3,
+            4,
             5,
             6
           ]
@@ -1011,15 +1024,15 @@
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 15,
-              "__rowNum__": 14,
+              "_row_num": 17,
+              "__rowNum__": 16,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\nactivePromptIndicies.push(1);\nif (data('tdr')=='1') {\nactivePromptIndicies.push(2);\n}\nactivePromptIndicies.push(3);\nactivePromptIndicies.push(4);\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\nactivePromptIndicies.push(1);\nif (data('tdr')=='1') {\nactivePromptIndicies.push(2);\n}\nactivePromptIndicies.push(3);\nactivePromptIndicies.push(4);\nassign('ncampo', data('campo')==\"\" ? 200 : data('campo'));\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 0
           },
           {
-            "_row_num": 17,
+            "_row_num": 19,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 1
@@ -1027,11 +1040,11 @@
           {
             "_token_type": "exit_section",
             "clause": "exit section",
-            "_row_num": 18,
+            "_row_num": 20,
             "operationIdx": 2
           },
           {
-            "_row_num": 18,
+            "_row_num": 20,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
@@ -1042,15 +1055,15 @@
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 18,
+            "_row_num": 20,
             "operationIdx": 4
           }
         ],
         "branch_label_map": {
           "_screen4": 0,
-          "_screen17": 1,
+          "_screen19": 1,
           "_contents": 3,
-          "_screen18": 3
+          "_screen20": 3
         }
       },
       "initial": {
@@ -1411,7 +1424,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 13,
+            "_row_num": 15,
             "section_name": "survey"
           },
           {
@@ -1428,7 +1441,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 14,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -1445,7 +1458,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 17,
+            "_row_num": 19,
             "section_name": "survey"
           },
           {
@@ -1461,7 +1474,7 @@
       "campo": {
         "_defn": [
           {
-            "_row_num": 12,
+            "_row_num": 13,
             "section_name": "survey"
           }
         ],

@@ -90,7 +90,7 @@
         "_row_num": 13
       },
       {
-        "type": "select_one_dropdown",
+        "type": "select_one",
         "values_list": "dx_csv",
         "name": "diagnostico",
         "display": {
@@ -1166,7 +1166,7 @@
         "query_name": "dx_csv",
         "query_type": "csv",
         "uri": "\"dx.csv\"",
-        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
+        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico} } };\n}).value()",
         "_row_num": 3
       },
       {
@@ -2376,7 +2376,7 @@
         "query_name": "dx_csv",
         "query_type": "csv",
         "uri": "\"dx.csv\"",
-        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
+        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico} } };\n}).value()",
         "_row_num": 3
       },
       "sub_csv": {
@@ -2864,7 +2864,7 @@
             "promptIdx": 2
           },
           {
-            "type": "select_one_dropdown",
+            "type": "select_one",
             "values_list": "dx_csv",
             "name": "diagnostico",
             "display": {
@@ -2876,7 +2876,7 @@
             "_row_num": 14,
             "__rowNum__": 13,
             "_token_type": "prompt",
-            "_type": "select_one_dropdown",
+            "_type": "select_one",
             "_branch_label_enclosing_screen": "survey/_screen14",
             "promptIdx": 3
           },
