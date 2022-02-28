@@ -82,7 +82,7 @@
             "text": "Temperatura"
           }
         },
-        "constraint": "data('temperatura')<46 & data('temperatura')>25",
+        "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
         "_row_num": 12
       },
       {
@@ -2725,7 +2725,7 @@
                 "text": "Temperatura"
               }
             },
-            "constraint": "data('temperatura')<46 & data('temperatura')>25",
+            "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
             "_row_num": 12,
             "__rowNum__": 11,
             "_token_type": "prompt",
