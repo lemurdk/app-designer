@@ -8,7 +8,7 @@
       },
       {
         "setting_name": "form_version",
-        "value": 2022010501,
+        "value": 2022022800,
         "_row_num": 3
       },
       {
@@ -91,7 +91,7 @@
       },
       {
         "type": "select_one_dropdown",
-        "values_list": "diagnostico",
+        "values_list": "dx_csv",
         "name": "diagnostico",
         "display": {
           "prompt": {
@@ -123,7 +123,7 @@
       },
       {
         "type": "select_one",
-        "values_list": "subdx",
+        "values_list": "subdx_csv",
         "name": "sub_dx",
         "display": {
           "prompt": {
@@ -135,7 +135,7 @@
       },
       {
         "type": "select_one_dropdown",
-        "values_list": "diagnostico",
+        "values_list": "dx_csv",
         "name": "diagno_secund",
         "display": {
           "prompt": {
@@ -227,6 +227,26 @@
         "_row_num": 36
       },
       {
+        "type": "string",
+        "name": "lab",
+        "display": {
+          "prompt": {
+            "text": "Inicias de Laboratorista"
+          }
+        },
+        "_row_num": 37
+      },
+      {
+        "type": "string",
+        "name": "med",
+        "display": {
+          "prompt": {
+            "text": "inicias de medico assistente"
+          }
+        },
+        "_row_num": 38
+      },
+      {
         "type": "text",
         "name": "comentario",
         "display": {
@@ -234,7 +254,7 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 37
+        "_row_num": 39
       }
     ],
     "choices": [
@@ -1141,6 +1161,27 @@
         "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
+      },
+      {
+        "query_name": "dx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
+        "_row_num": 3
+      },
+      {
+        "query_name": "sub_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.uniq(function(x){return x.sub;})\n.map(function(place){\n    return {\n        data_value:place.sub, \n        diagnostico: place.diagnostico,\n        display:{title: {text: place.sub} }\n    } \n    })\n.value()",
+        "_row_num": 4
+      },
+      {
+        "query_name": "subdx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.subdx, \n        diagnostico: place.diagnostico,\n        sub: place.sub,\n               display:{title: {text: place.subdx_label} }\n    } \n    })\n.value()",
+        "_row_num": 5
       }
     ],
     "prompt_types": [
@@ -1311,6 +1352,26 @@
         "type": "string",
         "name": "esp_diagnostico_secudario",
         "_row_num": 26
+      },
+      {
+        "type": "select_one",
+        "name": "envio_tdr",
+        "_row_num": 28
+      },
+      {
+        "type": "string",
+        "name": "inq",
+        "_row_num": 29
+      },
+      {
+        "type": "string",
+        "name": "lab",
+        "_row_num": 30
+      },
+      {
+        "type": "string",
+        "name": "med",
+        "_row_num": 31
       }
     ]
   },
@@ -1339,7 +1400,7 @@
       },
       "form_version": {
         "setting_name": "form_version",
-        "value": 2022010501,
+        "value": 2022022800,
         "_row_num": 3
       },
       "survey": {
@@ -2310,6 +2371,27 @@
         "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
+      },
+      "dx_csv": {
+        "query_name": "dx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
+        "_row_num": 3
+      },
+      "sub_csv": {
+        "query_name": "sub_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.uniq(function(x){return x.sub;})\n.map(function(place){\n    return {\n        data_value:place.sub, \n        diagnostico: place.diagnostico,\n        display:{title: {text: place.sub} }\n    } \n    })\n.value()",
+        "_row_num": 4
+      },
+      "subdx_csv": {
+        "query_name": "subdx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.subdx, \n        diagnostico: place.diagnostico,\n        sub: place.sub,\n               display:{title: {text: place.subdx_label} }\n    } \n    })\n.value()",
+        "_row_num": 5
       }
     },
     "calculates": {
@@ -2515,7 +2597,7 @@
       },
       "diagnostico": {
         "type": "string",
-        "valuesList": "diagnostico",
+        "valuesList": "dx_csv",
         "_defn": [
           {
             "_row_num": 14,
@@ -2530,7 +2612,7 @@
       },
       "diagno_secund": {
         "type": "string",
-        "valuesList": "diagnostico",
+        "valuesList": "dx_csv",
         "_defn": [
           {
             "_row_num": 20,
@@ -2562,7 +2644,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 37,
+            "_row_num": 39,
             "section_name": "survey"
           },
           {
@@ -2640,6 +2722,54 @@
         ],
         "elementKey": "esp_diagnostico_secudario"
       },
+      "envio_tdr": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 28,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "envio_tdr"
+      },
+      "inq": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 29,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "inq"
+      },
+      "lab": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 37,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 30,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "lab"
+      },
+      "med": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 38,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 31,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "med"
+      },
       "sub_dx": {
         "_defn": [
           {
@@ -2648,7 +2778,7 @@
           }
         ],
         "type": "string",
-        "valuesList": "subdx",
+        "valuesList": "subdx_csv",
         "elementKey": "sub_dx"
       },
       "sub_dx2": {
@@ -2735,7 +2865,7 @@
           },
           {
             "type": "select_one_dropdown",
-            "values_list": "diagnostico",
+            "values_list": "dx_csv",
             "name": "diagnostico",
             "display": {
               "prompt": {
@@ -2768,7 +2898,7 @@
           },
           {
             "type": "select_one",
-            "values_list": "subdx",
+            "values_list": "subdx_csv",
             "name": "sub_dx",
             "display": {
               "prompt": {
@@ -2785,7 +2915,7 @@
           },
           {
             "type": "select_one_dropdown",
-            "values_list": "diagnostico",
+            "values_list": "dx_csv",
             "name": "diagno_secund",
             "display": {
               "prompt": {
@@ -2886,6 +3016,36 @@
             "promptIdx": 12
           },
           {
+            "type": "string",
+            "name": "lab",
+            "display": {
+              "prompt": {
+                "text": "Inicias de Laboratorista"
+              }
+            },
+            "_row_num": 37,
+            "__rowNum__": 36,
+            "_token_type": "prompt",
+            "_type": "string",
+            "_branch_label_enclosing_screen": "survey/_screen37",
+            "promptIdx": 13
+          },
+          {
+            "type": "string",
+            "name": "med",
+            "display": {
+              "prompt": {
+                "text": "inicias de medico assistente"
+              }
+            },
+            "_row_num": 38,
+            "__rowNum__": 37,
+            "_token_type": "prompt",
+            "_type": "string",
+            "_branch_label_enclosing_screen": "survey/_screen38",
+            "promptIdx": 14
+          },
+          {
             "type": "text",
             "name": "comentario",
             "display": {
@@ -2893,20 +3053,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 37,
-            "__rowNum__": 36,
+            "_row_num": 39,
+            "__rowNum__": 38,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen37",
-            "promptIdx": 13
+            "_branch_label_enclosing_screen": "survey/_screen39",
+            "promptIdx": 15
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 38,
-            "_branch_label_enclosing_screen": "survey/_screen38",
-            "promptIdx": 14
+            "_row_num": 40,
+            "_branch_label_enclosing_screen": "survey/_screen40",
+            "promptIdx": 16
           }
         ],
         "validation_tag_map": {
@@ -3081,25 +3241,37 @@
             "operationIdx": 20
           },
           {
-            "_token_type": "exit_section",
-            "clause": "exit section",
-            "_row_num": 38,
-            "operationIdx": 21
-          },
-          {
             "_row_num": 38,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 21
+          },
+          {
+            "_row_num": 39,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 22
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 40,
+            "operationIdx": 23
+          },
+          {
+            "_row_num": 40,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(16);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 22
+            "operationIdx": 24
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 38,
-            "operationIdx": 23
+            "_row_num": 40,
+            "operationIdx": 25
           }
         ],
         "branch_label_map": {
@@ -3123,8 +3295,10 @@
           "_endif30": 19,
           "_screen33": 19,
           "_screen37": 20,
-          "_contents": 22,
-          "_screen38": 22
+          "_screen38": 21,
+          "_screen39": 22,
+          "_contents": 24,
+          "_screen40": 24
         }
       },
       "initial": {
@@ -3526,7 +3700,7 @@
       },
       "diagnostico": {
         "type": "string",
-        "valuesList": "diagnostico",
+        "valuesList": "dx_csv",
         "_defn": [
           {
             "_row_num": 14,
@@ -3544,7 +3718,7 @@
       },
       "diagno_secund": {
         "type": "string",
-        "valuesList": "diagnostico",
+        "valuesList": "dx_csv",
         "_defn": [
           {
             "_row_num": 20,
@@ -3582,7 +3756,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 37,
+            "_row_num": 39,
             "section_name": "survey"
           },
           {
@@ -3681,6 +3855,66 @@
         "elementSet": "data",
         "elementPath": "esp_diagnostico_secudario"
       },
+      "envio_tdr": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 28,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "envio_tdr",
+        "elementName": "envio_tdr",
+        "elementSet": "data",
+        "elementPath": "envio_tdr"
+      },
+      "inq": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 29,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "inq",
+        "elementName": "inq",
+        "elementSet": "data",
+        "elementPath": "inq"
+      },
+      "lab": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 37,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 30,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "lab",
+        "elementName": "lab",
+        "elementSet": "data",
+        "elementPath": "lab"
+      },
+      "med": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 38,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 31,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "med",
+        "elementName": "med",
+        "elementSet": "data",
+        "elementPath": "med"
+      },
       "sub_dx": {
         "_defn": [
           {
@@ -3689,7 +3923,7 @@
           }
         ],
         "type": "string",
-        "valuesList": "subdx",
+        "valuesList": "subdx_csv",
         "elementKey": "sub_dx",
         "elementName": "sub_dx",
         "elementSet": "data",

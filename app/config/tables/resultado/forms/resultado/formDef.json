@@ -8,7 +8,7 @@
       },
       {
         "setting_name": "form_version",
-        "value": 2022010601,
+        "value": 2022022800,
         "_row_num": 3
       },
       {
@@ -112,7 +112,7 @@
             "text": "N campo"
           }
         },
-        "default": 200,
+        "default": "data('campo')==200",
         "_row_num": 12
       },
       {
@@ -423,7 +423,7 @@
       },
       "form_version": {
         "setting_name": "form_version",
-        "value": 2022010601,
+        "value": 2022022800,
         "_row_num": 3
       },
       "survey": {
@@ -930,7 +930,7 @@
                 "text": "N campo"
               }
             },
-            "default": 200,
+            "default": "data('campo')==200",
             "_row_num": 12,
             "__rowNum__": 11,
             "_token_type": "prompt",

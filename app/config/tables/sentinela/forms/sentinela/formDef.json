@@ -8,7 +8,7 @@
       },
       {
         "setting_name": "form_version",
-        "value": 2022010501,
+        "value": 2022022800,
         "_row_num": 3
       },
       {
@@ -132,12 +132,6 @@
         "_row_num": 16
       },
       {
-        "type": "assign",
-        "name": "id_paciente",
-        "calculation": "calculates.letra_codigo() + data('numero_codigo')",
-        "_row_num": 17
-      },
-      {
         "clause": "begin screen",
         "_row_num": 18
       },
@@ -186,11 +180,6 @@
         "_row_num": 22
       },
       {
-        "clause": "if",
-        "condition": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
-        "_row_num": 23
-      },
-      {
         "type": "decimal",
         "name": "peso",
         "display": {
@@ -213,10 +202,6 @@
         "_row_num": 25
       },
       {
-        "clause": "end if",
-        "_row_num": 27
-      },
-      {
         "clause": "end screen",
         "_row_num": 28
       },
@@ -227,6 +212,27 @@
         "_row_num": 29
       },
       {
+        "type": "select_one",
+        "values_list": "yesno",
+        "name": "envio_tdr",
+        "display": {
+          "prompt": {
+            "text": "O/A paciente foi enviada a fazer TDR"
+          }
+        },
+        "_row_num": 31
+      },
+      {
+        "type": "string",
+        "name": "inq",
+        "display": {
+          "prompt": {
+            "text": "Inicias do Inqueridor"
+          }
+        },
+        "_row_num": 34
+      },
+      {
         "type": "text",
         "name": "comentario_2",
         "display": {
@@ -234,7 +240,7 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 42
+        "_row_num": 37
       }
     ],
     "choices": [
@@ -700,6 +706,27 @@
         "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
+      },
+      {
+        "query_name": "dx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
+        "_row_num": 3
+      },
+      {
+        "query_name": "sub_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.uniq(function(x){return x.sub;})\n.map(function(place){\n    return {\n        data_value:place.sub, \n        diagnostico: place.diagnostico,\n        display:{title: {text: place.sub} }\n    } \n    })\n.value()",
+        "_row_num": 4
+      },
+      {
+        "query_name": "subdx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.subdx, \n        diagnostico: place.diagnostico,\n        sub: place.sub,\n               display:{title: {text: place.subdx_label} }\n    } \n    })\n.value()",
+        "_row_num": 5
       }
     ],
     "prompt_types": [
@@ -865,6 +892,16 @@
         "type": "string",
         "name": "esp_diagnostico_secudario",
         "_row_num": 26
+      },
+      {
+        "type": "select_one",
+        "name": "envio_tdr",
+        "_row_num": 28
+      },
+      {
+        "type": "string",
+        "name": "inq",
+        "_row_num": 29
       }
     ]
   },
@@ -893,7 +930,7 @@
       },
       "form_version": {
         "setting_name": "form_version",
-        "value": 2022010501,
+        "value": 2022022800,
         "_row_num": 3
       },
       "survey": {
@@ -1417,6 +1454,27 @@
         "newRowInitialElementKeyToValueMap": "{id_formssentinela: opendatakit.getCurrentInstanceId(), id_paciente: data('id_paciente'), nome: data('nome'), nome_casa: data('nome_casa'), sexo: data('sexo'), dn: data('dn'), ano: data('ano'), mes: data('mes')}",
         "openRowInitialElementKeyToValueMap": "{}",
         "_row_num": 2
+      },
+      "dx_csv": {
+        "query_name": "dx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context).pluck('diagnostico').uniq().map(function(diagnostico){\nreturn {data_value:diagnostico, display:{title: {text: diagnostico_label} } };\n}).value()",
+        "_row_num": 3
+      },
+      "sub_csv": {
+        "query_name": "sub_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.uniq(function(x){return x.sub;})\n.map(function(place){\n    return {\n        data_value:place.sub, \n        diagnostico: place.diagnostico,\n        display:{title: {text: place.sub} }\n    } \n    })\n.value()",
+        "_row_num": 4
+      },
+      "subdx_csv": {
+        "query_name": "subdx_csv",
+        "query_type": "csv",
+        "uri": "\"dx.csv\"",
+        "callback": "_.chain(context)\n.map(function(place){\n    return {\n        data_value:place.subdx, \n        diagnostico: place.diagnostico,\n        sub: place.sub,\n               display:{title: {text: place.subdx_label} }\n    } \n    })\n.value()",
+        "_row_num": 5
       }
     },
     "calculates": {
@@ -1526,10 +1584,6 @@
       },
       "id_paciente": {
         "_defn": [
-          {
-            "_row_num": 17,
-            "section_name": "survey"
-          },
           {
             "_row_num": 29,
             "section_name": "survey"
@@ -1747,10 +1801,39 @@
         ],
         "elementKey": "esp_diagnostico_secudario"
       },
+      "envio_tdr": {
+        "type": "string",
+        "valuesList": "yesno",
+        "_defn": [
+          {
+            "_row_num": 31,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 28,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "envio_tdr"
+      },
+      "inq": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 34,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 29,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "inq"
+      },
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 42,
+            "_row_num": 37,
             "section_name": "survey"
           }
         ],
@@ -1952,6 +2035,37 @@
             "promptIdx": 10
           },
           {
+            "type": "select_one",
+            "values_list": "yesno",
+            "name": "envio_tdr",
+            "display": {
+              "prompt": {
+                "text": "O/A paciente foi enviada a fazer TDR"
+              }
+            },
+            "_row_num": 31,
+            "__rowNum__": 30,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "survey/_screen31",
+            "promptIdx": 11
+          },
+          {
+            "type": "string",
+            "name": "inq",
+            "display": {
+              "prompt": {
+                "text": "Inicias do Inqueridor"
+              }
+            },
+            "_row_num": 34,
+            "__rowNum__": 33,
+            "_token_type": "prompt",
+            "_type": "string",
+            "_branch_label_enclosing_screen": "survey/_screen34",
+            "promptIdx": 12
+          },
+          {
             "type": "text",
             "name": "comentario_2",
             "display": {
@@ -1959,20 +2073,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 42,
-            "__rowNum__": 41,
+            "_row_num": 37,
+            "__rowNum__": 36,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen42",
-            "promptIdx": 11
+            "_branch_label_enclosing_screen": "survey/_screen37",
+            "promptIdx": 13
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 43,
-            "_branch_label_enclosing_screen": "survey/_screen43",
-            "promptIdx": 12
+            "_row_num": 38,
+            "_branch_label_enclosing_screen": "survey/_screen38",
+            "promptIdx": 14
           }
         ],
         "validation_tag_map": {
@@ -2004,15 +2118,6 @@
             "operationIdx": 0
           },
           {
-            "type": "assign",
-            "name": "id_paciente",
-            "calculation": "calculates.letra_codigo() + data('numero_codigo')",
-            "_row_num": 17,
-            "__rowNum__": 16,
-            "_token_type": "assign",
-            "operationIdx": 1
-          },
-          {
             "clause": "begin screen",
             "_row_num": 18,
             "__rowNum__": 17,
@@ -2023,8 +2128,8 @@
               "__rowNum__": 27,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nif (data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)) {\nactivePromptIndicies.push(9);\nactivePromptIndicies.push(10);\n}\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 2
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nactivePromptIndicies.push(9);\nactivePromptIndicies.push(10);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 1
           },
           {
             "type": "assign",
@@ -2033,42 +2138,56 @@
             "_row_num": 29,
             "__rowNum__": 28,
             "_token_type": "assign",
+            "operationIdx": 2
+          },
+          {
+            "_row_num": 31,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(11);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 3
           },
           {
-            "_row_num": 42,
+            "_row_num": 34,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(11);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 4
+          },
+          {
+            "_row_num": 37,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 5
           },
           {
             "_token_type": "exit_section",
             "clause": "exit section",
-            "_row_num": 43,
-            "operationIdx": 5
+            "_row_num": 38,
+            "operationIdx": 6
           },
           {
-            "_row_num": 43,
+            "_row_num": 38,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 6
+            "operationIdx": 7
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 43,
-            "operationIdx": 7
+            "_row_num": 38,
+            "operationIdx": 8
           }
         ],
         "branch_label_map": {
           "_screen3": 0,
-          "_screen18": 2,
-          "_screen42": 4,
-          "_contents": 6,
-          "_screen43": 6
+          "_screen18": 1,
+          "_screen31": 3,
+          "_screen34": 4,
+          "_screen37": 5,
+          "_contents": 7,
+          "_screen38": 7
         }
       },
       "initial": {
@@ -2353,10 +2472,6 @@
       "id_paciente": {
         "_defn": [
           {
-            "_row_num": 17,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 29,
             "section_name": "survey"
           },
@@ -2630,10 +2745,45 @@
         "elementSet": "data",
         "elementPath": "esp_diagnostico_secudario"
       },
+      "envio_tdr": {
+        "type": "string",
+        "valuesList": "yesno",
+        "_defn": [
+          {
+            "_row_num": 31,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 28,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "envio_tdr",
+        "elementName": "envio_tdr",
+        "elementSet": "data",
+        "elementPath": "envio_tdr"
+      },
+      "inq": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 34,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 29,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "inq",
+        "elementName": "inq",
+        "elementSet": "data",
+        "elementPath": "inq"
+      },
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 42,
+            "_row_num": 37,
             "section_name": "survey"
           }
         ],
@@ -2763,6 +2913,13 @@
         "_key": "displayChoicesList",
         "_type": "object",
         "_value": "[{\"choice_list_name\":\"DOB_idade\",\"data_value\":1,\"display\":{\"title\":{\"text\":\"Data de Nascimento\"}},\"_row_num\":5},{\"choice_list_name\":\"DOB_idade\",\"data_value\":2,\"display\":{\"title\":{\"text\":\"Idade\"}},\"_row_num\":6}]"
+      },
+      {
+        "_partition": "Column",
+        "_aspect": "envio_tdr",
+        "_key": "displayChoicesList",
+        "_type": "object",
+        "_value": "[{\"choice_list_name\":\"yesno\",\"data_value\":1,\"display\":{\"title\":{\"text\":\"Sim\"}},\"_row_num\":8},{\"choice_list_name\":\"yesno\",\"data_value\":2,\"display\":{\"title\":{\"text\":\"Não\"}},\"_row_num\":9}]"
       },
       {
         "_partition": "Column",
