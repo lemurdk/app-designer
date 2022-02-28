@@ -906,6 +906,31 @@
         "type": "select_one",
         "name": "saida",
         "_row_num": 35
+      },
+      {
+        "type": "select_one",
+        "name": "tto",
+        "_row_num": 37
+      },
+      {
+        "type": "decimal",
+        "name": "quanti",
+        "_row_num": 38
+      },
+      {
+        "type": "select_one",
+        "name": "unidade",
+        "_row_num": 39
+      },
+      {
+        "type": "select_one",
+        "name": "freq",
+        "_row_num": 40
+      },
+      {
+        "type": "select_one",
+        "name": "via",
+        "_row_num": 41
       }
     ]
   },
@@ -1852,6 +1877,56 @@
           }
         ],
         "elementKey": "saida"
+      },
+      "tto": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 37,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "tto"
+      },
+      "quanti": {
+        "type": "number",
+        "_defn": [
+          {
+            "_row_num": 38,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "quanti"
+      },
+      "unidade": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 39,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "unidade"
+      },
+      "freq": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 40,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "freq"
+      },
+      "via": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 41,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "via"
       },
       "comentario_2": {
         "_defn": [
@@ -2841,6 +2916,71 @@
         "elementName": "saida",
         "elementSet": "data",
         "elementPath": "saida"
+      },
+      "tto": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 37,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "tto",
+        "elementName": "tto",
+        "elementSet": "data",
+        "elementPath": "tto"
+      },
+      "quanti": {
+        "type": "number",
+        "_defn": [
+          {
+            "_row_num": 38,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "quanti",
+        "elementName": "quanti",
+        "elementSet": "data",
+        "elementPath": "quanti"
+      },
+      "unidade": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 39,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "unidade",
+        "elementName": "unidade",
+        "elementSet": "data",
+        "elementPath": "unidade"
+      },
+      "freq": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 40,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "freq",
+        "elementName": "freq",
+        "elementSet": "data",
+        "elementPath": "freq"
+      },
+      "via": {
+        "type": "string",
+        "_defn": [
+          {
+            "_row_num": 41,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "via",
+        "elementName": "via",
+        "elementSet": "data",
+        "elementPath": "via"
       },
       "comentario_2": {
         "_defn": [
