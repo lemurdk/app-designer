@@ -33,156 +33,19 @@
     ],
     "survey": [
       {
-        "clause": "begin screen",
+        "type": "assign",
+        "name": "id_paciente",
+        "calculation": "calculates.letra_codigo() + data('numero_codigo')",
         "_row_num": 5
       },
       {
-        "type": "assign",
-        "name": "data_consulta",
-        "calculation": "adate.today()",
-        "hideInContents": true,
-        "_row_num": 6
-      },
-      {
-        "type": "note",
-        "name": "nota_1",
-        "display": {
-          "prompt": {
-            "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}"
-          }
-        },
-        "_row_num": 7
-      },
-      {
-        "type": "select_one",
-        "values_list": "DOB_idade",
-        "name": "DOB_idade",
-        "display": {
-          "prompt": {
-            "text": "Idade ou data de nascimento?"
-          }
-        },
-        "required": true,
-        "_row_num": 8
-      },
-      {
-        "clause": "if",
-        "condition": "data('DOB_idade')=='1'",
-        "_row_num": 9
-      },
-      {
-        "type": "adate",
-        "name": "dn",
-        "display": {
-          "prompt": {
-            "text": "Data de Nascimento"
-          }
-        },
-        "required": "data('DOB_idade')=='1'",
-        "_row_num": 10
-      },
-      {
-        "clause": "else",
-        "_row_num": 11
-      },
-      {
-        "type": "integer",
-        "name": "ano",
-        "display": {
-          "prompt": {
-            "text": "Idades em anos"
-          },
-          "hint": {
-            "text": "se for menos de 1 ano coloca zero"
-          }
-        },
-        "required": "data('DOB_idade')=='2'",
-        "_row_num": 12
-      },
-      {
-        "clause": "if",
-        "condition": "data('ano')<5",
-        "_row_num": 13
-      },
-      {
-        "type": "integer",
-        "name": "mes",
-        "display": {
-          "prompt": {
-            "text": "Idade em meses"
-          },
-          "hint": {
-            "text": "se nao souber coloca zero, se for 12 acrescenta 1 ano"
-          }
-        },
-        "constraint": "data('mes')<12",
-        "required": "data('DOB_idade')=='2' && data('ano')<5",
-        "_row_num": 14
-      },
-      {
-        "clause": "end if",
-        "_row_num": 16
-      },
-      {
-        "clause": "end if",
-        "_row_num": 17
-      },
-      {
-        "clause": "end screen",
-        "_row_num": 18
-      },
-      {
         "clause": "begin screen",
-        "_row_num": 20
-      },
-      {
-        "type": "integer",
-        "name": "numero_codigo",
-        "display": {
-          "prompt": {
-            "text": "Introduza o numero se serie do cartao: {{calculates.letra_codigo}}"
-          }
-        },
-        "required": true,
-        "_row_num": 21
-      },
-      {
-        "type": "string",
-        "name": "nome",
-        "display": {
-          "prompt": {
-            "text": "Nome e Apelido"
-          }
-        },
-        "required": true,
-        "_row_num": 22
-      },
-      {
-        "type": "string",
-        "name": "nome_casa",
-        "display": {
-          "prompt": {
-            "text": "Nome de Casa"
-          }
-        },
-        "_row_num": 23
-      },
-      {
-        "type": "select_one",
-        "values_list": "sexo",
-        "name": "sexo",
-        "display": {
-          "prompt": {
-            "text": "Sexo"
-          }
-        },
-        "required": true,
-        "_row_num": 24
+        "_row_num": 6
       },
       {
         "clause": "if",
         "condition": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
-        "_row_num": 25
+        "_row_num": 7
       },
       {
         "type": "select_one",
@@ -193,49 +56,11 @@
             "text": "Gravida"
           }
         },
-        "required": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
-        "_row_num": 26
+        "_row_num": 8
       },
       {
         "clause": "end if",
-        "_row_num": 27
-      },
-      {
-        "clause": "end screen",
-        "_row_num": 28
-      },
-      {
-        "type": "assign",
-        "name": "id_paciente",
-        "calculation": "calculates.letra_codigo() + data('numero_codigo')",
-        "_row_num": 29
-      },
-      {
-        "clause": "begin screen",
-        "_row_num": 31
-      },
-      {
-        "type": "decimal",
-        "name": "peso",
-        "display": {
-          "prompt": {
-            "text": "Peso"
-          }
-        },
-        "constraint": "data('peso')<250",
-        "required": true,
-        "_row_num": 32
-      },
-      {
-        "type": "string",
-        "name": "procedencia",
-        "display": {
-          "prompt": {
-            "text": "Proveniência"
-          }
-        },
-        "required": true,
-        "_row_num": 33
+        "_row_num": 9
       },
       {
         "type": "select_one",
@@ -247,7 +72,7 @@
           }
         },
         "required": true,
-        "_row_num": 34
+        "_row_num": 11
       },
       {
         "type": "decimal",
@@ -258,8 +83,11 @@
           }
         },
         "constraint": "data('temperatura')<46 & data('temperatura')>25",
-        "required": true,
-        "_row_num": 35
+        "_row_num": 12
+      },
+      {
+        "clause": "end screen",
+        "_row_num": 13
       },
       {
         "type": "select_one_dropdown",
@@ -271,12 +99,12 @@
           }
         },
         "required": true,
-        "_row_num": 36
+        "_row_num": 14
       },
       {
         "clause": "if",
         "condition": "data('diagnostico')=='outro'",
-        "_row_num": 37
+        "_row_num": 15
       },
       {
         "type": "string",
@@ -287,11 +115,23 @@
           }
         },
         "required": "data('diagnostico')=='outro'",
-        "_row_num": 38
+        "_row_num": 16
       },
       {
         "clause": "end if",
-        "_row_num": 39
+        "_row_num": 17
+      },
+      {
+        "type": "select_one",
+        "values_list": "subdx",
+        "name": "sub_dx",
+        "display": {
+          "prompt": {
+            "text": "especifique:"
+          }
+        },
+        "choice_filter_1": "choice_list_name.diagnostico === data('diagnostico')",
+        "_row_num": 18
       },
       {
         "type": "select_one_dropdown",
@@ -302,12 +142,12 @@
             "text": "Diagnósticos secundarios"
           }
         },
-        "_row_num": 40
+        "_row_num": 20
       },
       {
         "clause": "if",
         "condition": "data('diagno_secund')=='outro'",
-        "_row_num": 41
+        "_row_num": 21
       },
       {
         "type": "string",
@@ -318,11 +158,18 @@
           }
         },
         "required": "data('diagno_secund')=='outro'",
-        "_row_num": 42
+        "_row_num": 22
       },
       {
         "clause": "end if",
-        "_row_num": 43
+        "_row_num": 23
+      },
+      {
+        "type": "select_one",
+        "values_list": "subdx",
+        "name": "sub_dx2",
+        "choice_filter_1": "choice_item.diagnostico === data('diagno_secund')",
+        "_row_num": 24
       },
       {
         "type": "select_one",
@@ -334,15 +181,31 @@
           }
         },
         "required": true,
-        "_row_num": 44
+        "_row_num": 26
       },
       {
-        "clause": "end screen",
-        "_row_num": 45
+        "clause": "if",
+        "condition": "data('hospitaliza')==2",
+        "_row_num": 28
+      },
+      {
+        "type": "select_one",
+        "values_list": "saida",
+        "name": "saida",
+        "display": {
+          "prompt": {
+            "text": "Paciente foi:"
+          }
+        },
+        "_row_num": 29
+      },
+      {
+        "clause": "end if",
+        "_row_num": 30
       },
       {
         "clause": "begin screen",
-        "_row_num": 46
+        "_row_num": 33
       },
       {
         "type": "note",
@@ -352,16 +215,16 @@
             "text": "Introducão dos resultados de laboratorio"
           }
         },
-        "_row_num": 47
+        "_row_num": 34
       },
       {
         "type": "linked_table",
         "values_list": "resultado",
-        "_row_num": 48
+        "_row_num": 35
       },
       {
         "clause": "end screen",
-        "_row_num": 49
+        "_row_num": 36
       },
       {
         "type": "text",
@@ -371,7 +234,7 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 50
+        "_row_num": 37
       }
     ],
     "choices": [
@@ -527,273 +390,33 @@
       },
       {
         "choice_list_name": "diagnostico",
-        "data_value": "1F4Z",
+        "data_value": "1B75",
         "display": {
           "title": {
-            "text": "Paludismo (malária)"
+            "text": "Abcesso"
           }
         },
         "_row_num": 22
       },
       {
         "choice_list_name": "diagnostico",
-        "data_value": "3A9Z",
+        "data_value": "MA01",
         "display": {
           "title": {
-            "text": "Anemia"
+            "text": "Adenopatias"
           }
         },
         "_row_num": 23
       },
       {
         "choice_list_name": "diagnostico",
-        "data_value": "1A07.Z",
+        "data_value": "PJ20",
         "display": {
           "title": {
-            "text": "Febre Tifoide"
+            "text": "Agressão física"
           }
         },
         "_row_num": 24
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A40.Z",
-        "display": {
-          "title": {
-            "text": "Disenteria"
-          }
-        },
-        "_row_num": 25
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "RA01",
-        "display": {
-          "title": {
-            "text": "COVID-19"
-          }
-        },
-        "_row_num": 26
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA40.Z",
-        "display": {
-          "title": {
-            "text": "Pneumonia"
-          }
-        },
-        "_row_num": 27
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "ME05.1",
-        "display": {
-          "title": {
-            "text": "Diarrea"
-          }
-        },
-        "_row_num": 28
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1B1Z",
-        "display": {
-          "title": {
-            "text": "Tuberculosis"
-          }
-        },
-        "_row_num": 29
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1C62.Z",
-        "display": {
-          "title": {
-            "text": "HIV"
-          }
-        },
-        "_row_num": 30
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "DA42.Z",
-        "display": {
-          "title": {
-            "text": "Gastritis"
-          }
-        },
-        "_row_num": 31
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "DB97.Z",
-        "display": {
-          "title": {
-            "text": "Hepatitis"
-          }
-        },
-        "_row_num": 32
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "9A60.Z",
-        "display": {
-          "title": {
-            "text": "Conjuntivite"
-          }
-        },
-        "_row_num": 33
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A40.0",
-        "display": {
-          "title": {
-            "text": "Gastroentetites"
-          }
-        },
-        "_row_num": 34
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "BA00.Z",
-        "display": {
-          "title": {
-            "text": "Hipertensão arterial"
-          }
-        },
-        "_row_num": 35
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "5A14",
-        "display": {
-          "title": {
-            "text": "Diabetes"
-          }
-        },
-        "_row_num": 36
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "1A9Z",
-        "display": {
-          "title": {
-            "text": "Infecões de transmissão sexual"
-          }
-        },
-        "_row_num": 37
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "GC08.Z",
-        "display": {
-          "title": {
-            "text": "Infecões de tracto urinario"
-          }
-        },
-        "_row_num": 38
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "GA05.Z",
-        "display": {
-          "title": {
-            "text": "Doencas inflamatorias pelvicas"
-          }
-        },
-        "_row_num": 39
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA08.1Y",
-        "display": {
-          "title": {
-            "text": "Gravidez"
-          }
-        },
-        "_row_num": 40
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "ME05.0",
-        "display": {
-          "title": {
-            "text": "constipação"
-          }
-        },
-        "_row_num": 41
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "AA3Z",
-        "display": {
-          "title": {
-            "text": "Otitis externa o Media"
-          }
-        },
-        "_row_num": 42
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "CA0Y",
-        "display": {
-          "title": {
-            "text": "Faringoamigdalites"
-          }
-        },
-        "_row_num": 43
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "FA2Z",
-        "display": {
-          "title": {
-            "text": "Atrites"
-          }
-        },
-        "_row_num": 44
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "ND56.Z",
-        "display": {
-          "title": {
-            "text": "Traumatismo"
-          }
-        },
-        "_row_num": 45
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "8A80.Z",
-        "display": {
-          "title": {
-            "text": "Migranha"
-          }
-        },
-        "_row_num": 46
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "MG27",
-        "display": {
-          "title": {
-            "text": "Hemorragia"
-          }
-        },
-        "_row_num": 47
-      },
-      {
-        "choice_list_name": "diagnostico",
-        "data_value": "DD5Z",
-        "display": {
-          "title": {
-            "text": "Hernias"
-          }
-        },
-        "_row_num": 48
       },
       {
         "choice_list_name": "diagnostico",
@@ -803,37 +426,708 @@
             "text": "Alergia"
           }
         },
+        "_row_num": 25
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "JA40.0",
+        "display": {
+          "title": {
+            "text": "Ameaça de aborto"
+          }
+        },
+        "_row_num": 26
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA03020Y",
+        "display": {
+          "title": {
+            "text": "Amigdalites/Faringite/Faringamidalites"
+          }
+        },
+        "_row_num": 27
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "3A9Z",
+        "display": {
+          "title": {
+            "text": "Anemia (ligeira, moderada e grave)"
+          }
+        },
+        "_row_num": 28
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA23",
+        "display": {
+          "title": {
+            "text": "Asma Bronquial"
+          }
+        },
+        "_row_num": 29
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA20",
+        "display": {
+          "title": {
+            "text": "Bronquites"
+          }
+        },
+        "_row_num": 30
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA07",
+        "display": {
+          "title": {
+            "text": "IRA"
+          }
+        },
+        "_row_num": 31
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA20.Y",
+        "display": {
+          "title": {
+            "text": "Broncopneumonia"
+          }
+        },
+        "_row_num": 32
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA40.Z",
+        "display": {
+          "title": {
+            "text": "Pneumonia"
+          }
+        },
+        "_row_num": 33
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA41",
+        "display": {
+          "title": {
+            "text": "Bronquiolites"
+          }
+        },
+        "_row_num": 34
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "CA00",
+        "display": {
+          "title": {
+            "text": "Gripe /Catarro comum/ Resfriado/Constipação"
+          }
+        },
+        "_row_num": 35
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1F23.0",
+        "display": {
+          "title": {
+            "text": "Candidíase oral"
+          }
+        },
+        "_row_num": 36
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1F23.10",
+        "display": {
+          "title": {
+            "text": "Candidíase vaginal"
+          }
+        },
+        "_row_num": 37
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "MD81.4",
+        "display": {
+          "title": {
+            "text": "Cólicas abdominal"
+          }
+        },
+        "_row_num": 38
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "9A60.Z",
+        "display": {
+          "title": {
+            "text": "Conjuntivites (Alérgica, Bacteriana, Viral)"
+          }
+        },
+        "_row_num": 39
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "EB7Y",
+        "display": {
+          "title": {
+            "text": "Dermatose"
+          }
+        },
+        "_row_num": 40
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1A40.Z",
+        "display": {
+          "title": {
+            "text": "Disenteria (Basilar. Amebiana)"
+          }
+        },
+        "_row_num": 41
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "ME05.1",
+        "display": {
+          "title": {
+            "text": "Diarreia /EDA (Ligeira ou Plano A, Moderada ou Plano B, Grave ou Plano C)"
+          }
+        },
+        "_row_num": 42
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "5A14",
+        "display": {
+          "title": {
+            "text": "Diabetes Melitos (Tipo I, Tipo II)"
+          }
+        },
+        "_row_num": 43
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "GA34.3",
+        "display": {
+          "title": {
+            "text": "Dismenorreia"
+          }
+        },
+        "_row_num": 44
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1A40.Z",
+        "display": {
+          "title": {
+            "text": "Enterites"
+          }
+        },
+        "_row_num": 45
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "DA01",
+        "display": {
+          "title": {
+            "text": "Estomatites"
+          }
+        },
+        "_row_num": 46
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1G04",
+        "display": {
+          "title": {
+            "text": "Escabiose"
+          }
+        },
+        "_row_num": 47
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1A07.Z",
+        "display": {
+          "title": {
+            "text": "Febre Tifoide"
+          }
+        },
+        "_row_num": 48
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1A7Z",
+        "display": {
+          "title": {
+            "text": "Gonorreia"
+          }
+        },
         "_row_num": 49
       },
       {
         "choice_list_name": "diagnostico",
-        "data_value": "1F28.Z",
+        "data_value": "BA00.Z",
         "display": {
           "title": {
-            "text": "Micosis Superficial"
+            "text": "Hipertensão Arterial"
           }
         },
         "_row_num": 50
       },
       {
         "choice_list_name": "diagnostico",
-        "data_value": "1B7Y",
+        "data_value": "BA2Z",
         "display": {
           "title": {
-            "text": "Infeccoes bacterianas da pele e partes blando"
+            "text": "Hipotensão Arterial"
           }
         },
         "_row_num": 51
       },
       {
         "choice_list_name": "diagnostico",
-        "data_value": "outro",
+        "data_value": "JA60.Z",
         "display": {
           "title": {
-            "text": "Outro"
+            "text": "Hiperémese Gravídica"
           }
         },
         "_row_num": 52
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "FB.ME",
+        "display": {
+          "title": {
+            "text": "Mialgia/ Lombalgia"
+          }
+        },
+        "_row_num": 53
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "AAZ1.90",
+        "display": {
+          "title": {
+            "text": "Otites (Externo, Media, Purulenta)"
+          }
+        },
+        "_row_num": 54
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1F4Z",
+        "display": {
+          "title": {
+            "text": "Paludismo/Malaria (Simples, Grave)"
+          }
+        },
+        "_row_num": 55
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1A36.0Z",
+        "display": {
+          "title": {
+            "text": "Parasitismo Intestinal"
+          }
+        },
+        "_row_num": 56
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1B7Y",
+        "display": {
+          "title": {
+            "text": "Pio dermites"
+          }
+        },
+        "_row_num": 57
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1F03",
+        "display": {
+          "title": {
+            "text": "Sarampo (suspeita)"
+          }
+        },
+        "_row_num": 58
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "MG26",
+        "display": {
+          "title": {
+            "text": "Síndrome Febril"
+          }
+        },
+        "_row_num": 59
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1B1Z",
+        "display": {
+          "title": {
+            "text": "Tuberculose (Suspeita)"
+          }
+        },
+        "_row_num": 60
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "DA60",
+        "display": {
+          "title": {
+            "text": "Ulcera Gástrica"
+          }
+        },
+        "_row_num": 61
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "GC02",
+        "display": {
+          "title": {
+            "text": "Uretrites"
+          }
+        },
+        "_row_num": 62
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1A92",
+        "display": {
+          "title": {
+            "text": "Tricomoníase"
+          }
+        },
+        "_row_num": 63
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1E90",
+        "display": {
+          "title": {
+            "text": "Varicela"
+          }
+        },
+        "_row_num": 64
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "1C62.Z",
+        "display": {
+          "title": {
+            "text": "VIH/Sida"
+          }
+        },
+        "_row_num": 65
+      },
+      {
+        "choice_list_name": "diagnostico",
+        "data_value": "otro",
+        "display": {
+          "title": {
+            "text": "Outras"
+          }
+        },
+        "_row_num": 66
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "CA03",
+        "display": {
+          "title": {
+            "text": "Amigdalites"
+          }
+        },
+        "diagnostico": "CA03020Y",
+        "_row_num": 70
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "CA02",
+        "display": {
+          "title": {
+            "text": "Faringite"
+          }
+        },
+        "diagnostico": "CA03020Y",
+        "_row_num": 71
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "CA0Y",
+        "display": {
+          "title": {
+            "text": "Faringamidalites"
+          }
+        },
+        "diagnostico": "CA03020Y",
+        "_row_num": 72
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "XS5W",
+        "display": {
+          "title": {
+            "text": "Anemia ligeira"
+          }
+        },
+        "diagnostico": "3A9Z",
+        "_row_num": 73
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "XS0T",
+        "display": {
+          "title": {
+            "text": "Anemia moderada"
+          }
+        },
+        "diagnostico": "3A9Z",
+        "_row_num": 74
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "XS25",
+        "display": {
+          "title": {
+            "text": "Anemia grave"
+          }
+        },
+        "diagnostico": "3A9Z",
+        "_row_num": 75
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "9A60.02",
+        "display": {
+          "title": {
+            "text": "Conjuntivites Alérgica"
+          }
+        },
+        "diagnostico": "9A60.Z",
+        "_row_num": 76
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "9A60.Y",
+        "display": {
+          "title": {
+            "text": "Conjuntivites Bacteriana"
+          }
+        },
+        "diagnostico": "9A60.Z",
+        "_row_num": 77
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "1D84",
+        "display": {
+          "title": {
+            "text": "Conjuntivites Viral"
+          }
+        },
+        "diagnostico": "9A60.Z",
+        "_row_num": 78
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "PA",
+        "display": {
+          "title": {
+            "text": "Diarreia /EDA Ligeira ou Plano A"
+          }
+        },
+        "diagnostico": "ME05.1",
+        "_row_num": 79
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "PB",
+        "display": {
+          "title": {
+            "text": "Diarreia /EDA  Moderada ou Plano B"
+          }
+        },
+        "diagnostico": "ME05.1",
+        "_row_num": 80
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "PC",
+        "display": {
+          "title": {
+            "text": "Diarreia /EDA Grave ou Plano C"
+          }
+        },
+        "diagnostico": "ME05.1",
+        "_row_num": 81
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "5A10",
+        "display": {
+          "title": {
+            "text": "Diabetes Melitos Tipo I"
+          }
+        },
+        "diagnostico": "5A14",
+        "_row_num": 82
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "5A11",
+        "display": {
+          "title": {
+            "text": "Diabetes MelitosTipo II"
+          }
+        },
+        "diagnostico": "5A14",
+        "_row_num": 83
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "FB56.2",
+        "display": {
+          "title": {
+            "text": "Mialgia"
+          }
+        },
+        "diagnostico": "FB.ME",
+        "_row_num": 84
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "ME84.2",
+        "display": {
+          "title": {
+            "text": "Lombalgia"
+          }
+        },
+        "diagnostico": "FB.ME",
+        "_row_num": 85
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "AA1Z",
+        "display": {
+          "title": {
+            "text": "Otites Externo"
+          }
+        },
+        "diagnostico": "AAZ1.90",
+        "_row_num": 86
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "AA80",
+        "display": {
+          "title": {
+            "text": "Otites Media"
+          }
+        },
+        "diagnostico": "AAZ1.90",
+        "_row_num": 87
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "AA90",
+        "display": {
+          "title": {
+            "text": "Otites  Purulenta"
+          }
+        },
+        "diagnostico": "AAZ1.90",
+        "_row_num": 88
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "1F4.S",
+        "display": {
+          "title": {
+            "text": "Paludismo/Malaria Simples"
+          }
+        },
+        "diagnostico": "1F4Z",
+        "_row_num": 89
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "1F4.G",
+        "display": {
+          "title": {
+            "text": "Paludismo/Malaria Grave"
+          }
+        },
+        "diagnostico": "1F4Z",
+        "_row_num": 90
+      },
+      {
+        "choice_list_name": "subdx",
+        "data_value": "esp",
+        "display": {
+          "title": {
+            "text": "Especifique"
+          }
+        },
+        "_row_num": 91
+      },
+      {
+        "choice_list_name": "saida",
+        "data_value": 1,
+        "display": {
+          "title": {
+            "text": "Alta"
+          }
+        },
+        "_row_num": 95
+      },
+      {
+        "choice_list_name": "saida",
+        "data_value": 2,
+        "display": {
+          "title": {
+            "text": "Transferido"
+          }
+        },
+        "_row_num": 96
+      },
+      {
+        "choice_list_name": "saida",
+        "data_value": 3,
+        "display": {
+          "title": {
+            "text": "Fuga"
+          }
+        },
+        "_row_num": 97
+      },
+      {
+        "choice_list_name": "saida",
+        "data_value": 4,
+        "display": {
+          "title": {
+            "text": "Óbito"
+          }
+        },
+        "_row_num": 98
+      },
+      {
+        "choice_list_name": "saida",
+        "data_value": 5,
+        "display": {
+          "title": {
+            "text": "Desconhecido"
+          }
+        },
+        "_row_num": 99
       }
     ],
     "queries": [
@@ -1260,273 +1554,33 @@
       "diagnostico": [
         {
           "choice_list_name": "diagnostico",
-          "data_value": "1F4Z",
+          "data_value": "1B75",
           "display": {
             "title": {
-              "text": "Paludismo (malária)"
+              "text": "Abcesso"
             }
           },
           "_row_num": 22
         },
         {
           "choice_list_name": "diagnostico",
-          "data_value": "3A9Z",
+          "data_value": "MA01",
           "display": {
             "title": {
-              "text": "Anemia"
+              "text": "Adenopatias"
             }
           },
           "_row_num": 23
         },
         {
           "choice_list_name": "diagnostico",
-          "data_value": "1A07.Z",
+          "data_value": "PJ20",
           "display": {
             "title": {
-              "text": "Febre Tifoide"
+              "text": "Agressão física"
             }
           },
           "_row_num": 24
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A40.Z",
-          "display": {
-            "title": {
-              "text": "Disenteria"
-            }
-          },
-          "_row_num": 25
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "RA01",
-          "display": {
-            "title": {
-              "text": "COVID-19"
-            }
-          },
-          "_row_num": 26
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA40.Z",
-          "display": {
-            "title": {
-              "text": "Pneumonia"
-            }
-          },
-          "_row_num": 27
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "ME05.1",
-          "display": {
-            "title": {
-              "text": "Diarrea"
-            }
-          },
-          "_row_num": 28
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1B1Z",
-          "display": {
-            "title": {
-              "text": "Tuberculosis"
-            }
-          },
-          "_row_num": 29
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1C62.Z",
-          "display": {
-            "title": {
-              "text": "HIV"
-            }
-          },
-          "_row_num": 30
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "DA42.Z",
-          "display": {
-            "title": {
-              "text": "Gastritis"
-            }
-          },
-          "_row_num": 31
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "DB97.Z",
-          "display": {
-            "title": {
-              "text": "Hepatitis"
-            }
-          },
-          "_row_num": 32
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "9A60.Z",
-          "display": {
-            "title": {
-              "text": "Conjuntivite"
-            }
-          },
-          "_row_num": 33
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A40.0",
-          "display": {
-            "title": {
-              "text": "Gastroentetites"
-            }
-          },
-          "_row_num": 34
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "BA00.Z",
-          "display": {
-            "title": {
-              "text": "Hipertensão arterial"
-            }
-          },
-          "_row_num": 35
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "5A14",
-          "display": {
-            "title": {
-              "text": "Diabetes"
-            }
-          },
-          "_row_num": 36
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "1A9Z",
-          "display": {
-            "title": {
-              "text": "Infecões de transmissão sexual"
-            }
-          },
-          "_row_num": 37
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "GC08.Z",
-          "display": {
-            "title": {
-              "text": "Infecões de tracto urinario"
-            }
-          },
-          "_row_num": 38
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "GA05.Z",
-          "display": {
-            "title": {
-              "text": "Doencas inflamatorias pelvicas"
-            }
-          },
-          "_row_num": 39
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA08.1Y",
-          "display": {
-            "title": {
-              "text": "Gravidez"
-            }
-          },
-          "_row_num": 40
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "ME05.0",
-          "display": {
-            "title": {
-              "text": "constipação"
-            }
-          },
-          "_row_num": 41
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "AA3Z",
-          "display": {
-            "title": {
-              "text": "Otitis externa o Media"
-            }
-          },
-          "_row_num": 42
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "CA0Y",
-          "display": {
-            "title": {
-              "text": "Faringoamigdalites"
-            }
-          },
-          "_row_num": 43
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "FA2Z",
-          "display": {
-            "title": {
-              "text": "Atrites"
-            }
-          },
-          "_row_num": 44
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "ND56.Z",
-          "display": {
-            "title": {
-              "text": "Traumatismo"
-            }
-          },
-          "_row_num": 45
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "8A80.Z",
-          "display": {
-            "title": {
-              "text": "Migranha"
-            }
-          },
-          "_row_num": 46
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "MG27",
-          "display": {
-            "title": {
-              "text": "Hemorragia"
-            }
-          },
-          "_row_num": 47
-        },
-        {
-          "choice_list_name": "diagnostico",
-          "data_value": "DD5Z",
-          "display": {
-            "title": {
-              "text": "Hernias"
-            }
-          },
-          "_row_num": 48
         },
         {
           "choice_list_name": "diagnostico",
@@ -1536,37 +1590,712 @@
               "text": "Alergia"
             }
           },
+          "_row_num": 25
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "JA40.0",
+          "display": {
+            "title": {
+              "text": "Ameaça de aborto"
+            }
+          },
+          "_row_num": 26
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA03020Y",
+          "display": {
+            "title": {
+              "text": "Amigdalites/Faringite/Faringamidalites"
+            }
+          },
+          "_row_num": 27
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "3A9Z",
+          "display": {
+            "title": {
+              "text": "Anemia (ligeira, moderada e grave)"
+            }
+          },
+          "_row_num": 28
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA23",
+          "display": {
+            "title": {
+              "text": "Asma Bronquial"
+            }
+          },
+          "_row_num": 29
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA20",
+          "display": {
+            "title": {
+              "text": "Bronquites"
+            }
+          },
+          "_row_num": 30
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA07",
+          "display": {
+            "title": {
+              "text": "IRA"
+            }
+          },
+          "_row_num": 31
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA20.Y",
+          "display": {
+            "title": {
+              "text": "Broncopneumonia"
+            }
+          },
+          "_row_num": 32
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA40.Z",
+          "display": {
+            "title": {
+              "text": "Pneumonia"
+            }
+          },
+          "_row_num": 33
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA41",
+          "display": {
+            "title": {
+              "text": "Bronquiolites"
+            }
+          },
+          "_row_num": 34
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "CA00",
+          "display": {
+            "title": {
+              "text": "Gripe /Catarro comum/ Resfriado/Constipação"
+            }
+          },
+          "_row_num": 35
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1F23.0",
+          "display": {
+            "title": {
+              "text": "Candidíase oral"
+            }
+          },
+          "_row_num": 36
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1F23.10",
+          "display": {
+            "title": {
+              "text": "Candidíase vaginal"
+            }
+          },
+          "_row_num": 37
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "MD81.4",
+          "display": {
+            "title": {
+              "text": "Cólicas abdominal"
+            }
+          },
+          "_row_num": 38
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "9A60.Z",
+          "display": {
+            "title": {
+              "text": "Conjuntivites (Alérgica, Bacteriana, Viral)"
+            }
+          },
+          "_row_num": 39
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "EB7Y",
+          "display": {
+            "title": {
+              "text": "Dermatose"
+            }
+          },
+          "_row_num": 40
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1A40.Z",
+          "display": {
+            "title": {
+              "text": "Disenteria (Basilar. Amebiana)"
+            }
+          },
+          "_row_num": 41
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "ME05.1",
+          "display": {
+            "title": {
+              "text": "Diarreia /EDA (Ligeira ou Plano A, Moderada ou Plano B, Grave ou Plano C)"
+            }
+          },
+          "_row_num": 42
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "5A14",
+          "display": {
+            "title": {
+              "text": "Diabetes Melitos (Tipo I, Tipo II)"
+            }
+          },
+          "_row_num": 43
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "GA34.3",
+          "display": {
+            "title": {
+              "text": "Dismenorreia"
+            }
+          },
+          "_row_num": 44
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1A40.Z",
+          "display": {
+            "title": {
+              "text": "Enterites"
+            }
+          },
+          "_row_num": 45
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "DA01",
+          "display": {
+            "title": {
+              "text": "Estomatites"
+            }
+          },
+          "_row_num": 46
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1G04",
+          "display": {
+            "title": {
+              "text": "Escabiose"
+            }
+          },
+          "_row_num": 47
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1A07.Z",
+          "display": {
+            "title": {
+              "text": "Febre Tifoide"
+            }
+          },
+          "_row_num": 48
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1A7Z",
+          "display": {
+            "title": {
+              "text": "Gonorreia"
+            }
+          },
           "_row_num": 49
         },
         {
           "choice_list_name": "diagnostico",
-          "data_value": "1F28.Z",
+          "data_value": "BA00.Z",
           "display": {
             "title": {
-              "text": "Micosis Superficial"
+              "text": "Hipertensão Arterial"
             }
           },
           "_row_num": 50
         },
         {
           "choice_list_name": "diagnostico",
-          "data_value": "1B7Y",
+          "data_value": "BA2Z",
           "display": {
             "title": {
-              "text": "Infeccoes bacterianas da pele e partes blando"
+              "text": "Hipotensão Arterial"
             }
           },
           "_row_num": 51
         },
         {
           "choice_list_name": "diagnostico",
-          "data_value": "outro",
+          "data_value": "JA60.Z",
           "display": {
             "title": {
-              "text": "Outro"
+              "text": "Hiperémese Gravídica"
             }
           },
           "_row_num": 52
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "FB.ME",
+          "display": {
+            "title": {
+              "text": "Mialgia/ Lombalgia"
+            }
+          },
+          "_row_num": 53
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "AAZ1.90",
+          "display": {
+            "title": {
+              "text": "Otites (Externo, Media, Purulenta)"
+            }
+          },
+          "_row_num": 54
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1F4Z",
+          "display": {
+            "title": {
+              "text": "Paludismo/Malaria (Simples, Grave)"
+            }
+          },
+          "_row_num": 55
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1A36.0Z",
+          "display": {
+            "title": {
+              "text": "Parasitismo Intestinal"
+            }
+          },
+          "_row_num": 56
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1B7Y",
+          "display": {
+            "title": {
+              "text": "Pio dermites"
+            }
+          },
+          "_row_num": 57
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1F03",
+          "display": {
+            "title": {
+              "text": "Sarampo (suspeita)"
+            }
+          },
+          "_row_num": 58
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "MG26",
+          "display": {
+            "title": {
+              "text": "Síndrome Febril"
+            }
+          },
+          "_row_num": 59
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1B1Z",
+          "display": {
+            "title": {
+              "text": "Tuberculose (Suspeita)"
+            }
+          },
+          "_row_num": 60
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "DA60",
+          "display": {
+            "title": {
+              "text": "Ulcera Gástrica"
+            }
+          },
+          "_row_num": 61
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "GC02",
+          "display": {
+            "title": {
+              "text": "Uretrites"
+            }
+          },
+          "_row_num": 62
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1A92",
+          "display": {
+            "title": {
+              "text": "Tricomoníase"
+            }
+          },
+          "_row_num": 63
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1E90",
+          "display": {
+            "title": {
+              "text": "Varicela"
+            }
+          },
+          "_row_num": 64
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "1C62.Z",
+          "display": {
+            "title": {
+              "text": "VIH/Sida"
+            }
+          },
+          "_row_num": 65
+        },
+        {
+          "choice_list_name": "diagnostico",
+          "data_value": "otro",
+          "display": {
+            "title": {
+              "text": "Outras"
+            }
+          },
+          "_row_num": 66
+        }
+      ],
+      "subdx": [
+        {
+          "choice_list_name": "subdx",
+          "data_value": "CA03",
+          "display": {
+            "title": {
+              "text": "Amigdalites"
+            }
+          },
+          "diagnostico": "CA03020Y",
+          "_row_num": 70
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "CA02",
+          "display": {
+            "title": {
+              "text": "Faringite"
+            }
+          },
+          "diagnostico": "CA03020Y",
+          "_row_num": 71
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "CA0Y",
+          "display": {
+            "title": {
+              "text": "Faringamidalites"
+            }
+          },
+          "diagnostico": "CA03020Y",
+          "_row_num": 72
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "XS5W",
+          "display": {
+            "title": {
+              "text": "Anemia ligeira"
+            }
+          },
+          "diagnostico": "3A9Z",
+          "_row_num": 73
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "XS0T",
+          "display": {
+            "title": {
+              "text": "Anemia moderada"
+            }
+          },
+          "diagnostico": "3A9Z",
+          "_row_num": 74
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "XS25",
+          "display": {
+            "title": {
+              "text": "Anemia grave"
+            }
+          },
+          "diagnostico": "3A9Z",
+          "_row_num": 75
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "9A60.02",
+          "display": {
+            "title": {
+              "text": "Conjuntivites Alérgica"
+            }
+          },
+          "diagnostico": "9A60.Z",
+          "_row_num": 76
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "9A60.Y",
+          "display": {
+            "title": {
+              "text": "Conjuntivites Bacteriana"
+            }
+          },
+          "diagnostico": "9A60.Z",
+          "_row_num": 77
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "1D84",
+          "display": {
+            "title": {
+              "text": "Conjuntivites Viral"
+            }
+          },
+          "diagnostico": "9A60.Z",
+          "_row_num": 78
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "PA",
+          "display": {
+            "title": {
+              "text": "Diarreia /EDA Ligeira ou Plano A"
+            }
+          },
+          "diagnostico": "ME05.1",
+          "_row_num": 79
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "PB",
+          "display": {
+            "title": {
+              "text": "Diarreia /EDA  Moderada ou Plano B"
+            }
+          },
+          "diagnostico": "ME05.1",
+          "_row_num": 80
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "PC",
+          "display": {
+            "title": {
+              "text": "Diarreia /EDA Grave ou Plano C"
+            }
+          },
+          "diagnostico": "ME05.1",
+          "_row_num": 81
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "5A10",
+          "display": {
+            "title": {
+              "text": "Diabetes Melitos Tipo I"
+            }
+          },
+          "diagnostico": "5A14",
+          "_row_num": 82
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "5A11",
+          "display": {
+            "title": {
+              "text": "Diabetes MelitosTipo II"
+            }
+          },
+          "diagnostico": "5A14",
+          "_row_num": 83
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "FB56.2",
+          "display": {
+            "title": {
+              "text": "Mialgia"
+            }
+          },
+          "diagnostico": "FB.ME",
+          "_row_num": 84
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "ME84.2",
+          "display": {
+            "title": {
+              "text": "Lombalgia"
+            }
+          },
+          "diagnostico": "FB.ME",
+          "_row_num": 85
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "AA1Z",
+          "display": {
+            "title": {
+              "text": "Otites Externo"
+            }
+          },
+          "diagnostico": "AAZ1.90",
+          "_row_num": 86
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "AA80",
+          "display": {
+            "title": {
+              "text": "Otites Media"
+            }
+          },
+          "diagnostico": "AAZ1.90",
+          "_row_num": 87
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "AA90",
+          "display": {
+            "title": {
+              "text": "Otites  Purulenta"
+            }
+          },
+          "diagnostico": "AAZ1.90",
+          "_row_num": 88
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "1F4.S",
+          "display": {
+            "title": {
+              "text": "Paludismo/Malaria Simples"
+            }
+          },
+          "diagnostico": "1F4Z",
+          "_row_num": 89
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "1F4.G",
+          "display": {
+            "title": {
+              "text": "Paludismo/Malaria Grave"
+            }
+          },
+          "diagnostico": "1F4Z",
+          "_row_num": 90
+        },
+        {
+          "choice_list_name": "subdx",
+          "data_value": "esp",
+          "display": {
+            "title": {
+              "text": "Especifique"
+            }
+          },
+          "_row_num": 91
+        }
+      ],
+      "saida": [
+        {
+          "choice_list_name": "saida",
+          "data_value": 1,
+          "display": {
+            "title": {
+              "text": "Alta"
+            }
+          },
+          "_row_num": 95
+        },
+        {
+          "choice_list_name": "saida",
+          "data_value": 2,
+          "display": {
+            "title": {
+              "text": "Transferido"
+            }
+          },
+          "_row_num": 96
+        },
+        {
+          "choice_list_name": "saida",
+          "data_value": 3,
+          "display": {
+            "title": {
+              "text": "Fuga"
+            }
+          },
+          "_row_num": 97
+        },
+        {
+          "choice_list_name": "saida",
+          "data_value": 4,
+          "display": {
+            "title": {
+              "text": "Óbito"
+            }
+          },
+          "_row_num": 98
+        },
+        {
+          "choice_list_name": "saida",
+          "data_value": 5,
+          "display": {
+            "title": {
+              "text": "Desconhecido"
+            }
+          },
+          "_row_num": 99
         }
       ]
     },
@@ -1633,12 +2362,7 @@
       },
       "DOB_idade": {
         "type": "string",
-        "valuesList": "DOB_idade",
         "_defn": [
-          {
-            "_row_num": 8,
-            "section_name": "survey"
-          },
           {
             "_row_num": 4,
             "section_name": "model"
@@ -1655,10 +2379,6 @@
         "__rowNum__": 2,
         "_defn": [
           {
-            "_row_num": 10,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 5,
             "section_name": "model"
           }
@@ -1668,10 +2388,6 @@
       "ano": {
         "type": "integer",
         "_defn": [
-          {
-            "_row_num": 12,
-            "section_name": "survey"
-          },
           {
             "_row_num": 6,
             "section_name": "model"
@@ -1683,10 +2399,6 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 14,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 7,
             "section_name": "model"
           }
@@ -1696,7 +2408,7 @@
       "id_paciente": {
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 5,
             "section_name": "survey"
           },
           {
@@ -1711,10 +2423,6 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 22,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 9,
             "section_name": "model"
           }
@@ -1725,10 +2433,6 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 23,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 10,
             "section_name": "model"
           }
@@ -1737,12 +2441,7 @@
       },
       "sexo": {
         "type": "string",
-        "valuesList": "sexo",
         "_defn": [
-          {
-            "_row_num": 24,
-            "section_name": "survey"
-          },
           {
             "_row_num": 11,
             "section_name": "model"
@@ -1755,7 +2454,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 8,
             "section_name": "survey"
           },
           {
@@ -1769,10 +2468,6 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 32,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 13,
             "section_name": "model"
           }
@@ -1782,10 +2477,6 @@
       "procedencia": {
         "type": "string",
         "_defn": [
-          {
-            "_row_num": 33,
-            "section_name": "survey"
-          },
           {
             "_row_num": 14,
             "section_name": "model"
@@ -1798,7 +2489,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 11,
             "section_name": "survey"
           },
           {
@@ -1812,7 +2503,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 35,
+            "_row_num": 12,
             "section_name": "survey"
           },
           {
@@ -1827,7 +2518,7 @@
         "valuesList": "diagnostico",
         "_defn": [
           {
-            "_row_num": 36,
+            "_row_num": 14,
             "section_name": "survey"
           },
           {
@@ -1842,7 +2533,7 @@
         "valuesList": "diagnostico",
         "_defn": [
           {
-            "_row_num": 40,
+            "_row_num": 20,
             "section_name": "survey"
           },
           {
@@ -1857,7 +2548,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 44,
+            "_row_num": 26,
             "section_name": "survey"
           },
           {
@@ -1871,7 +2562,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 50,
+            "_row_num": 37,
             "section_name": "survey"
           },
           {
@@ -1894,10 +2585,6 @@
       "numero_codigo": {
         "type": "integer",
         "_defn": [
-          {
-            "_row_num": 21,
-            "section_name": "survey"
-          },
           {
             "_row_num": 22,
             "section_name": "model"
@@ -1929,7 +2616,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 38,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -1943,7 +2630,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 42,
+            "_row_num": 22,
             "section_name": "survey"
           },
           {
@@ -1952,6 +2639,39 @@
           }
         ],
         "elementKey": "esp_diagnostico_secudario"
+      },
+      "sub_dx": {
+        "_defn": [
+          {
+            "_row_num": 18,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "valuesList": "subdx",
+        "elementKey": "sub_dx"
+      },
+      "sub_dx2": {
+        "_defn": [
+          {
+            "_row_num": 24,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "valuesList": "subdx",
+        "elementKey": "sub_dx2"
+      },
+      "saida": {
+        "_defn": [
+          {
+            "_row_num": 29,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "valuesList": "saida",
+        "elementKey": "saida"
       }
     },
     "section_names": [
@@ -1965,157 +2685,6 @@
         "reachable_sections": {},
         "prompts": [
           {
-            "type": "note",
-            "name": "nota_1",
-            "display": {
-              "prompt": {
-                "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}"
-              }
-            },
-            "_row_num": 7,
-            "__rowNum__": 6,
-            "_token_type": "prompt",
-            "_type": "note",
-            "_branch_label_enclosing_screen": "survey/_screen5",
-            "promptIdx": 0
-          },
-          {
-            "type": "select_one",
-            "values_list": "DOB_idade",
-            "name": "DOB_idade",
-            "display": {
-              "prompt": {
-                "text": "Idade ou data de nascimento?"
-              }
-            },
-            "required": true,
-            "_row_num": 8,
-            "__rowNum__": 7,
-            "_token_type": "prompt",
-            "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen5",
-            "promptIdx": 1
-          },
-          {
-            "type": "adate",
-            "name": "dn",
-            "display": {
-              "prompt": {
-                "text": "Data de Nascimento"
-              }
-            },
-            "required": "data('DOB_idade')=='1'",
-            "_row_num": 10,
-            "__rowNum__": 9,
-            "_token_type": "prompt",
-            "_type": "adate",
-            "_branch_label_enclosing_screen": "survey/_screen5",
-            "promptIdx": 2
-          },
-          {
-            "type": "integer",
-            "name": "ano",
-            "display": {
-              "prompt": {
-                "text": "Idades em anos"
-              },
-              "hint": {
-                "text": "se for menos de 1 ano coloca zero"
-              }
-            },
-            "required": "data('DOB_idade')=='2'",
-            "_row_num": 12,
-            "__rowNum__": 11,
-            "_token_type": "prompt",
-            "_type": "integer",
-            "_branch_label_enclosing_screen": "survey/_screen5",
-            "promptIdx": 3
-          },
-          {
-            "type": "integer",
-            "name": "mes",
-            "display": {
-              "prompt": {
-                "text": "Idade em meses"
-              },
-              "hint": {
-                "text": "se nao souber coloca zero, se for 12 acrescenta 1 ano"
-              }
-            },
-            "constraint": "data('mes')<12",
-            "required": "data('DOB_idade')=='2' && data('ano')<5",
-            "_row_num": 14,
-            "__rowNum__": 13,
-            "_token_type": "prompt",
-            "_type": "integer",
-            "_branch_label_enclosing_screen": "survey/_screen5",
-            "promptIdx": 4
-          },
-          {
-            "type": "integer",
-            "name": "numero_codigo",
-            "display": {
-              "prompt": {
-                "text": "Introduza o numero se serie do cartao: {{calculates.letra_codigo}}"
-              }
-            },
-            "required": true,
-            "_row_num": 21,
-            "__rowNum__": 20,
-            "_token_type": "prompt",
-            "_type": "integer",
-            "_branch_label_enclosing_screen": "survey/_screen20",
-            "promptIdx": 5
-          },
-          {
-            "type": "string",
-            "name": "nome",
-            "display": {
-              "prompt": {
-                "text": "Nome e Apelido"
-              }
-            },
-            "required": true,
-            "_row_num": 22,
-            "__rowNum__": 21,
-            "_token_type": "prompt",
-            "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen20",
-            "promptIdx": 6
-          },
-          {
-            "type": "string",
-            "name": "nome_casa",
-            "display": {
-              "prompt": {
-                "text": "Nome de Casa"
-              }
-            },
-            "_row_num": 23,
-            "__rowNum__": 22,
-            "_token_type": "prompt",
-            "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen20",
-            "promptIdx": 7
-          },
-          {
-            "type": "select_one",
-            "values_list": "sexo",
-            "name": "sexo",
-            "display": {
-              "prompt": {
-                "text": "Sexo"
-              }
-            },
-            "required": true,
-            "_row_num": 24,
-            "__rowNum__": 23,
-            "_token_type": "prompt",
-            "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen20",
-            "promptIdx": 8
-          },
-          {
             "type": "select_one",
             "values_list": "yesno",
             "name": "gravidez",
@@ -2124,46 +2693,12 @@
                 "text": "Gravida"
               }
             },
-            "required": "data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)",
-            "_row_num": 26,
-            "__rowNum__": 25,
+            "_row_num": 8,
+            "__rowNum__": 7,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen20",
-            "promptIdx": 9
-          },
-          {
-            "type": "decimal",
-            "name": "peso",
-            "display": {
-              "prompt": {
-                "text": "Peso"
-              }
-            },
-            "constraint": "data('peso')<250",
-            "required": true,
-            "_row_num": 32,
-            "__rowNum__": 31,
-            "_token_type": "prompt",
-            "_type": "decimal",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 10
-          },
-          {
-            "type": "string",
-            "name": "procedencia",
-            "display": {
-              "prompt": {
-                "text": "Proveniência"
-              }
-            },
-            "required": true,
-            "_row_num": 33,
-            "__rowNum__": 32,
-            "_token_type": "prompt",
-            "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 11
+            "_branch_label_enclosing_screen": "survey/_screen6",
+            "promptIdx": 0
           },
           {
             "type": "select_one",
@@ -2175,12 +2710,12 @@
               }
             },
             "required": true,
-            "_row_num": 34,
-            "__rowNum__": 33,
+            "_row_num": 11,
+            "__rowNum__": 10,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 12
+            "_branch_label_enclosing_screen": "survey/_screen6",
+            "promptIdx": 1
           },
           {
             "type": "decimal",
@@ -2191,13 +2726,12 @@
               }
             },
             "constraint": "data('temperatura')<46 & data('temperatura')>25",
-            "required": true,
-            "_row_num": 35,
-            "__rowNum__": 34,
+            "_row_num": 12,
+            "__rowNum__": 11,
             "_token_type": "prompt",
             "_type": "decimal",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 13
+            "_branch_label_enclosing_screen": "survey/_screen6",
+            "promptIdx": 2
           },
           {
             "type": "select_one_dropdown",
@@ -2209,12 +2743,12 @@
               }
             },
             "required": true,
-            "_row_num": 36,
-            "__rowNum__": 35,
+            "_row_num": 14,
+            "__rowNum__": 13,
             "_token_type": "prompt",
             "_type": "select_one_dropdown",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 14
+            "_branch_label_enclosing_screen": "survey/_screen14",
+            "promptIdx": 3
           },
           {
             "type": "string",
@@ -2225,12 +2759,29 @@
               }
             },
             "required": "data('diagnostico')=='outro'",
-            "_row_num": 38,
-            "__rowNum__": 37,
+            "_row_num": 16,
+            "__rowNum__": 15,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 15
+            "_branch_label_enclosing_screen": "survey/_screen16",
+            "promptIdx": 4
+          },
+          {
+            "type": "select_one",
+            "values_list": "subdx",
+            "name": "sub_dx",
+            "display": {
+              "prompt": {
+                "text": "especifique:"
+              }
+            },
+            "choice_filter_1": "choice_list_name.diagnostico === data('diagnostico')",
+            "_row_num": 18,
+            "__rowNum__": 17,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "survey/_screen18",
+            "promptIdx": 5
           },
           {
             "type": "select_one_dropdown",
@@ -2241,12 +2792,12 @@
                 "text": "Diagnósticos secundarios"
               }
             },
-            "_row_num": 40,
-            "__rowNum__": 39,
+            "_row_num": 20,
+            "__rowNum__": 19,
             "_token_type": "prompt",
             "_type": "select_one_dropdown",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 16
+            "_branch_label_enclosing_screen": "survey/_screen20",
+            "promptIdx": 6
           },
           {
             "type": "string",
@@ -2257,12 +2808,24 @@
               }
             },
             "required": "data('diagno_secund')=='outro'",
-            "_row_num": 42,
-            "__rowNum__": 41,
+            "_row_num": 22,
+            "__rowNum__": 21,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 17
+            "_branch_label_enclosing_screen": "survey/_screen22",
+            "promptIdx": 7
+          },
+          {
+            "type": "select_one",
+            "values_list": "subdx",
+            "name": "sub_dx2",
+            "choice_filter_1": "choice_item.diagnostico === data('diagno_secund')",
+            "_row_num": 24,
+            "__rowNum__": 23,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "survey/_screen24",
+            "promptIdx": 8
           },
           {
             "type": "select_one",
@@ -2274,12 +2837,28 @@
               }
             },
             "required": true,
-            "_row_num": 44,
-            "__rowNum__": 43,
+            "_row_num": 26,
+            "__rowNum__": 25,
             "_token_type": "prompt",
             "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 18
+            "_branch_label_enclosing_screen": "survey/_screen26",
+            "promptIdx": 9
+          },
+          {
+            "type": "select_one",
+            "values_list": "saida",
+            "name": "saida",
+            "display": {
+              "prompt": {
+                "text": "Paciente foi:"
+              }
+            },
+            "_row_num": 29,
+            "__rowNum__": 28,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "survey/_screen29",
+            "promptIdx": 10
           },
           {
             "type": "note",
@@ -2289,22 +2868,22 @@
                 "text": "Introducão dos resultados de laboratorio"
               }
             },
-            "_row_num": 47,
-            "__rowNum__": 46,
+            "_row_num": 34,
+            "__rowNum__": 33,
             "_token_type": "prompt",
             "_type": "note",
-            "_branch_label_enclosing_screen": "survey/_screen46",
-            "promptIdx": 19
+            "_branch_label_enclosing_screen": "survey/_screen33",
+            "promptIdx": 11
           },
           {
             "type": "linked_table",
             "values_list": "resultado",
-            "_row_num": 48,
-            "__rowNum__": 47,
+            "_row_num": 35,
+            "__rowNum__": 34,
             "_token_type": "prompt",
             "_type": "linked_table",
-            "_branch_label_enclosing_screen": "survey/_screen46",
-            "promptIdx": 20
+            "_branch_label_enclosing_screen": "survey/_screen33",
+            "promptIdx": 12
           },
           {
             "type": "text",
@@ -2314,20 +2893,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 50,
-            "__rowNum__": 49,
+            "_row_num": 37,
+            "__rowNum__": 36,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen50",
-            "promptIdx": 21
+            "_branch_label_enclosing_screen": "survey/_screen37",
+            "promptIdx": 13
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 51,
-            "_branch_label_enclosing_screen": "survey/_screen51",
-            "promptIdx": 22
+            "_row_num": 38,
+            "_branch_label_enclosing_screen": "survey/_screen38",
+            "promptIdx": 14
           }
         ],
         "validation_tag_map": {
@@ -2336,122 +2915,216 @@
             2,
             3,
             4,
-            5,
-            6,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            17,
-            18
+            7,
+            9
           ]
         },
         "operations": [
           {
-            "clause": "begin screen",
+            "type": "assign",
+            "name": "id_paciente",
+            "calculation": "calculates.letra_codigo() + data('numero_codigo')",
             "_row_num": 5,
             "__rowNum__": 4,
-            "_token_type": "begin_screen",
-            "_end_screen_clause": {
-              "clause": "end screen",
-              "_row_num": 18,
-              "__rowNum__": 17,
-              "_token_type": "end_screen"
-            },
-            "_screen_block": "function() {var activePromptIndicies = [];\nassign('data_consulta', adate.today());\nactivePromptIndicies.push(0);\nactivePromptIndicies.push(1);\nif (data('DOB_idade')=='1') {\nactivePromptIndicies.push(2);\n}\nelse {\nactivePromptIndicies.push(3);\nif (data('ano')<5) {\nactivePromptIndicies.push(4);\n}\n}\n\nreturn activePromptIndicies;\n}\n",
+            "_token_type": "assign",
             "operationIdx": 0
           },
           {
             "clause": "begin screen",
-            "_row_num": 20,
-            "__rowNum__": 19,
+            "_row_num": 6,
+            "__rowNum__": 5,
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 28,
-              "__rowNum__": 27,
+              "_row_num": 13,
+              "__rowNum__": 12,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nif (data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)) {\nactivePromptIndicies.push(9);\n}\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nif (data('sexo')=='2' && (calculates.idade_mes()<=660 && calculates.idade_mes()>=144)) {\nactivePromptIndicies.push(0);\n}\nactivePromptIndicies.push(1);\nactivePromptIndicies.push(2);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 1
           },
           {
-            "type": "assign",
-            "name": "id_paciente",
-            "calculation": "calculates.letra_codigo() + data('numero_codigo')",
-            "_row_num": 29,
-            "__rowNum__": 28,
-            "_token_type": "assign",
+            "_row_num": 14,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 2
           },
           {
-            "clause": "begin screen",
-            "_row_num": 31,
-            "__rowNum__": 30,
-            "_token_type": "begin_screen",
-            "_end_screen_clause": {
-              "clause": "end screen",
-              "_row_num": 45,
-              "__rowNum__": 44,
-              "_token_type": "end_screen"
-            },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(10);\nactivePromptIndicies.push(11);\nactivePromptIndicies.push(12);\nactivePromptIndicies.push(13);\nactivePromptIndicies.push(14);\nif (data('diagnostico')=='outro') {\nactivePromptIndicies.push(15);\n}\nactivePromptIndicies.push(16);\nif (data('diagno_secund')=='outro') {\nactivePromptIndicies.push(17);\n}\nactivePromptIndicies.push(18);\n\nreturn activePromptIndicies;\n}\n",
+            "clause": "if",
+            "condition": "data('diagnostico')=='outro'",
+            "_row_num": 15,
+            "__rowNum__": 14,
+            "_token_type": "goto_label",
+            "_branch_label": "_then15",
             "operationIdx": 3
           },
           {
-            "clause": "begin screen",
-            "_row_num": 46,
-            "__rowNum__": 45,
-            "_token_type": "begin_screen",
-            "_end_screen_clause": {
-              "clause": "end screen",
-              "_row_num": 49,
-              "__rowNum__": 48,
-              "_token_type": "end_screen"
-            },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(19);\nactivePromptIndicies.push(20);\n\nreturn activePromptIndicies;\n}\n",
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else17",
+            "_row_num": 17,
             "operationIdx": 4
           },
           {
-            "_row_num": 50,
+            "_row_num": 16,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(21);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(4);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 5
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif17",
+            "_row_num": 17,
+            "operationIdx": 6
+          },
+          {
+            "_row_num": 18,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 7
+          },
+          {
+            "_row_num": 20,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(6);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 8
+          },
+          {
+            "clause": "if",
+            "condition": "data('diagno_secund')=='outro'",
+            "_row_num": 21,
+            "__rowNum__": 20,
+            "_token_type": "goto_label",
+            "_branch_label": "_then21",
+            "operationIdx": 9
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else23",
+            "_row_num": 23,
+            "operationIdx": 10
+          },
+          {
+            "_row_num": 22,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 11
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif23",
+            "_row_num": 23,
+            "operationIdx": 12
+          },
+          {
+            "_row_num": 24,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 13
+          },
+          {
+            "_row_num": 26,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(9);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 14
+          },
+          {
+            "clause": "if",
+            "condition": "data('hospitaliza')==2",
+            "_row_num": 28,
+            "__rowNum__": 27,
+            "_token_type": "goto_label",
+            "_branch_label": "_then28",
+            "operationIdx": 15
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else30",
+            "_row_num": 30,
+            "operationIdx": 16
+          },
+          {
+            "_row_num": 29,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(10);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 17
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif30",
+            "_row_num": 30,
+            "operationIdx": 18
+          },
+          {
+            "clause": "begin screen",
+            "_row_num": 33,
+            "__rowNum__": 32,
+            "_token_type": "begin_screen",
+            "_end_screen_clause": {
+              "clause": "end screen",
+              "_row_num": 36,
+              "__rowNum__": 35,
+              "_token_type": "end_screen"
+            },
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(11);\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 19
+          },
+          {
+            "_row_num": 37,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 20
           },
           {
             "_token_type": "exit_section",
             "clause": "exit section",
-            "_row_num": 51,
-            "operationIdx": 6
+            "_row_num": 38,
+            "operationIdx": 21
           },
           {
-            "_row_num": 51,
+            "_row_num": 38,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(22);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 7
+            "operationIdx": 22
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 51,
-            "operationIdx": 8
+            "_row_num": 38,
+            "operationIdx": 23
           }
         ],
         "branch_label_map": {
-          "_screen5": 0,
-          "_screen20": 1,
-          "_screen31": 3,
-          "_screen46": 4,
-          "_screen50": 5,
-          "_contents": 7,
-          "_screen51": 7
+          "_screen6": 1,
+          "_screen14": 2,
+          "_then15": 5,
+          "_screen16": 5,
+          "_else17": 7,
+          "_endif17": 7,
+          "_screen18": 7,
+          "_screen20": 8,
+          "_then21": 11,
+          "_screen22": 11,
+          "_else23": 13,
+          "_endif23": 13,
+          "_screen24": 13,
+          "_screen26": 14,
+          "_then28": 17,
+          "_screen29": 17,
+          "_else30": 19,
+          "_endif30": 19,
+          "_screen33": 19,
+          "_screen37": 20,
+          "_contents": 22,
+          "_screen38": 22
         }
       },
       "initial": {
@@ -2661,12 +3334,7 @@
       },
       "DOB_idade": {
         "type": "string",
-        "valuesList": "DOB_idade",
         "_defn": [
-          {
-            "_row_num": 8,
-            "section_name": "survey"
-          },
           {
             "_row_num": 4,
             "section_name": "model"
@@ -2686,10 +3354,6 @@
         "__rowNum__": 2,
         "_defn": [
           {
-            "_row_num": 10,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 5,
             "section_name": "model"
           }
@@ -2702,10 +3366,6 @@
       "ano": {
         "type": "integer",
         "_defn": [
-          {
-            "_row_num": 12,
-            "section_name": "survey"
-          },
           {
             "_row_num": 6,
             "section_name": "model"
@@ -2720,10 +3380,6 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 14,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 7,
             "section_name": "model"
           }
@@ -2736,7 +3392,7 @@
       "id_paciente": {
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 5,
             "section_name": "survey"
           },
           {
@@ -2754,10 +3410,6 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 22,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 9,
             "section_name": "model"
           }
@@ -2771,10 +3423,6 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 23,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 10,
             "section_name": "model"
           }
@@ -2786,12 +3434,7 @@
       },
       "sexo": {
         "type": "string",
-        "valuesList": "sexo",
         "_defn": [
-          {
-            "_row_num": 24,
-            "section_name": "survey"
-          },
           {
             "_row_num": 11,
             "section_name": "model"
@@ -2807,7 +3450,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 8,
             "section_name": "survey"
           },
           {
@@ -2824,10 +3467,6 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 32,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 13,
             "section_name": "model"
           }
@@ -2840,10 +3479,6 @@
       "procedencia": {
         "type": "string",
         "_defn": [
-          {
-            "_row_num": 33,
-            "section_name": "survey"
-          },
           {
             "_row_num": 14,
             "section_name": "model"
@@ -2859,7 +3494,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 11,
             "section_name": "survey"
           },
           {
@@ -2876,7 +3511,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 35,
+            "_row_num": 12,
             "section_name": "survey"
           },
           {
@@ -2894,7 +3529,7 @@
         "valuesList": "diagnostico",
         "_defn": [
           {
-            "_row_num": 36,
+            "_row_num": 14,
             "section_name": "survey"
           },
           {
@@ -2912,7 +3547,7 @@
         "valuesList": "diagnostico",
         "_defn": [
           {
-            "_row_num": 40,
+            "_row_num": 20,
             "section_name": "survey"
           },
           {
@@ -2930,7 +3565,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 44,
+            "_row_num": 26,
             "section_name": "survey"
           },
           {
@@ -2947,7 +3582,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 50,
+            "_row_num": 37,
             "section_name": "survey"
           },
           {
@@ -2976,10 +3611,6 @@
       "numero_codigo": {
         "type": "integer",
         "_defn": [
-          {
-            "_row_num": 21,
-            "section_name": "survey"
-          },
           {
             "_row_num": 22,
             "section_name": "model"
@@ -3020,7 +3651,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 38,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -3037,7 +3668,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 42,
+            "_row_num": 22,
             "section_name": "survey"
           },
           {
@@ -3049,6 +3680,48 @@
         "elementName": "esp_diagnostico_secudario",
         "elementSet": "data",
         "elementPath": "esp_diagnostico_secudario"
+      },
+      "sub_dx": {
+        "_defn": [
+          {
+            "_row_num": 18,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "valuesList": "subdx",
+        "elementKey": "sub_dx",
+        "elementName": "sub_dx",
+        "elementSet": "data",
+        "elementPath": "sub_dx"
+      },
+      "sub_dx2": {
+        "_defn": [
+          {
+            "_row_num": 24,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "valuesList": "subdx",
+        "elementKey": "sub_dx2",
+        "elementName": "sub_dx2",
+        "elementSet": "data",
+        "elementPath": "sub_dx2"
+      },
+      "saida": {
+        "_defn": [
+          {
+            "_row_num": 29,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "valuesList": "saida",
+        "elementKey": "saida",
+        "elementName": "saida",
+        "elementSet": "data",
+        "elementPath": "saida"
       },
       "_id": {
         "type": "string",

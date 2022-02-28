@@ -1236,7 +1236,9 @@ promptTypes.select = promptTypes._linked_type.extend({
             $container.html(that.$el);
         }
     },
-    choice_filter: function(){ return true; },
+    choice_filter: function(choice){
+         console.log(choice);
+        return true; },
     updateRenderValue: function(formValue) {
         var that = this;
         //that.renderContext.value = formValue;

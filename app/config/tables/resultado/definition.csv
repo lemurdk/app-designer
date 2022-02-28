@@ -1,6 +1,7 @@
 _element_key,_element_name,_element_type,_list_child_element_keys
 GE,GE,integer,[]
 ano,ano,integer,[]
+campo,campo,integer,[]
 comentario_1,comentario_1,string,[]
 cs,cs,string,[]
 dn,dn,string,[]
