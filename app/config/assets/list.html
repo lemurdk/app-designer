@@ -31,7 +31,7 @@
             var formId = "consulta"; 
             // if (person.hasResult) {
             var rowId = String(person.id_formssentinela);
-            console.log("EDIT form with row id:" + rowId);
+            console.log("EDIT consulta form with row id:" + rowId);
             odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
             // } else {
             //     var jsonMap = getJsonMap(person);
@@ -47,7 +47,7 @@
             var formId = "resultado"; 
             if (person.hasResult) {
                 var rowId = person.resultId;
-                console.log("EDIT form with row id:" + rowId);
+                console.log("EDIT resultado form with row id:" + rowId);
                 odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
             } else {
                 var jsonMap = getJsonMap(person);
@@ -104,6 +104,7 @@
             
             $('#theList tr:last').after(row);
             $("#" + idButton).on("click",function () {
+                console.log(p);
                 rowClickResultado(p);
                 return false;
             });
@@ -136,14 +137,14 @@
         function listRows(cs, consultor, visit_date) {
             if (TESTMODE) return;
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.consultor = "' + consultor + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult, r._id as resultId FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.consultor = "' + consultor + '" COLLATE NOCASE AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
 
         function searchId(strId) {
             if (TESTMODE) return;
             console.log("Querying database for consultas with id_paciente = " + strId);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult, r._id as resultId FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
         
@@ -521,7 +522,7 @@
                <td colspan="6" style="text-align: center;padding:90px 0;">Nenhuma consulta feita hoje</td>
             </tr>
             </table>
-            <div style="width:99%;text-align:right;"><span style="display: inline-block;background-color: rgb(245, 245, 245);color: black;padding: 2px 10px;font-size: x-small;font-style: italic;content: 'sap';">by Sapiens Consult</span></div>
+            
             <button id="btnRefresh">Sincronizar com servidor</button>
         </div>
     </form>
