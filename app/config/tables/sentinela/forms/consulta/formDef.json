@@ -885,6 +885,11 @@
         "type": "select_one",
         "name": "via",
         "_row_num": 41
+      },
+      {
+        "type": "select_one_integer",
+        "name": "hospital",
+        "_row_num": 43
       }
     ]
   },
@@ -1816,14 +1821,18 @@
         "elementKey": "via"
       },
       "hospital": {
+        "type": "integer",
+        "valuesList": "yesno",
         "_defn": [
           {
             "_row_num": 38,
             "section_name": "survey"
+          },
+          {
+            "_row_num": 43,
+            "section_name": "model"
           }
         ],
-        "type": "integer",
-        "valuesList": "yesno",
         "elementKey": "hospital"
       }
     },
@@ -3091,14 +3100,18 @@
         "elementPath": "via"
       },
       "hospital": {
+        "type": "integer",
+        "valuesList": "yesno",
         "_defn": [
           {
             "_row_num": 38,
             "section_name": "survey"
+          },
+          {
+            "_row_num": 43,
+            "section_name": "model"
           }
         ],
-        "type": "integer",
-        "valuesList": "yesno",
         "elementKey": "hospital",
         "elementName": "hospital",
         "elementSet": "data",
