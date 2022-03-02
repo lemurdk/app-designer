@@ -54,7 +54,7 @@
         "_row_num": 5
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "values_list": "DOB_idade",
         "name": "DOB_idade",
         "display": {
@@ -168,7 +168,7 @@
         "_row_num": 21
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "values_list": "sexo",
         "name": "sexo",
         "display": {
@@ -212,7 +212,37 @@
         "_row_num": 29
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
+        "values_list": "yesno",
+        "name": "febre",
+        "display": {
+          "prompt": {
+            "text": "Febre"
+          },
+          "constraint_message": {
+            "text": true
+          }
+        },
+        "_row_num": 30
+      },
+      {
+        "type": "decimal",
+        "name": "temperatura",
+        "display": {
+          "prompt": {
+            "text": "Temperatura"
+          }
+        },
+        "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
+        "_row_num": 31
+      },
+      {
+        "clause": "if",
+        "condition": "data('febre')== 1 | data('temperatura')>38",
+        "_row_num": 33
+      },
+      {
+        "type": "select_one_integer",
         "values_list": "yesno",
         "name": "envio_tdr",
         "display": {
@@ -220,7 +250,11 @@
             "text": "O/A paciente foi enviada a fazer TDR"
           }
         },
-        "_row_num": 31
+        "_row_num": 34
+      },
+      {
+        "clause": "end if",
+        "_row_num": 35
       },
       {
         "type": "string",
@@ -230,7 +264,7 @@
             "text": "Inicias do Inqueridor"
           }
         },
-        "_row_num": 34
+        "_row_num": 39
       },
       {
         "type": "text",
@@ -240,7 +274,7 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 37
+        "_row_num": 42
       }
     ],
     "choices": [
@@ -768,7 +802,7 @@
         "_row_num": 3
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "DOB_idade",
         "_row_num": 4
       },
@@ -803,12 +837,12 @@
         "_row_num": 10
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "sexo",
         "_row_num": 11
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "gravidez",
         "_row_num": 12
       },
@@ -823,7 +857,7 @@
         "_row_num": 14
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "febre",
         "_row_num": 15
       },
@@ -878,7 +912,7 @@
         "_row_num": 26
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "envio_tdr",
         "_row_num": 28
       },
@@ -903,12 +937,12 @@
         "_row_num": 33
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "saida",
         "_row_num": 35
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "tto",
         "_row_num": 37
       },
@@ -918,12 +952,12 @@
         "_row_num": 38
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "unidade",
         "_row_num": 39
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "freq",
         "_row_num": 40
       },
@@ -1539,7 +1573,7 @@
         "elementKey": "cs"
       },
       "DOB_idade": {
-        "type": "string",
+        "type": "integer",
         "valuesList": "DOB_idade",
         "_defn": [
           {
@@ -1643,7 +1677,7 @@
         "elementKey": "nome_casa"
       },
       "sexo": {
-        "type": "string",
+        "type": "integer",
         "valuesList": "sexo",
         "_defn": [
           {
@@ -1658,7 +1692,7 @@
         "elementKey": "sexo"
       },
       "gravidez": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 12,
@@ -1696,8 +1730,13 @@
         "elementKey": "procedencia"
       },
       "febre": {
-        "type": "string",
+        "type": "integer",
+        "valuesList": "yesno",
         "_defn": [
+          {
+            "_row_num": 30,
+            "section_name": "survey"
+          },
           {
             "_row_num": 15,
             "section_name": "model"
@@ -1708,6 +1747,10 @@
       "temperatura": {
         "type": "number",
         "_defn": [
+          {
+            "_row_num": 31,
+            "section_name": "survey"
+          },
           {
             "_row_num": 16,
             "section_name": "model"
@@ -1810,11 +1853,11 @@
         "elementKey": "esp_diagnostico_secudario"
       },
       "envio_tdr": {
-        "type": "string",
+        "type": "integer",
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 31,
+            "_row_num": 34,
             "section_name": "survey"
           },
           {
@@ -1828,7 +1871,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 39,
             "section_name": "survey"
           },
           {
@@ -1869,7 +1912,7 @@
         "elementKey": "sub_dx2"
       },
       "saida": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 35,
@@ -1879,7 +1922,7 @@
         "elementKey": "saida"
       },
       "tto": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 37,
@@ -1899,7 +1942,7 @@
         "elementKey": "quanti"
       },
       "unidade": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 39,
@@ -1909,7 +1952,7 @@
         "elementKey": "unidade"
       },
       "freq": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 40,
@@ -1931,7 +1974,7 @@
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 37,
+            "_row_num": 42,
             "section_name": "survey"
           }
         ],
@@ -1965,7 +2008,7 @@
             "promptIdx": 0
           },
           {
-            "type": "select_one",
+            "type": "select_one_integer",
             "values_list": "DOB_idade",
             "name": "DOB_idade",
             "display": {
@@ -1977,7 +2020,7 @@
             "_row_num": 6,
             "__rowNum__": 5,
             "_token_type": "prompt",
-            "_type": "select_one",
+            "_type": "select_one_integer",
             "_branch_label_enclosing_screen": "survey/_screen3",
             "promptIdx": 1
           },
@@ -2084,7 +2127,7 @@
             "promptIdx": 7
           },
           {
-            "type": "select_one",
+            "type": "select_one_integer",
             "values_list": "sexo",
             "name": "sexo",
             "display": {
@@ -2096,7 +2139,7 @@
             "_row_num": 22,
             "__rowNum__": 21,
             "_token_type": "prompt",
-            "_type": "select_one",
+            "_type": "select_one_integer",
             "_branch_label_enclosing_screen": "survey/_screen18",
             "promptIdx": 8
           },
@@ -2133,7 +2176,42 @@
             "promptIdx": 10
           },
           {
-            "type": "select_one",
+            "type": "select_one_integer",
+            "values_list": "yesno",
+            "name": "febre",
+            "display": {
+              "prompt": {
+                "text": "Febre"
+              },
+              "constraint_message": {
+                "text": true
+              }
+            },
+            "_row_num": 30,
+            "__rowNum__": 29,
+            "_token_type": "prompt",
+            "_type": "select_one_integer",
+            "_branch_label_enclosing_screen": "survey/_screen30",
+            "promptIdx": 11
+          },
+          {
+            "type": "decimal",
+            "name": "temperatura",
+            "display": {
+              "prompt": {
+                "text": "Temperatura"
+              }
+            },
+            "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
+            "_row_num": 31,
+            "__rowNum__": 30,
+            "_token_type": "prompt",
+            "_type": "decimal",
+            "_branch_label_enclosing_screen": "survey/_screen31",
+            "promptIdx": 12
+          },
+          {
+            "type": "select_one_integer",
             "values_list": "yesno",
             "name": "envio_tdr",
             "display": {
@@ -2141,12 +2219,12 @@
                 "text": "O/A paciente foi enviada a fazer TDR"
               }
             },
-            "_row_num": 31,
-            "__rowNum__": 30,
+            "_row_num": 34,
+            "__rowNum__": 33,
             "_token_type": "prompt",
-            "_type": "select_one",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 11
+            "_type": "select_one_integer",
+            "_branch_label_enclosing_screen": "survey/_screen34",
+            "promptIdx": 13
           },
           {
             "type": "string",
@@ -2156,12 +2234,12 @@
                 "text": "Inicias do Inqueridor"
               }
             },
-            "_row_num": 34,
-            "__rowNum__": 33,
+            "_row_num": 39,
+            "__rowNum__": 38,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen34",
-            "promptIdx": 12
+            "_branch_label_enclosing_screen": "survey/_screen39",
+            "promptIdx": 14
           },
           {
             "type": "text",
@@ -2171,20 +2249,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 37,
-            "__rowNum__": 36,
+            "_row_num": 42,
+            "__rowNum__": 41,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen37",
-            "promptIdx": 13
+            "_branch_label_enclosing_screen": "survey/_screen42",
+            "promptIdx": 15
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 38,
-            "_branch_label_enclosing_screen": "survey/_screen38",
-            "promptIdx": 14
+            "_row_num": 43,
+            "_branch_label_enclosing_screen": "survey/_screen43",
+            "promptIdx": 16
           }
         ],
         "validation_tag_map": {
@@ -2197,7 +2275,8 @@
             6,
             8,
             9,
-            10
+            10,
+            12
           ]
         },
         "operations": [
@@ -2239,53 +2318,93 @@
             "operationIdx": 2
           },
           {
-            "_row_num": 31,
+            "_row_num": 30,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(11);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 3
           },
           {
-            "_row_num": 34,
+            "_row_num": 31,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 4
           },
           {
-            "_row_num": 37,
+            "clause": "if",
+            "condition": "data('febre')== 1 | data('temperatura')>38",
+            "_row_num": 33,
+            "__rowNum__": 32,
+            "_token_type": "goto_label",
+            "_branch_label": "_then33",
+            "operationIdx": 5
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else35",
+            "_row_num": 35,
+            "operationIdx": 6
+          },
+          {
+            "_row_num": 34,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 5
+            "operationIdx": 7
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif35",
+            "_row_num": 35,
+            "operationIdx": 8
+          },
+          {
+            "_row_num": 39,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 9
+          },
+          {
+            "_row_num": 42,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 10
           },
           {
             "_token_type": "exit_section",
             "clause": "exit section",
-            "_row_num": 38,
-            "operationIdx": 6
+            "_row_num": 43,
+            "operationIdx": 11
           },
           {
-            "_row_num": 38,
+            "_row_num": 43,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(16);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 7
+            "operationIdx": 12
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 38,
-            "operationIdx": 8
+            "_row_num": 43,
+            "operationIdx": 13
           }
         ],
         "branch_label_map": {
           "_screen3": 0,
           "_screen18": 1,
-          "_screen31": 3,
-          "_screen34": 4,
-          "_screen37": 5,
-          "_contents": 7,
-          "_screen38": 7
+          "_screen30": 3,
+          "_screen31": 4,
+          "_then33": 7,
+          "_screen34": 7,
+          "_else35": 9,
+          "_endif35": 9,
+          "_screen39": 9,
+          "_screen42": 10,
+          "_contents": 12,
+          "_screen43": 12
         }
       },
       "initial": {
@@ -2494,7 +2613,7 @@
         "elementPath": "cs"
       },
       "DOB_idade": {
-        "type": "string",
+        "type": "integer",
         "valuesList": "DOB_idade",
         "_defn": [
           {
@@ -2619,7 +2738,7 @@
         "elementPath": "nome_casa"
       },
       "sexo": {
-        "type": "string",
+        "type": "integer",
         "valuesList": "sexo",
         "_defn": [
           {
@@ -2637,7 +2756,7 @@
         "elementPath": "sexo"
       },
       "gravidez": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 12,
@@ -2684,8 +2803,13 @@
         "elementPath": "procedencia"
       },
       "febre": {
-        "type": "string",
+        "type": "integer",
+        "valuesList": "yesno",
         "_defn": [
+          {
+            "_row_num": 30,
+            "section_name": "survey"
+          },
           {
             "_row_num": 15,
             "section_name": "model"
@@ -2699,6 +2823,10 @@
       "temperatura": {
         "type": "number",
         "_defn": [
+          {
+            "_row_num": 31,
+            "section_name": "survey"
+          },
           {
             "_row_num": 16,
             "section_name": "model"
@@ -2831,11 +2959,11 @@
         "elementPath": "esp_diagnostico_secudario"
       },
       "envio_tdr": {
-        "type": "string",
+        "type": "integer",
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 31,
+            "_row_num": 34,
             "section_name": "survey"
           },
           {
@@ -2852,7 +2980,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 39,
             "section_name": "survey"
           },
           {
@@ -2905,7 +3033,7 @@
         "elementPath": "sub_dx2"
       },
       "saida": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 35,
@@ -2918,7 +3046,7 @@
         "elementPath": "saida"
       },
       "tto": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 37,
@@ -2944,7 +3072,7 @@
         "elementPath": "quanti"
       },
       "unidade": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 39,
@@ -2957,7 +3085,7 @@
         "elementPath": "unidade"
       },
       "freq": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 40,
@@ -2985,7 +3113,7 @@
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 37,
+            "_row_num": 42,
             "section_name": "survey"
           }
         ],
@@ -3119,6 +3247,13 @@
       {
         "_partition": "Column",
         "_aspect": "envio_tdr",
+        "_key": "displayChoicesList",
+        "_type": "object",
+        "_value": "[{\"choice_list_name\":\"yesno\",\"data_value\":1,\"display\":{\"title\":{\"text\":\"Sim\"}},\"_row_num\":8},{\"choice_list_name\":\"yesno\",\"data_value\":2,\"display\":{\"title\":{\"text\":\"Não\"}},\"_row_num\":9}]"
+      },
+      {
+        "_partition": "Column",
+        "_aspect": "febre",
         "_key": "displayChoicesList",
         "_type": "object",
         "_value": "[{\"choice_list_name\":\"yesno\",\"data_value\":1,\"display\":{\"title\":{\"text\":\"Sim\"}},\"_row_num\":8},{\"choice_list_name\":\"yesno\",\"data_value\":2,\"display\":{\"title\":{\"text\":\"Não\"}},\"_row_num\":9}]"

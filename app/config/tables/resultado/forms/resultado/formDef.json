@@ -358,7 +358,7 @@
         "_row_num": 8
       },
       {
-        "type": "select_one",
+        "type": "select_one_integer",
         "name": "sexo",
         "_row_num": 9
       },
@@ -746,7 +746,7 @@
         "elementKey": "nome_casa"
       },
       "sexo": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 9,
@@ -1378,7 +1378,7 @@
         "elementPath": "nome_casa"
       },
       "sexo": {
-        "type": "string",
+        "type": "integer",
         "_defn": [
           {
             "_row_num": 9,
