@@ -13,7 +13,7 @@
     <script>
 
         function editEntry(person) {
-            if (!confirm("Editar formulario de consulta?","Sim","Nao tonto")) return;
+            if (!confirm("Editar formulario de triagem?","Sim","Não")) return;
 
             var dispatchStruct = null;
             var tableId = "sentinela";
@@ -24,7 +24,23 @@
             odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
         }
 
-        function rowClick(person) {
+        function rowClickConsulta(person) {
+            var dispatchStruct = null;
+            var tableId = "sentinela";
+            var screenPath = null;            
+            var formId = "consulta"; 
+            // if (person.hasResult) {
+            var rowId = String(person.id_formssentinela);
+            console.log("EDIT form with row id:" + rowId);
+            odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
+            // } else {
+            //     var jsonMap = getJsonMap(person);
+            //     console.log("Adding NEW form with following info", jsonMap);
+            //     odkTables.addRowWithSurvey(dispatchStruct,tableId, formId, screenPath, jsonMap);
+            // }
+        }
+
+        function rowClickResultado(person) {
             var dispatchStruct = null;
             var tableId = "resultado";
             var screenPath = null;            
@@ -83,13 +99,17 @@
         function addPersonDiv(p) {    
             var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;  
             var idButton = "btnRow_" + String(p.id_formssentinela).replaceAll("uuid:","").replaceAll("-","");
-            var row = "<tr class='lab" + p.hasResult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' id='" + idButton + "' class='arrow'></input></td></tr>";
+            var idButtonConsulta = "btnRowConsulta_" + String(p.id_formssentinela).replaceAll("uuid:","").replaceAll("-","");
+            var row = "<tr class='lab" + p.hasResult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' id='" + idButtonConsulta + "' class='arrow'></input></td><td><input type='button' value=' ' id='" + idButton + "' class='arrow'></input></td></tr>";
             
             $('#theList tr:last').after(row);
             $("#" + idButton).on("click",function () {
-                console.log("WOWOWO");
+                rowClickResultado(p);
+                return false;
+            });
+            $("#" + idButtonConsulta).on("click",function () {
                 console.log(p);
-                rowClick(p);
+                rowClickConsulta(p);
                 return false;
             });
             $('#theList tr:last td:first').on("click",function(){
@@ -199,7 +219,7 @@
             $("#subheader").text(getCenterName(cs, consultor) + ' @ ' + adateHelper.getMoment(visit_date).format('DD/MM/YYYY'));
 
 
-            $("#btnConsulta").on("click", NewConsulta);
+            $("#btnSentinela").on("click", NewSentinela);
             $("#btnSearch").on("click", Search);
             $("#btnClearSearch").on("click", ClearSearch);
             $("#btnRefresh").on("click", Sync);
@@ -236,9 +256,9 @@
             setTimeout(function() {$("#btnRefresh").removeAttr("disabled");}, 10000);
         }
 
-        function NewConsulta() {
+        function NewSentinela() {
             var tableId = "sentinela";
-            var formId = "consulta"; 
+            var formId = "sentinela"; 
             var dispatchStruct = null;
             var screenPath = null;
             var jsonMap = { cs : cs, consultor : consultor, csname : getCenterName(cs, false) };            
@@ -485,7 +505,7 @@
                     </div>
                 </div>
                 <div style="float:right;width:50%;">
-                    <button type="button" id="btnConsulta" class="addButton">Nova Consulta</button>
+                    <button type="button" id="btnSentinela" class="addButton">Triagem</button>
                 </div>
             </div>
             <table id="theList">
@@ -494,10 +514,11 @@
                 <th>Nome</th>
                 <th>Sexo</th>
                 <th>Idade</th>
+                <th>Consulta</th>
                 <th>Resultados</th>
             </tr>
             <tr id="emptyRow">
-               <td colspan="5" style="text-align: center;padding:90px 0;">Nenhuma consulta feita hoje</td>
+               <td colspan="6" style="text-align: center;padding:90px 0;">Nenhuma consulta feita hoje</td>
             </tr>
             </table>
             <div style="width:99%;text-align:right;"><span style="display: inline-block;background-color: rgb(245, 245, 245);color: black;padding: 2px 10px;font-size: x-small;font-style: italic;content: 'sap';">by Sapiens Consult</span></div>
