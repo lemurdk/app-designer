@@ -13,22 +13,22 @@
     <script>
 
         function editEntry(person) {
-            if (!confirm("Editar formulario de registro?","Sim","Nao tonto")) return;
+            if (!confirm("Editar formulario de consulta?","Sim","Nao tonto")) return;
 
             var dispatchStruct = null;
             var tableId = "sentinela";
             var screenPath = null;            
-            var formId = "sentinela"; 
+            var formId = "consulta"; 
             var rowId = String(person.id_formssentinela);
-            console.log("EDIT registro with row id:" + rowId);
+            console.log("EDIT consulta with row id:" + rowId);
             odkTables.editRowWithSurvey(dispatchStruct, tableId, rowId, formId, screenPath);
         }
 
         function rowClick(person) {
             var dispatchStruct = null;
-            var tableId = "sentinela";
+            var tableId = "resultado";
             var screenPath = null;            
-            var formId = "consulta"; 
+            var formId = "resultado"; 
             if (person.hasResult) {
                 var rowId = person.resultId;
                 console.log("EDIT form with row id:" + rowId);
@@ -199,7 +199,7 @@
             $("#subheader").text(getCenterName(cs, consultor) + ' @ ' + adateHelper.getMoment(visit_date).format('DD/MM/YYYY'));
 
 
-            $("#btnNewSentinela").on("click", NewSentinela);
+            $("#btnConsulta").on("click", NewConsulta);
             $("#btnSearch").on("click", Search);
             $("#btnClearSearch").on("click", ClearSearch);
             $("#btnRefresh").on("click", Sync);
@@ -236,9 +236,9 @@
             setTimeout(function() {$("#btnRefresh").removeAttr("disabled");}, 10000);
         }
 
-        function NewSentinela() {
+        function NewConsulta() {
             var tableId = "sentinela";
-            var formId = "sentinela"; 
+            var formId = "consulta"; 
             var dispatchStruct = null;
             var screenPath = null;
             var jsonMap = { cs : cs, consultor : consultor, csname : getCenterName(cs, false) };            
@@ -485,7 +485,7 @@
                     </div>
                 </div>
                 <div style="float:right;width:50%;">
-                    <button type="button" id="btnNewSentinela" class="addButton">Triagem</button>
+                    <button type="button" id="btnConsulta" class="addButton">Nova Consulta</button>
                 </div>
             </div>
             <table id="theList">
@@ -494,7 +494,7 @@
                 <th>Nome</th>
                 <th>Sexo</th>
                 <th>Idade</th>
-                <th>Consulta</th>
+                <th>Resultados</th>
             </tr>
             <tr id="emptyRow">
                <td colspan="5" style="text-align: center;padding:90px 0;">Nenhuma consulta feita hoje</td>
