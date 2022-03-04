@@ -302,6 +302,19 @@ module.exports = function (grunt) {
     // We need grunt-exec to run adb commands from within grunt.
     grunt.loadNpmTasks('grunt-exec');
 
+
+    grunt.registerTask(
+        'pulldb',
+        'Pulls a copy of the database',
+        function(dest) {
+            if (arguments.length !== 1) {
+                grunt.fail.fatal(this.name + ' requires a destination. Call using "' + this.name + ':dest"');
+            } else {
+                grunt.task.run('exec:pulldb:' + dest);
+            }
+        }
+    );
+
     // Just an alias task--shorthand for doing all the pullings
     grunt.registerTask(
         'adbpull',
