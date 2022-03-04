@@ -1,4 +1,6 @@
 ﻿diagnostico,diagnostico_label,subdx,subdx_label,sub
+1F4Z,Paludismo/Malaria,1F4_S,Paludismo/Malaria Simples ,1
+1F4Z,Paludismo/Malaria,1F4_G,Paludismo/Malaria Grave,1
 1B75,Abcesso,,,0
 MA01,Adenopatias,,,0
 PJ20,Agressao fisica,,,0
@@ -34,7 +36,7 @@ MG26,Sindrome Febril,,,0
 DA60,Ulcera Gastrica,,,0
 GC02,Uretrites,,,0
 1A92,Tricomoniase,,,0
-1E90,Varicela,,,0
+1.00E+90,Varicela,,,0
 1C62_Z,VIH/Sida,,,0
 otro,Outras,,,0
 CA03020Y,Amigdalites/Faringite/Faringamidalites,CA03,Amigdalites,1
@@ -56,5 +58,3 @@ FB_ME,Mialgia/ Lombalgia,ME84_2,Lombalgia,1
 AAZ1_90,Otites (Externo Media Purulenta),AA1Z,Otites Externo,1
 AAZ1_90,Otites (Externo Media Purulenta),AA80,Otites Media,1
 AAZ1_90,Otites (Externo Media Purulenta),AA90,Otites  Purulenta,1
-1F4Z,Paludismo/Malaria,1F4_S,Paludismo/Malaria Simples ,1
-1F4Z,Paludismo/Malaria,1F4_G,Paludismo/Malaria Grave,1

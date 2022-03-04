@@ -156,6 +156,7 @@
             "text": "Inicias de Laboratorista"
           }
         },
+        "constraint": true,
         "_row_num": 18
       },
       {
@@ -1006,6 +1007,7 @@
                 "text": "Inicias de Laboratorista"
               }
             },
+            "constraint": true,
             "_row_num": 18,
             "__rowNum__": 17,
             "_token_type": "prompt",
@@ -1042,7 +1044,8 @@
             1,
             2,
             3,
-            4
+            4,
+            7
           ]
         },
         "operations": [
