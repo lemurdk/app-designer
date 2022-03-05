@@ -286,6 +286,7 @@
             "text": "Inicias do Inqueridor"
           }
         },
+        "required": true,
         "_row_num": 40
       },
       {
@@ -2293,6 +2294,7 @@
                 "text": "Inicias do Inqueridor"
               }
             },
+            "required": true,
             "_row_num": 40,
             "__rowNum__": 39,
             "_token_type": "prompt",
@@ -2337,7 +2339,8 @@
             10,
             11,
             12,
-            14
+            14,
+            15
           ]
         },
         "operations": [

@@ -156,7 +156,7 @@
             "text": "Inicias de Laboratorista"
           }
         },
-        "constraint": true,
+        "required": true,
         "_row_num": 18
       },
       {
@@ -1007,7 +1007,7 @@
                 "text": "Inicias de Laboratorista"
               }
             },
-            "constraint": true,
+            "required": true,
             "_row_num": 18,
             "__rowNum__": 17,
             "_token_type": "prompt",
