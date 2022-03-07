@@ -93,6 +93,23 @@
         "_row_num": 9
       },
       {
+        "type": "select_one_integer",
+        "values_list": "yesno",
+        "name": "fez_ge",
+        "display": {
+          "prompt": {
+            "text": "Fizeram a GE (Gota espessa)?"
+          }
+        },
+        "required": true,
+        "_row_num": 10
+      },
+      {
+        "clause": "if",
+        "condition": "data('fez_ge')==1",
+        "_row_num": 11
+      },
+      {
         "type": "integer",
         "name": "GE",
         "display": {
@@ -101,8 +118,7 @@
           }
         },
         "constraint": "data('GE')<10000 || data('GE')==88888",
-        "required": true,
-        "_row_num": 11
+        "_row_num": 12
       },
       {
         "type": "integer",
@@ -119,10 +135,14 @@
         "_row_num": 13
       },
       {
+        "clause": "end if",
+        "_row_num": 14
+      },
+      {
         "type": "assign",
         "name": "ncampo",
         "calculation": "data('campo')==\"\" ? 200 : data('campo')",
-        "_row_num": 14
+        "_row_num": 15
       },
       {
         "type": "decimal",
@@ -132,7 +152,7 @@
             "text": "Leucocitos"
           }
         },
-        "_row_num": 15
+        "_row_num": 16
       },
       {
         "type": "decimal",
@@ -142,11 +162,11 @@
             "text": "Hemoglobina (mg/dl)"
           }
         },
-        "_row_num": 16
+        "_row_num": 17
       },
       {
         "clause": "end screen",
-        "_row_num": 17
+        "_row_num": 18
       },
       {
         "type": "string",
@@ -157,7 +177,7 @@
           }
         },
         "required": true,
-        "_row_num": 18
+        "_row_num": 19
       },
       {
         "type": "text",
@@ -167,7 +187,7 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 19
+        "_row_num": 20
       }
     ],
     "choices": [
@@ -367,6 +387,11 @@
         "type": "string",
         "name": "id_formssentinela",
         "_row_num": 10
+      },
+      {
+        "type": "select_one_integer",
+        "name": "fez_ge",
+        "_row_num": 13
       },
       {
         "type": "select_one_integer",
@@ -766,6 +791,21 @@
         ],
         "elementKey": "id_formssentinela"
       },
+      "fez_ge": {
+        "type": "integer",
+        "valuesList": "yesno",
+        "_defn": [
+          {
+            "_row_num": 10,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 13,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "fez_ge"
+      },
       "tdr": {
         "type": "integer",
         "valuesList": "yesno",
@@ -800,7 +840,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 11,
+            "_row_num": 12,
             "section_name": "survey"
           },
           {
@@ -814,7 +854,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 15,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -828,7 +868,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 16,
+            "_row_num": 17,
             "section_name": "survey"
           },
           {
@@ -842,7 +882,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 19,
+            "_row_num": 20,
             "section_name": "survey"
           },
           {
@@ -865,7 +905,7 @@
       "lab": {
         "_defn": [
           {
-            "_row_num": 18,
+            "_row_num": 19,
             "section_name": "survey"
           }
         ],
@@ -934,6 +974,23 @@
             "promptIdx": 2
           },
           {
+            "type": "select_one_integer",
+            "values_list": "yesno",
+            "name": "fez_ge",
+            "display": {
+              "prompt": {
+                "text": "Fizeram a GE (Gota espessa)?"
+              }
+            },
+            "required": true,
+            "_row_num": 10,
+            "__rowNum__": 9,
+            "_token_type": "prompt",
+            "_type": "select_one_integer",
+            "_branch_label_enclosing_screen": "survey/_screen4",
+            "promptIdx": 3
+          },
+          {
             "type": "integer",
             "name": "GE",
             "display": {
@@ -942,13 +999,12 @@
               }
             },
             "constraint": "data('GE')<10000 || data('GE')==88888",
-            "required": true,
-            "_row_num": 11,
-            "__rowNum__": 10,
+            "_row_num": 12,
+            "__rowNum__": 11,
             "_token_type": "prompt",
             "_type": "integer",
             "_branch_label_enclosing_screen": "survey/_screen4",
-            "promptIdx": 3
+            "promptIdx": 4
           },
           {
             "type": "integer",
@@ -967,7 +1023,7 @@
             "_token_type": "prompt",
             "_type": "integer",
             "_branch_label_enclosing_screen": "survey/_screen4",
-            "promptIdx": 4
+            "promptIdx": 5
           },
           {
             "type": "decimal",
@@ -975,21 +1031,6 @@
             "display": {
               "prompt": {
                 "text": "Leucocitos"
-              }
-            },
-            "_row_num": 15,
-            "__rowNum__": 14,
-            "_token_type": "prompt",
-            "_type": "decimal",
-            "_branch_label_enclosing_screen": "survey/_screen4",
-            "promptIdx": 5
-          },
-          {
-            "type": "decimal",
-            "name": "hb",
-            "display": {
-              "prompt": {
-                "text": "Hemoglobina (mg/dl)"
               }
             },
             "_row_num": 16,
@@ -1000,6 +1041,21 @@
             "promptIdx": 6
           },
           {
+            "type": "decimal",
+            "name": "hb",
+            "display": {
+              "prompt": {
+                "text": "Hemoglobina (mg/dl)"
+              }
+            },
+            "_row_num": 17,
+            "__rowNum__": 16,
+            "_token_type": "prompt",
+            "_type": "decimal",
+            "_branch_label_enclosing_screen": "survey/_screen4",
+            "promptIdx": 7
+          },
+          {
             "type": "string",
             "name": "lab",
             "display": {
@@ -1008,12 +1064,12 @@
               }
             },
             "required": true,
-            "_row_num": 18,
-            "__rowNum__": 17,
+            "_row_num": 19,
+            "__rowNum__": 18,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen18",
-            "promptIdx": 7
+            "_branch_label_enclosing_screen": "survey/_screen19",
+            "promptIdx": 8
           },
           {
             "type": "text",
@@ -1023,20 +1079,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 19,
-            "__rowNum__": 18,
+            "_row_num": 20,
+            "__rowNum__": 19,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen19",
-            "promptIdx": 8
+            "_branch_label_enclosing_screen": "survey/_screen20",
+            "promptIdx": 9
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 20,
-            "_branch_label_enclosing_screen": "survey/_screen20",
-            "promptIdx": 9
+            "_row_num": 21,
+            "_branch_label_enclosing_screen": "survey/_screen21",
+            "promptIdx": 10
           }
         ],
         "validation_tag_map": {
@@ -1045,7 +1101,8 @@
             2,
             3,
             4,
-            7
+            5,
+            8
           ]
         },
         "operations": [
@@ -1056,35 +1113,35 @@
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 17,
-              "__rowNum__": 16,
+              "_row_num": 18,
+              "__rowNum__": 17,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\nactivePromptIndicies.push(1);\nif (data('tdr')=='1') {\nactivePromptIndicies.push(2);\n}\nactivePromptIndicies.push(3);\nactivePromptIndicies.push(4);\nassign('ncampo', data('campo')==\"\" ? 200 : data('campo'));\nactivePromptIndicies.push(5);\nactivePromptIndicies.push(6);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\nactivePromptIndicies.push(1);\nif (data('tdr')=='1') {\nactivePromptIndicies.push(2);\n}\nactivePromptIndicies.push(3);\nif (data('fez_ge')==1) {\nactivePromptIndicies.push(4);\nactivePromptIndicies.push(5);\n}\nassign('ncampo', data('campo')==\"\" ? 200 : data('campo'));\nactivePromptIndicies.push(6);\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 0
-          },
-          {
-            "_row_num": 18,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 1
           },
           {
             "_row_num": 19,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 2
-          },
-          {
-            "_token_type": "exit_section",
-            "clause": "exit section",
-            "_row_num": 20,
-            "operationIdx": 3
+            "operationIdx": 1
           },
           {
             "_row_num": 20,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(9);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 2
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 21,
+            "operationIdx": 3
+          },
+          {
+            "_row_num": 21,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(10);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
@@ -1093,16 +1150,16 @@
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 20,
+            "_row_num": 21,
             "operationIdx": 5
           }
         ],
         "branch_label_map": {
           "_screen4": 0,
-          "_screen18": 1,
-          "_screen19": 2,
+          "_screen19": 1,
+          "_screen20": 2,
           "_contents": 4,
-          "_screen20": 4
+          "_screen21": 4
         }
       },
       "initial": {
@@ -1406,6 +1463,24 @@
         "elementSet": "data",
         "elementPath": "id_formssentinela"
       },
+      "fez_ge": {
+        "type": "integer",
+        "valuesList": "yesno",
+        "_defn": [
+          {
+            "_row_num": 10,
+            "section_name": "survey"
+          },
+          {
+            "_row_num": 13,
+            "section_name": "model"
+          }
+        ],
+        "elementKey": "fez_ge",
+        "elementName": "fez_ge",
+        "elementSet": "data",
+        "elementPath": "fez_ge"
+      },
       "tdr": {
         "type": "integer",
         "valuesList": "yesno",
@@ -1446,7 +1521,7 @@
         "type": "integer",
         "_defn": [
           {
-            "_row_num": 11,
+            "_row_num": 12,
             "section_name": "survey"
           },
           {
@@ -1463,7 +1538,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 15,
+            "_row_num": 16,
             "section_name": "survey"
           },
           {
@@ -1480,7 +1555,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 16,
+            "_row_num": 17,
             "section_name": "survey"
           },
           {
@@ -1497,7 +1572,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 19,
+            "_row_num": 20,
             "section_name": "survey"
           },
           {
@@ -1526,7 +1601,7 @@
       "lab": {
         "_defn": [
           {
-            "_row_num": 18,
+            "_row_num": 19,
             "section_name": "survey"
           }
         ],
@@ -1650,6 +1725,13 @@
       }
     },
     "properties": [
+      {
+        "_partition": "Column",
+        "_aspect": "fez_ge",
+        "_key": "displayChoicesList",
+        "_type": "object",
+        "_value": "[{\"choice_list_name\":\"yesno\",\"data_value\":1,\"display\":{\"title\":{\"text\":\"Sim\"}},\"_row_num\":8},{\"choice_list_name\":\"yesno\",\"data_value\":2,\"display\":{\"title\":{\"text\":\"Não\"}},\"_row_num\":9}]"
+      },
       {
         "_partition": "Column",
         "_aspect": "tdr",
