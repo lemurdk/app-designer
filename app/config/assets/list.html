@@ -66,7 +66,7 @@
             delete person.ano;
             delete person.mes;
             delete person.consultor;
-
+            delete person.hasConsult;
             console.log("Sending following data:");
             console.log(person);      
 
@@ -140,7 +140,7 @@
             var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult, s.diagnostico IS NOT NULL as HasConsult, r._id as resultId FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.consultor = "' + consultor + '" COLLATE NOCASE AND s.envio_tdr = 1  AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
-        hasConsult
+        
         function searchId(strId) {
             if (TESTMODE) return;
             console.log("Querying database for consultas with id_paciente = " + strId);
