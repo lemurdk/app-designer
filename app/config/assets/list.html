@@ -99,8 +99,8 @@
         function addPersonDiv(p) {    
             var nome = (p.nome_casa && p.nome_casa.length) ? nome = p.nome + " (" + p.nome_casa + ")" : p.nome;  
             var idButton = "btnRow_" + String(p.id_formssentinela).replaceAll("uuid:","").replaceAll("-","");
-            var idButtonConsulta = "btnRowConsulta_" + String(p.id_formssentinela).replaceAll("uuid:","").replaceAll("-","");
-            var row = "<tr class='lab" + p.hasResult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' id='" + idButtonConsulta + "' class='arrow'></input></td><td><input type='button' value=' ' id='" + idButton + "' class='arrow'></input></td></tr>";
+            var idButtonConsulta = "btnRowConsulta_" + String(p.id_formssentinela).replaceAll("uuid:","").replaceAll("-","");            
+            var row = "<tr class='lab" + p.hasResult + " consult" + p.hasConsult + "'><td>" + p.id_paciente + "</td><td>" + nome + "</td><td>" + getSexoString(p.sexo) + "</td><td>" + getAgeString(p) + "</td><td><input type='button' value=' ' id='" + idButtonConsulta + "' class='arrow btnConsult'></input></td><td><input type='button' value=' ' id='" + idButton + "' class='arrow btnResult'></input></td></tr>";
             
             $('#theList tr:last').after(row);
             $("#" + idButton).on("click",function () {
@@ -137,14 +137,14 @@
         function listRows(cs, consultor, visit_date) {
             if (TESTMODE) return;
             console.log("Querying database for forms from cs = " + cs + " @" + visit_date);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult, r._id as resultId FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.consultor = "' + consultor + '" COLLATE NOCASE AND s.envio_tdr = 1  AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult, s.diagnostico IS NOT NULL as HasConsult, r._id as resultId FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.cs = "' + cs + '" COLLATE NOCASE AND s.consultor = "' + consultor + '" COLLATE NOCASE AND s.envio_tdr = 1  AND s._savepoint_timestamp > datetime("now", "-24 hours") COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
-
+        hasConsult
         function searchId(strId) {
             if (TESTMODE) return;
             console.log("Querying database for consultas with id_paciente = " + strId);
-            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult, r._id as resultId FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
+            var SQL ='SELECT s._id, s.nome, s.nome_casa, s.sexo, s.id_paciente, s.dn, s.cs, s.consultor, s.ano, s.mes, r._id IS NOT NULL as HasResult, s.diagnostico IS NOT NULL as HasConsult, r._id as resultId FROM sentinela s LEFT JOIN resultado r ON s._id = r.id_formssentinela AND r._savepoint_type = "COMPLETE" WHERE s.id_paciente = "' + strId + '" COLLATE NOCASE AND s._savepoint_type = "COMPLETE"';
             performQuery(SQL);            
         }
         
@@ -165,6 +165,7 @@
                     var cs =  result.getData(row,"cs");
                     var consultor = result.getData(row, "consultor");
                     var hasResult =  result.getData(row,"HasResult") == "1";
+                    var hasConsult = result.getData(row, "HasConsult") == "1";
                     var resultId = result.getData(row, "resultId");
                     var p = {
                         id_formssentinela,
@@ -178,6 +179,7 @@
                         cs,
                         consultor,
                         hasResult,
+                        hasConsult,
                         resultId
                     }
                     console.log(p);
@@ -241,7 +243,8 @@
                         ano: i%2==0 ? null : 0,
                         mes: i%2==2 ? null : i%3==0 ? 4 : 0,
                         id_formssentinela: Math.round(Math.random()*100000000000,0),
-                        hasResult : i > 4 ? 1 : 0
+                        hasResult : i > 4,
+                        hasConsult : i > 6,
                     }
                     persons.push(p);
                 }
@@ -409,20 +412,25 @@
             .arrow {
                 height: 40px;
                 width:40px;
-                text-indent: 100;
+                text-indent: 100px;
                 background-color:white;
                 border-color: black;
                 border-radius: 10%;
                 display: inline-block;
                 vertical-align: middle;
             }
-            #theList > tbody > tr.labtrue > td> .arrow {                
+            #theList > tbody > tr.consulttrue > td > .arrow.btnConsult,
+            #theList > tbody > tr.labtrue > td > .arrow.btnResult {
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>')
             }
-            #theList > tbody > tr.labfalse > td> .arrow, .addButton {
+
+            #theList > tbody > tr.consultfalse > td> .arrow.arrow.btnConsult,
+            #theList > tbody > tr.labfalse > td> .arrow.arrow.btnResult, .addButton {
                 background-image: url('data:image/svg+xml;utf8,<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>')
             }
             
+            
+
             .addButton {
                 background-color: #4CAF50; /* Green */
                 border: none;
