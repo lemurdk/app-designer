@@ -1,6 +1,5 @@
 _partition,_aspect,_key,_type,_value
 Column,DOB_idade,displayChoicesList,object,"[{""choice_list_name"":""DOB_idade"",""data_value"":1,""display"":{""title"":{""text"":""Data de Nascimento""}},""_row_num"":5},{""choice_list_name"":""DOB_idade"",""data_value"":2,""display"":{""title"":{""text"":""Idade""}},""_row_num"":6}]"
-Column,envio_tdr,displayChoicesList,object,"[{""choice_list_name"":""yesno"",""data_value"":1,""display"":{""title"":{""text"":""Sim""}},""_row_num"":8},{""choice_list_name"":""yesno"",""data_value"":2,""display"":{""title"":{""text"":""Não""}},""_row_num"":9}]"
 Column,febre,displayChoicesList,object,"[{""choice_list_name"":""yesno"",""data_value"":1,""display"":{""title"":{""text"":""Sim""}},""_row_num"":8},{""choice_list_name"":""yesno"",""data_value"":2,""display"":{""title"":{""text"":""Não""}},""_row_num"":9}]"
 Column,sexo,displayChoicesList,object,"[{""choice_list_name"":""sexo"",""data_value"":1,""display"":{""title"":{""text"":""Masculino""}},""_row_num"":2},{""choice_list_name"":""sexo"",""data_value"":2,""display"":{""title"":{""text"":""Feminino""}},""_row_num"":3}]"
 FormType,default,FormType.formType,string,SURVEY
