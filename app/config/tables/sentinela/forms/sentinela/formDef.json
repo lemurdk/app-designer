@@ -232,7 +232,7 @@
       },
       {
         "clause": "end screen",
-        "_row_num": 32
+        "_row_num": 30
       },
       {
         "type": "select_one_integer",
@@ -244,7 +244,7 @@
           }
         },
         "required": true,
-        "_row_num": 33
+        "_row_num": 31
       },
       {
         "type": "decimal",
@@ -255,28 +255,11 @@
           }
         },
         "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
-        "_row_num": 34
-      },
-      {
-        "type": "integer",
-        "name": "numero_codigo",
-        "display": {
-          "prompt": {
-            "text": "Introduza o numero se serie do cartao: {{calculates.letra_codigo}}"
-          }
-        },
-        "required": true,
-        "_row_num": 37
-      },
-      {
-        "type": "assign",
-        "name": "id_paciente",
-        "calculation": "calculates.letra_codigo() + data('numero_codigo')",
-        "_row_num": 38
+        "_row_num": 32
       },
       {
         "clause": "begin screen",
-        "_row_num": 39
+        "_row_num": 33
       },
       {
         "type": "string",
@@ -287,7 +270,7 @@
           }
         },
         "required": true,
-        "_row_num": 40
+        "_row_num": 34
       },
       {
         "type": "text",
@@ -297,11 +280,11 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 41
+        "_row_num": 35
       },
       {
         "clause": "end screen",
-        "_row_num": 42
+        "_row_num": 36
       }
     ],
     "choices": [
@@ -1699,10 +1682,6 @@
       "id_paciente": {
         "_defn": [
           {
-            "_row_num": 38,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 8,
             "section_name": "model"
           }
@@ -1796,7 +1775,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 33,
+            "_row_num": 31,
             "section_name": "survey"
           },
           {
@@ -1810,7 +1789,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 32,
             "section_name": "survey"
           },
           {
@@ -1863,10 +1842,6 @@
       "numero_codigo": {
         "type": "integer",
         "_defn": [
-          {
-            "_row_num": 37,
-            "section_name": "survey"
-          },
           {
             "_row_num": 22,
             "section_name": "model"
@@ -1928,7 +1903,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 40,
+            "_row_num": 34,
             "section_name": "survey"
           },
           {
@@ -2041,7 +2016,7 @@
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 41,
+            "_row_num": 35,
             "section_name": "survey"
           }
         ],
@@ -2268,11 +2243,11 @@
               }
             },
             "required": true,
-            "_row_num": 33,
-            "__rowNum__": 32,
+            "_row_num": 31,
+            "__rowNum__": 30,
             "_token_type": "prompt",
             "_type": "select_one_integer",
-            "_branch_label_enclosing_screen": "survey/_screen33",
+            "_branch_label_enclosing_screen": "survey/_screen31",
             "promptIdx": 12
           },
           {
@@ -2284,28 +2259,12 @@
               }
             },
             "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
-            "_row_num": 34,
-            "__rowNum__": 33,
+            "_row_num": 32,
+            "__rowNum__": 31,
             "_token_type": "prompt",
             "_type": "decimal",
-            "_branch_label_enclosing_screen": "survey/_screen34",
+            "_branch_label_enclosing_screen": "survey/_screen32",
             "promptIdx": 13
-          },
-          {
-            "type": "integer",
-            "name": "numero_codigo",
-            "display": {
-              "prompt": {
-                "text": "Introduza o numero se serie do cartao: {{calculates.letra_codigo}}"
-              }
-            },
-            "required": true,
-            "_row_num": 37,
-            "__rowNum__": 36,
-            "_token_type": "prompt",
-            "_type": "integer",
-            "_branch_label_enclosing_screen": "survey/_screen37",
-            "promptIdx": 14
           },
           {
             "type": "string",
@@ -2316,12 +2275,12 @@
               }
             },
             "required": true,
-            "_row_num": 40,
-            "__rowNum__": 39,
+            "_row_num": 34,
+            "__rowNum__": 33,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen39",
-            "promptIdx": 15
+            "_branch_label_enclosing_screen": "survey/_screen33",
+            "promptIdx": 14
           },
           {
             "type": "text",
@@ -2331,20 +2290,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 41,
-            "__rowNum__": 40,
+            "_row_num": 35,
+            "__rowNum__": 34,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen39",
-            "promptIdx": 16
+            "_branch_label_enclosing_screen": "survey/_screen33",
+            "promptIdx": 15
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 43,
-            "_branch_label_enclosing_screen": "survey/_screen43",
-            "promptIdx": 17
+            "_row_num": 37,
+            "_branch_label_enclosing_screen": "survey/_screen37",
+            "promptIdx": 16
           }
         ],
         "validation_tag_map": {
@@ -2361,8 +2320,7 @@
             11,
             12,
             13,
-            14,
-            15
+            14
           ]
         },
         "operations": [
@@ -2445,74 +2403,59 @@
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 32,
-              "__rowNum__": 31,
+              "_row_num": 30,
+              "__rowNum__": 29,
               "_token_type": "end_screen"
             },
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nactivePromptIndicies.push(9);\nactivePromptIndicies.push(10);\nactivePromptIndicies.push(11);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 9
           },
           {
-            "_row_num": 33,
+            "_row_num": 31,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 10
           },
           {
-            "_row_num": 34,
+            "_row_num": 32,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 11
           },
           {
-            "_row_num": 37,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 12
-          },
-          {
-            "type": "assign",
-            "name": "id_paciente",
-            "calculation": "calculates.letra_codigo() + data('numero_codigo')",
-            "_row_num": 38,
-            "__rowNum__": 37,
-            "_token_type": "assign",
-            "operationIdx": 13
-          },
-          {
             "clause": "begin screen",
-            "_row_num": 39,
-            "__rowNum__": 38,
+            "_row_num": 33,
+            "__rowNum__": 32,
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 42,
-              "__rowNum__": 41,
+              "_row_num": 36,
+              "__rowNum__": 35,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(15);\nactivePromptIndicies.push(16);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 14
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 12
           },
           {
             "_token_type": "exit_section",
             "clause": "exit section",
-            "_row_num": 43,
-            "operationIdx": 15
+            "_row_num": 37,
+            "operationIdx": 13
           },
           {
-            "_row_num": 43,
+            "_row_num": 37,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(17);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(16);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 16
+            "operationIdx": 14
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 43,
-            "operationIdx": 17
+            "_row_num": 37,
+            "operationIdx": 15
           }
         ],
         "branch_label_map": {
@@ -2526,12 +2469,11 @@
           "_else22": 9,
           "_endif22": 9,
           "_screen23": 9,
-          "_screen33": 10,
-          "_screen34": 11,
-          "_screen37": 12,
-          "_screen39": 14,
-          "_contents": 16,
-          "_screen43": 16
+          "_screen31": 10,
+          "_screen32": 11,
+          "_screen33": 12,
+          "_contents": 14,
+          "_screen37": 14
         }
       },
       "initial": {
@@ -2816,10 +2758,6 @@
       "id_paciente": {
         "_defn": [
           {
-            "_row_num": 38,
-            "section_name": "survey"
-          },
-          {
             "_row_num": 8,
             "section_name": "model"
           }
@@ -2934,7 +2872,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 33,
+            "_row_num": 31,
             "section_name": "survey"
           },
           {
@@ -2951,7 +2889,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 32,
             "section_name": "survey"
           },
           {
@@ -3019,10 +2957,6 @@
       "numero_codigo": {
         "type": "integer",
         "_defn": [
-          {
-            "_row_num": 37,
-            "section_name": "survey"
-          },
           {
             "_row_num": 22,
             "section_name": "model"
@@ -3102,7 +3036,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 40,
+            "_row_num": 34,
             "section_name": "survey"
           },
           {
@@ -3248,7 +3182,7 @@
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 41,
+            "_row_num": 35,
             "section_name": "survey"
           }
         ],
