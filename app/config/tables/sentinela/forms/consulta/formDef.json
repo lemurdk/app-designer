@@ -71,11 +71,11 @@
             "text": "Motivo de não enviar o paciente a fazer TDR"
           }
         },
-        "default": "data('envio_tdr')==2",
+        "required": "data('envio_tdr')==2",
         "_row_num": 7
       },
       {
-        "clause": "end if",
+        "clause": "else",
         "_row_num": 8
       },
       {
@@ -86,7 +86,7 @@
             "text": "Introduza o numero se serie do cartao: {{calculates.letra_codigo}}"
           }
         },
-        "default": true,
+        "required": "data('envio_tdr')==1",
         "_row_num": 9
       },
       {
@@ -94,6 +94,10 @@
         "name": "id_paciente",
         "calculation": "calculates.letra_codigo() + data('numero_codigo')",
         "_row_num": 10
+      },
+      {
+        "clause": "end if",
+        "_row_num": 11
       },
       {
         "clause": "if",
@@ -1932,7 +1936,7 @@
                 "text": "Motivo de não enviar o paciente a fazer TDR"
               }
             },
-            "default": "data('envio_tdr')==2",
+            "required": "data('envio_tdr')==2",
             "_row_num": 7,
             "__rowNum__": 6,
             "_token_type": "prompt",
@@ -1948,7 +1952,7 @@
                 "text": "Introduza o numero se serie do cartao: {{calculates.letra_codigo}}"
               }
             },
-            "default": true,
+            "required": "data('envio_tdr')==1",
             "_row_num": 9,
             "__rowNum__": 8,
             "_token_type": "prompt",
@@ -2208,6 +2212,8 @@
         ],
         "validation_tag_map": {
           "finalize": [
+            1,
+            2,
             4,
             5,
             8,
@@ -2263,7 +2269,7 @@
             "operationIdx": 5
           },
           {
-            "clause": "end if",
+            "clause": "else",
             "_token_type": "goto_label",
             "_branch_label": "_else8",
             "_row_num": 8,
@@ -2278,8 +2284,8 @@
           {
             "clause": "end if",
             "_token_type": "goto_label",
-            "_branch_label": "_endif8",
-            "_row_num": 8,
+            "_branch_label": "_endif11",
+            "_row_num": 11,
             "operationIdx": 8
           },
           {
@@ -2518,8 +2524,8 @@
           "_then6": 7,
           "_screen7": 7,
           "_else8": 9,
-          "_endif8": 9,
           "_screen9": 9,
+          "_endif11": 11,
           "_then12": 13,
           "_screen13": 13,
           "_else14": 15,
