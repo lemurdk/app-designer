@@ -8,7 +8,7 @@
       },
       {
         "setting_name": "form_version",
-        "value": 2020040701,
+        "value": 2024050200,
         "_row_num": 3
       },
       {
@@ -48,7 +48,7 @@
         "name": "nota_1",
         "display": {
           "prompt": {
-            "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}"
+            "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}  Consulta de: {{data.consultor}}"
           }
         },
         "_row_num": 5
@@ -172,8 +172,48 @@
         "_row_num": 22
       },
       {
-        "clause": "begin screen",
+        "clause": "if",
+        "condition": "calculates.idade_mes()>=216 && data('consultor')==\"CRIANCA\"",
         "_row_num": 23
+      },
+      {
+        "type": "note",
+        "name": "erro_consultorio_c",
+        "display": {
+          "prompt": {
+            "text": "A adulto não deve ser introduzido porque Tem menos de 18 anos y estás no Consultorio de criança"
+          }
+        },
+        "required": "calculates.idade_mes()>=216 && data('consultor')==\"CRIANCA\"",
+        "_row_num": 24
+      },
+      {
+        "clause": "end if",
+        "_row_num": 25
+      },
+      {
+        "clause": "if",
+        "condition": "calculates.idade_mes()<216 && data('consultor')==\"ADULTO\"",
+        "_row_num": 27
+      },
+      {
+        "type": "note",
+        "name": "erro_consultorio_a",
+        "display": {
+          "prompt": {
+            "text": "A Criança não deve ser introduzido porque Tem menos de 18 anos y estás no Consultorio de adulto"
+          }
+        },
+        "required": "calculates.idade_mes()<216 && data('consultor')==\"ADULTO\"",
+        "_row_num": 28
+      },
+      {
+        "clause": "end if",
+        "_row_num": 29
+      },
+      {
+        "clause": "begin screen",
+        "_row_num": 31
       },
       {
         "type": "string",
@@ -184,7 +224,7 @@
           }
         },
         "required": true,
-        "_row_num": 24
+        "_row_num": 32
       },
       {
         "type": "string",
@@ -194,7 +234,7 @@
             "text": "Nome de Casa"
           }
         },
-        "_row_num": 25
+        "_row_num": 33
       },
       {
         "type": "select_one_integer",
@@ -206,7 +246,7 @@
           }
         },
         "required": true,
-        "_row_num": 26
+        "_row_num": 34
       },
       {
         "type": "decimal",
@@ -217,7 +257,7 @@
           }
         },
         "constraint": "data('peso')<250",
-        "_row_num": 28
+        "_row_num": 36
       },
       {
         "type": "string",
@@ -228,11 +268,11 @@
           }
         },
         "required": true,
-        "_row_num": 29
+        "_row_num": 37
       },
       {
         "clause": "end screen",
-        "_row_num": 30
+        "_row_num": 38
       },
       {
         "type": "select_one_integer",
@@ -244,7 +284,7 @@
           }
         },
         "required": true,
-        "_row_num": 31
+        "_row_num": 39
       },
       {
         "type": "decimal",
@@ -255,11 +295,11 @@
           }
         },
         "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
-        "_row_num": 32
+        "_row_num": 40
       },
       {
         "clause": "begin screen",
-        "_row_num": 33
+        "_row_num": 41
       },
       {
         "type": "string",
@@ -270,7 +310,7 @@
           }
         },
         "required": true,
-        "_row_num": 34
+        "_row_num": 42
       },
       {
         "type": "text",
@@ -280,11 +320,11 @@
             "text": "Comentário"
           }
         },
-        "_row_num": 35
+        "_row_num": 43
       },
       {
         "clause": "end screen",
-        "_row_num": 36
+        "_row_num": 44
       }
     ],
     "choices": [
@@ -813,6 +853,11 @@
         "calculation_name": "letra_codigo",
         "calculation": "calculates.gabu()== 1 ? data('cs') : (data('cs') + calculates.child_adult())",
         "_row_num": 10
+      },
+      {
+        "calculation_name": "erro_consultorio",
+        "calculation": "calculates.idade_mes()>=216 && data('consultorio')==\"CRIANCA\"",
+        "_row_num": 12
       }
     ],
     "model": [
@@ -1023,7 +1068,7 @@
       },
       "form_version": {
         "setting_name": "form_version",
-        "value": 2020040701,
+        "value": 2024050200,
         "_row_num": 3
       },
       "survey": {
@@ -1594,6 +1639,11 @@
         "calculation_name": "letra_codigo",
         "calculation": "calculates.gabu()== 1 ? data('cs') : (data('cs') + calculates.child_adult())",
         "_row_num": 10
+      },
+      "erro_consultorio": {
+        "calculation_name": "erro_consultorio",
+        "calculation": "calculates.idade_mes()>=216 && data('consultorio')==\"CRIANCA\"",
+        "_row_num": 12
       }
     },
     "model": {
@@ -1693,7 +1743,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 24,
+            "_row_num": 32,
             "section_name": "survey"
           },
           {
@@ -1707,7 +1757,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 25,
+            "_row_num": 33,
             "section_name": "survey"
           },
           {
@@ -1722,7 +1772,7 @@
         "valuesList": "sexo",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 34,
             "section_name": "survey"
           },
           {
@@ -1746,7 +1796,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 36,
             "section_name": "survey"
           },
           {
@@ -1760,7 +1810,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 37,
             "section_name": "survey"
           },
           {
@@ -1775,7 +1825,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 31,
+            "_row_num": 39,
             "section_name": "survey"
           },
           {
@@ -1789,7 +1839,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 32,
+            "_row_num": 40,
             "section_name": "survey"
           },
           {
@@ -1903,7 +1953,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 42,
             "section_name": "survey"
           },
           {
@@ -2016,7 +2066,7 @@
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 35,
+            "_row_num": 43,
             "section_name": "survey"
           }
         ],
@@ -2039,7 +2089,7 @@
             "name": "nota_1",
             "display": {
               "prompt": {
-                "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}"
+                "text": "Centro: {{data.csname}} Data: {{calculates.hoje_display}}  Consulta de: {{data.consultor}}"
               }
             },
             "_row_num": 5,
@@ -2154,6 +2204,38 @@
             "promptIdx": 6
           },
           {
+            "type": "note",
+            "name": "erro_consultorio_c",
+            "display": {
+              "prompt": {
+                "text": "A adulto não deve ser introduzido porque Tem menos de 18 anos y estás no Consultorio de criança"
+              }
+            },
+            "required": "calculates.idade_mes()>=216 && data('consultor')==\"CRIANCA\"",
+            "_row_num": 24,
+            "__rowNum__": 23,
+            "_token_type": "prompt",
+            "_type": "note",
+            "_branch_label_enclosing_screen": "survey/_screen24",
+            "promptIdx": 7
+          },
+          {
+            "type": "note",
+            "name": "erro_consultorio_a",
+            "display": {
+              "prompt": {
+                "text": "A Criança não deve ser introduzido porque Tem menos de 18 anos y estás no Consultorio de adulto"
+              }
+            },
+            "required": "calculates.idade_mes()<216 && data('consultor')==\"ADULTO\"",
+            "_row_num": 28,
+            "__rowNum__": 27,
+            "_token_type": "prompt",
+            "_type": "note",
+            "_branch_label_enclosing_screen": "survey/_screen28",
+            "promptIdx": 8
+          },
+          {
             "type": "string",
             "name": "nome",
             "display": {
@@ -2162,12 +2244,12 @@
               }
             },
             "required": true,
-            "_row_num": 24,
-            "__rowNum__": 23,
+            "_row_num": 32,
+            "__rowNum__": 31,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen23",
-            "promptIdx": 7
+            "_branch_label_enclosing_screen": "survey/_screen31",
+            "promptIdx": 9
           },
           {
             "type": "string",
@@ -2177,12 +2259,12 @@
                 "text": "Nome de Casa"
               }
             },
-            "_row_num": 25,
-            "__rowNum__": 24,
+            "_row_num": 33,
+            "__rowNum__": 32,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen23",
-            "promptIdx": 8
+            "_branch_label_enclosing_screen": "survey/_screen31",
+            "promptIdx": 10
           },
           {
             "type": "select_one_integer",
@@ -2194,12 +2276,12 @@
               }
             },
             "required": true,
-            "_row_num": 26,
-            "__rowNum__": 25,
+            "_row_num": 34,
+            "__rowNum__": 33,
             "_token_type": "prompt",
             "_type": "select_one_integer",
-            "_branch_label_enclosing_screen": "survey/_screen23",
-            "promptIdx": 9
+            "_branch_label_enclosing_screen": "survey/_screen31",
+            "promptIdx": 11
           },
           {
             "type": "decimal",
@@ -2210,12 +2292,12 @@
               }
             },
             "constraint": "data('peso')<250",
-            "_row_num": 28,
-            "__rowNum__": 27,
+            "_row_num": 36,
+            "__rowNum__": 35,
             "_token_type": "prompt",
             "_type": "decimal",
-            "_branch_label_enclosing_screen": "survey/_screen23",
-            "promptIdx": 10
+            "_branch_label_enclosing_screen": "survey/_screen31",
+            "promptIdx": 12
           },
           {
             "type": "string",
@@ -2226,12 +2308,12 @@
               }
             },
             "required": true,
-            "_row_num": 29,
-            "__rowNum__": 28,
+            "_row_num": 37,
+            "__rowNum__": 36,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen23",
-            "promptIdx": 11
+            "_branch_label_enclosing_screen": "survey/_screen31",
+            "promptIdx": 13
           },
           {
             "type": "select_one_integer",
@@ -2243,12 +2325,12 @@
               }
             },
             "required": true,
-            "_row_num": 31,
-            "__rowNum__": 30,
+            "_row_num": 39,
+            "__rowNum__": 38,
             "_token_type": "prompt",
             "_type": "select_one_integer",
-            "_branch_label_enclosing_screen": "survey/_screen31",
-            "promptIdx": 12
+            "_branch_label_enclosing_screen": "survey/_screen39",
+            "promptIdx": 14
           },
           {
             "type": "decimal",
@@ -2259,12 +2341,12 @@
               }
             },
             "constraint": "(data('temperatura')<46 & data('temperatura')>25) || !data('temperatura')",
-            "_row_num": 32,
-            "__rowNum__": 31,
+            "_row_num": 40,
+            "__rowNum__": 39,
             "_token_type": "prompt",
             "_type": "decimal",
-            "_branch_label_enclosing_screen": "survey/_screen32",
-            "promptIdx": 13
+            "_branch_label_enclosing_screen": "survey/_screen40",
+            "promptIdx": 15
           },
           {
             "type": "string",
@@ -2275,12 +2357,12 @@
               }
             },
             "required": true,
-            "_row_num": 34,
-            "__rowNum__": 33,
+            "_row_num": 42,
+            "__rowNum__": 41,
             "_token_type": "prompt",
             "_type": "string",
-            "_branch_label_enclosing_screen": "survey/_screen33",
-            "promptIdx": 14
+            "_branch_label_enclosing_screen": "survey/_screen41",
+            "promptIdx": 16
           },
           {
             "type": "text",
@@ -2290,20 +2372,20 @@
                 "text": "Comentário"
               }
             },
-            "_row_num": 35,
-            "__rowNum__": 34,
+            "_row_num": 43,
+            "__rowNum__": 42,
             "_token_type": "prompt",
             "_type": "text",
-            "_branch_label_enclosing_screen": "survey/_screen33",
-            "promptIdx": 15
+            "_branch_label_enclosing_screen": "survey/_screen41",
+            "promptIdx": 17
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 37,
-            "_branch_label_enclosing_screen": "survey/_screen37",
-            "promptIdx": 16
+            "_row_num": 45,
+            "_branch_label_enclosing_screen": "survey/_screen45",
+            "promptIdx": 18
           }
         ],
         "validation_tag_map": {
@@ -2315,12 +2397,14 @@
             5,
             6,
             7,
+            8,
             9,
-            10,
             11,
             12,
             13,
-            14
+            14,
+            15,
+            16
           ]
         },
         "operations": [
@@ -2397,65 +2481,123 @@
             "operationIdx": 8
           },
           {
-            "clause": "begin screen",
+            "clause": "if",
+            "condition": "calculates.idade_mes()>=216 && data('consultor')==\"CRIANCA\"",
             "_row_num": 23,
             "__rowNum__": 22,
-            "_token_type": "begin_screen",
-            "_end_screen_clause": {
-              "clause": "end screen",
-              "_row_num": 30,
-              "__rowNum__": 29,
-              "_token_type": "end_screen"
-            },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\nactivePromptIndicies.push(8);\nactivePromptIndicies.push(9);\nactivePromptIndicies.push(10);\nactivePromptIndicies.push(11);\n\nreturn activePromptIndicies;\n}\n",
+            "_token_type": "goto_label",
+            "_branch_label": "_then23",
             "operationIdx": 9
           },
           {
-            "_row_num": 31,
-            "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(12);\n\nreturn activePromptIndicies;\n}\n",
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else25",
+            "_row_num": 25,
             "operationIdx": 10
           },
           {
-            "_row_num": 32,
+            "_row_num": 24,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
             "operationIdx": 11
           },
           {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif25",
+            "_row_num": 25,
+            "operationIdx": 12
+          },
+          {
+            "clause": "if",
+            "condition": "calculates.idade_mes()<216 && data('consultor')==\"ADULTO\"",
+            "_row_num": 27,
+            "__rowNum__": 26,
+            "_token_type": "goto_label",
+            "_branch_label": "_then27",
+            "operationIdx": 13
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else29",
+            "_row_num": 29,
+            "operationIdx": 14
+          },
+          {
+            "_row_num": 28,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(8);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 15
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif29",
+            "_row_num": 29,
+            "operationIdx": 16
+          },
+          {
             "clause": "begin screen",
-            "_row_num": 33,
-            "__rowNum__": 32,
+            "_row_num": 31,
+            "__rowNum__": 30,
             "_token_type": "begin_screen",
             "_end_screen_clause": {
               "clause": "end screen",
-              "_row_num": 36,
-              "__rowNum__": 35,
+              "_row_num": 38,
+              "__rowNum__": 37,
               "_token_type": "end_screen"
             },
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
-            "operationIdx": 12
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(9);\nactivePromptIndicies.push(10);\nactivePromptIndicies.push(11);\nactivePromptIndicies.push(12);\nactivePromptIndicies.push(13);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 17
+          },
+          {
+            "_row_num": 39,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(14);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 18
+          },
+          {
+            "_row_num": 40,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(15);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 19
+          },
+          {
+            "clause": "begin screen",
+            "_row_num": 41,
+            "__rowNum__": 40,
+            "_token_type": "begin_screen",
+            "_end_screen_clause": {
+              "clause": "end screen",
+              "_row_num": 44,
+              "__rowNum__": 43,
+              "_token_type": "end_screen"
+            },
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(16);\nactivePromptIndicies.push(17);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 20
           },
           {
             "_token_type": "exit_section",
             "clause": "exit section",
-            "_row_num": 37,
-            "operationIdx": 13
+            "_row_num": 45,
+            "operationIdx": 21
           },
           {
-            "_row_num": 37,
+            "_row_num": 45,
             "_token_type": "begin_screen",
-            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(16);\n\nreturn activePromptIndicies;\n}\n",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(18);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 14
+            "operationIdx": 22
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 37,
-            "operationIdx": 15
+            "_row_num": 45,
+            "operationIdx": 23
           }
         ],
         "branch_label_map": {
@@ -2468,12 +2610,20 @@
           "_screen21": 7,
           "_else22": 9,
           "_endif22": 9,
-          "_screen23": 9,
-          "_screen31": 10,
-          "_screen32": 11,
-          "_screen33": 12,
-          "_contents": 14,
-          "_screen37": 14
+          "_then23": 11,
+          "_screen24": 11,
+          "_else25": 13,
+          "_endif25": 13,
+          "_then27": 15,
+          "_screen28": 15,
+          "_else29": 17,
+          "_endif29": 17,
+          "_screen31": 17,
+          "_screen39": 18,
+          "_screen40": 19,
+          "_screen41": 20,
+          "_contents": 22,
+          "_screen45": 22
         }
       },
       "initial": {
@@ -2772,7 +2922,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 24,
+            "_row_num": 32,
             "section_name": "survey"
           },
           {
@@ -2789,7 +2939,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 25,
+            "_row_num": 33,
             "section_name": "survey"
           },
           {
@@ -2807,7 +2957,7 @@
         "valuesList": "sexo",
         "_defn": [
           {
-            "_row_num": 26,
+            "_row_num": 34,
             "section_name": "survey"
           },
           {
@@ -2837,7 +2987,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 28,
+            "_row_num": 36,
             "section_name": "survey"
           },
           {
@@ -2854,7 +3004,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 29,
+            "_row_num": 37,
             "section_name": "survey"
           },
           {
@@ -2872,7 +3022,7 @@
         "valuesList": "yesno",
         "_defn": [
           {
-            "_row_num": 31,
+            "_row_num": 39,
             "section_name": "survey"
           },
           {
@@ -2889,7 +3039,7 @@
         "type": "number",
         "_defn": [
           {
-            "_row_num": 32,
+            "_row_num": 40,
             "section_name": "survey"
           },
           {
@@ -3036,7 +3186,7 @@
         "type": "string",
         "_defn": [
           {
-            "_row_num": 34,
+            "_row_num": 42,
             "section_name": "survey"
           },
           {
@@ -3182,7 +3332,7 @@
       "comentario_2": {
         "_defn": [
           {
-            "_row_num": 35,
+            "_row_num": 43,
             "section_name": "survey"
           }
         ],

@@ -219,7 +219,8 @@
             // Set date
             var m = new Date().getMonth()+1;
             var d = new Date().getDate();
-            window.visit_date = "D:" + d + ",M:" + m + ",Y:2022";
+            const y = new Date().getFullYear();
+            window.visit_date = "D:" + d + ",M:" + m + ",Y:" + y;
             $("#subheader").text(getCenterName(cs, consultor) + ' @ ' + adateHelper.getMoment(visit_date).format('DD/MM/YYYY'));
 
 
