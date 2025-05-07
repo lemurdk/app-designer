@@ -2,24 +2,37 @@
 var LIVERELOAD_PORT = 35729;
 var SERVER_PORT = 8000;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
-    return connect.static(
+var serveStatic = require('serve-static');
+var serveIndex = require('serve-index');
+var mountFolder = function (dir) {
+    return serveStatic(
         require('path').resolve(dir),
         {
             // We need to specify a file that will be displayed in place of
             // index.html. _.html is used because it is unlikely to exist.
-            index: '_.html'
+            index: '_.html',
+            setHeaders: setHeaders
         }
     );
 };
-var mountDirectory = function(connect, dir) {
-    return connect.directory(
+var mountDirectory = function(dir) {
+    return serveIndex(
         require('path').resolve(dir),
         {
             icons: true,
         }
     );
 };
+
+var setHeaders = function(res, path) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'credentialless');
+    res.setHeader('Cross-Origin-Opener-Policy', 'cross-origin');
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.setHeader('Content-Security-Policy',`frame-ancestors 'self' http://localhost:${SERVER_PORT} http://localhost:${LIVERELOAD_PORT}`);
+    res.setHeader('X-Content-Type-Options', '');
+}
 
 var postHandler = function(req, res, next) {
     if (req.method === 'POST') {
@@ -48,10 +61,10 @@ var postHandler = function(req, res, next) {
 
 		var file;
         if (req.headers['content-type'] === 'application/octet-stream') {
-            var base64 = require('base64-stream');
+            var {Base64Decode} = require('base64-stream');
 
             file = fs.createWriteStream(path);
-            req.pipe(base64.decode()).pipe(file);
+            req.pipe(new Base64Decode()).pipe(file);
 
             file.on('error', function(err) {
                 res.write('error uploading the file');
@@ -102,6 +115,9 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('load-grunt-tasks')(grunt);
 
+    // passing in port as input
+    SERVER_PORT = grunt.option('port') || 8000;
+
     // We do not want the default behavior of serving only the app folder.
     // Instead we want to serve the base repo directory, as this will give us
     // access to the test dir as well. Further, if you don't have a homescreen
@@ -117,9 +133,11 @@ module.exports = function (grunt) {
         deviceMount: '/sdcard/opendatakit',
         // The mount point of the device for odk collect forms.
         formMount: '/sdcard/odk/forms',
+        assetsDir: 'app/config/assets',
         // The directory where the 'tables' directory containing the tableId
         // directories lives.
         tablesDir: 'app/config/tables',
+        dataDir: 'app/data',
         // Where the templates for a new tableId folder lives. i.e. if you want
         // to add a table, the contents of this directory would be copied to
         // tablesDir/tableId.
@@ -136,6 +154,8 @@ module.exports = function (grunt) {
         outputCsvDir: 'output/csv',
         // The directory where the device.properties and app.properties objects are stored
         outputPropsDir: 'output/props',
+        // The directory where logs are output
+        outputLogsDir: 'output/logging',
         // The directory where the debug objects are output.
         outputDebugDir: 'output/debug',
         // The db directory path on the phone. %APP% should be replaced by app name
@@ -180,7 +200,7 @@ module.exports = function (grunt) {
             },
 			macGenConvert: {
 				cmd: function(str, formDefFile) {
-					return 'node macGenConverter.js ' + str + ' > ' + formDefFile; 
+					return 'node macGenConverter.js ' + str + ' > ' + formDefFile;
 				}
 			}
         },
@@ -196,6 +216,8 @@ module.exports = function (grunt) {
                     livereload: LIVERELOAD_PORT
                 },
                 files: [
+                    'devEnv/*.html',
+                    'devEnv/*.js',
                     '<%= tables.appDir %>/*.html',
                     '<%= tables.appDir %>/system/**',
                 ]
@@ -206,6 +228,11 @@ module.exports = function (grunt) {
             }
         },
         connect: {
+            server: {
+                options: {
+                    setHeaders: setHeaders
+                }
+            },
             options: {
                 port: SERVER_PORT,
                 // change this to '0.0.0.0' to access the server from outside
@@ -213,50 +240,58 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    middleware: function (connect) {
-                        return [
-                            postHandler,
-                            lrSnippet,
-                            mountFolder(connect, baseDirForServer),
-                            mountDirectory(connect, baseDirForServer)
-                        ];
+                    middleware: function(connect, options, middlewares) {
+                        // Add the middleware for setting headers
+                        middlewares.unshift(function(req, res, next) {
+                            setHeaders(res);
+                            next();
+                        });
+
+                        middlewares.unshift(postHandler);
+                        middlewares.unshift(lrSnippet);
+                        middlewares.unshift(mountFolder(baseDirForServer));
+                        middlewares.unshift(mountDirectory(baseDirForServer));
+                        return middlewares;
                     }
                 }
             },
             test: {
                 options: {
                     port: 8001,
-                    middleware: function (connect) {
-                        return [
+                    middleware: [
                             postHandler,
                             lrSnippet,
-                            mountFolder(connect, 'test'),
-                            mountFolder(connect, baseDirForServer),
-                            mountDirectory(connect, baseDirForServer)
-                        ];
-                    }
+                            mountFolder('test'),
+                            mountFolder(baseDirForServer),
+                            mountDirectory(baseDirForServer)
+                        ]
                 }
             }
         },
-        open: {
+         open: {
             server: {
                 path: 'http://localhost:<%= connect.options.port %>/index.html',
-                app: (function() {
-                    var platform = require('os').platform();
-                    // windows: *win*
-                    // mac: darwin
-                    if (platform.search('win') >= 0 &&
-                        platform.search('darwin') < 0) {
-                        // Windows expects chrome.
-                        grunt.log.writeln('detected Windows environment');
-                        return 'chrome';
-                    } else {
-                        // Mac (and maybe others--add as discovered), expects
-                        // Google Chrome
-                        grunt.log.writeln('detected non-Windows environment');
-                        return 'Google Chrome';
-                    }
-                })()
+                app: {
+                    app: (function() {
+                        var platform = require('os').platform();
+                        // windows: *win*
+                        // mac: darwin
+                        // linux: linux
+                        if (platform.search('win') !== -1) {
+                            // Windows expects chrome.
+                            grunt.log.writeln('Detected Windows environment');
+                            return 'chrome';
+                        } else if (platform.search('darwin') !== -1) {
+                            // Mac expects "Google Chrome"
+                            grunt.log.writeln('Detected macOS environment');
+                            return 'Google Chrome';
+                        } else {
+                            // Default for Linux and potentially other environments
+                            grunt.log.writeln('Detected non-Windows, non-macOS environment');
+                            return 'google-chrome';
+                            }
+                  })()
+                }
             }
         },
     });
@@ -268,7 +303,7 @@ module.exports = function (grunt) {
     grunt.registerTask(
         'adbpull',
         'Perform all the adbpull tasks',
-        ['adbpull-debug', 'adbpull-db', 'adbpull-csv']);
+        ['adbpull-debug', 'adbpull-db', 'adbpull-csv', 'adbpull-logs']);
 
     // Just an alias task--shorthand for doing all the pushings
     grunt.registerTask(
@@ -318,13 +353,23 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask(
+        'adbpull-logs',
+        'Pull any logs stored in the device for debugging purposes',
+        function() {
+            var src = tablesConfig.deviceMount + '/' + tablesConfig.appName + '/' + tablesConfig.outputLogsDir;
+            var dest = tablesConfig.appDir + '/' + tablesConfig.outputLogsDir;
+            grunt.log.writeln('adb pull ' + src + ' ' + dest);
+            grunt.task.run('exec:adbpull:' + src + ':' + dest);
+        });
+
+    grunt.registerTask(
         'xlsx-convert-all',
         'Run the XLSX converter on all form definitions',
         function() {
 			var platform = require('os').platform();
 			var isWindows = (platform.search('win') >= 0 &&
                              platform.search('darwin') < 0);
-							 
+
             var dirs = grunt.file.expand(
                 {filter: function(path) {
  						if ( !path.endsWith(".xlsx") ) {
@@ -332,10 +377,11 @@ module.exports = function (grunt) {
 						}
 						var cells = path.split((isWindows ? "\\" : "/"));
 						return (cells.length >= 6) &&
-						  ( cells[cells.length-1] === cells[cells.length-2] + ".xlsx" ); 
+						  ( cells[cells.length-1] === cells[cells.length-2] + ".xlsx" );
 					},
                  cwd: 'app' },
-				'**/*.xlsx'
+				'**/*.xlsx',
+                '!**/~$*.xlsx'
 				);
 
             // Now run these files through macGenConvert.js
@@ -354,30 +400,30 @@ module.exports = function (grunt) {
         });
 
 var zipAllFiles = function( destZipFile, filesList, completionFn ) {
-			// create a file to stream archive data to. 
+			// create a file to stream archive data to.
 			var fs = require('fs');
 			var archiver = require('archiver');
 
 			var output = fs.createWriteStream(destZipFile);
 			var archive = archiver('zip', {
-				store: true // Sets the compression method to STORE. 
+				store: true // Sets the compression method to STORE.
 			});
-			 
-			// listen for all archive data to be written 
+
+			// listen for all archive data to be written
 			output.on('close', function() {
 			  console.log(archive.pointer() + ' total bytes');
 			  console.log('archiver has been finalized and the output file descriptor has closed.');
 			  completionFn(true);
 			});
-			 
-			// good practice to catch this error explicitly 
+
+			// good practice to catch this error explicitly
 			archive.on('error', function(err) {
 			  throw err;
 			});
-			 
-			// pipe archive data to the file 
+
+			// pipe archive data to the file
 			archive.pipe(output);
-				
+
 			filesList.forEach(function(fileName) {
                 //  Have to add app back into the file name for the adb push
                 var src = tablesConfig.appDir + '/' + fileName;
@@ -387,7 +433,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 						grunt.log.writeln('error ' + err + ' adding ' + src + ' to file ' + destZipFile);
 				}} );
 			});
-			// finalize the archive (ie we are done appending files but streams have to finish yet) 
+			// finalize the archive (ie we are done appending files but streams have to finish yet)
 			archive.finalize();
 };
 
@@ -396,12 +442,12 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
         'BROKEN: does not compress and last file is not terminated properly. Construct the configzip and systemzip for survey and tables',
         function() {
 			var done = this.async();
-			
+
 			var buildDir = 'build' +
 				'/zips';
-			 
+
 			grunt.file.delete(buildDir + '/');
-			
+
 			grunt.file.mkdir(buildDir);
 			grunt.file.mkdir(buildDir + '/survey/');
 			grunt.file.mkdir(buildDir + '/tables/');
@@ -414,7 +460,8 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
                 'system/libs/**',
                 'system/js/**',
                 'system/index.html',
-				'!**/.DS_Store');
+				'!**/.DS_Store',
+                '!**/~$*.xlsx');
 
             var surveyConfigZipFiles = grunt.file.expand(
                 {filter: 'isFile',
@@ -422,11 +469,12 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 				'config/assets/framework/**',
                 'config/assets/commonDefinitions.js',
                 'config/assets/img/play.png',
-                'config/assets/img/form_logo.png',
+                'config/assets/img/form_logo_new.png',
                 'config/assets/img/backup.png',
                 'config/assets/img/advance.png',
                 'config/assets/css/odk-survey.css',
-				'!**/.DS_Store');
+				'!**/.DS_Store',
+                '!**/~$*.xlsx');
 
             var tablesSystemZipFiles = grunt.file.expand(
                 {filter: 'isFile',
@@ -435,7 +483,8 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
                 'system/tables/js/**',
                 'system/libs/**',
                 'system/js/**',
-				'!**/.DS_Store');
+				'!**/.DS_Store',
+                '!**/~$*.xlsx');
 
             var tablesConfigZipFiles = grunt.file.expand(
                 {filter: 'isFile',
@@ -445,18 +494,19 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
                 'config/assets/libs/d3-amd/**',
                 'config/assets/commonDefinitions.js',
                 'config/assets/img/little_arrow.png',
-				'!**/.DS_Store');
+				'!**/.DS_Store',
+                '!**/~$*.xlsx');
 
-			zipAllFiles(buildDir + '/survey/systemzip', surveySystemZipFiles, 
+			zipAllFiles(buildDir + '/survey/systemzip', surveySystemZipFiles,
 				function(outcome) {
 					if ( outcome ) {
-						zipAllFiles(buildDir + '/survey/configzip', surveyConfigZipFiles, 
+						zipAllFiles(buildDir + '/survey/configzip', surveyConfigZipFiles,
 							function(outcome) {
 								if ( outcome ) {
-									zipAllFiles(buildDir + '/tables/systemzip', tablesSystemZipFiles, 
+									zipAllFiles(buildDir + '/tables/systemzip', tablesSystemZipFiles,
 										function(outcome) {
 											if ( outcome ) {
-												zipAllFiles(buildDir + '/tables/configzip', tablesConfigZipFiles, 
+												zipAllFiles(buildDir + '/tables/configzip', tablesConfigZipFiles,
 													function(outcome) {
 														if ( outcome ) {
 															grunt.log.writeln('success!');
@@ -494,9 +544,10 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
                  cwd: 'app' },
 				'.nomedia',
                 '**',
-                '!system/**',
+                'system/**',
 				'!data/**',
-				'!output/**');
+				'!output/**',
+                '!**/~$*.xlsx');
 
             // Now push these files to the phone.
             dirs.forEach(function(fileName) {
@@ -530,7 +581,8 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
                 '**',
                 '!system/**',
 				'!data/**',
-				'!output/**');
+                '!output/**',
+                '!**/~$*.xlsx');
 
             // Now push these files to the phone.
             dirs.forEach(function(fileName) {
@@ -574,7 +626,8 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
                 'system/survey/**',
 				'!data/**',
 				'!output/**',
-                '!config/**');
+                '!config/**',
+                '!**/~$*.xlsx');
 
             // Now push these files to the phone.
             dirs.forEach(function(fileName) {
@@ -723,7 +776,8 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 				'!output/**',
 				'!config/assets/**',
                 '!config/tables/**',
-                'config/tables/scan_example/**');
+                'config/tables/scan_example/**',
+                '!**/~$*.xlsx');
 
             // Now push these files to the phone.
             dirs.forEach(function(fileName) {
@@ -766,7 +820,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 				destFileName = destFileName.substring(0,idx) + destFileName.substring(idx+demoInfix.length);
 				idx = destFileName.indexOf(demoInfix + ".");
 			}
-			
+
 			var idxDir = destFileName.indexOf(demoInfix + "/");
 			while ( idxDir >= 0 ) {
 				// directory...
@@ -774,7 +828,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 				destFileName = destFileName.substring(0,idxDir) + destFileName.substring(idxDir+demoInfix.length);
 				idxDir = destFileName.indexOf(demoInfix + "/");
 			}
-			
+
 			var buildDir = 'build' +
 				'/' +
 				demoInfix.substring(1);
@@ -808,7 +862,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 
 	//
 	// returns a function that will handle the adb push of files onto the
-	// device with any files containing ".infix." stripped of that infix 
+	// device with any files containing ".infix." stripped of that infix
 	// and any folders ending in ".infix" also stripped.
 	//
 	var infixRenameAdbPusher = function(demoInfix, offsetDir) {
@@ -834,7 +888,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 				destFileName = destFileName.substring(0,idx) + destFileName.substring(idx+demoInfix.length);
 				idx = destFileName.indexOf(demoInfix + ".");
 			}
-			
+
 			var idxDir = destFileName.indexOf(demoInfix + "/");
 			while ( idxDir >= 0 ) {
 				// directory...
@@ -1013,7 +1067,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 			'config/assets/css/odk-survey.css',
 			'config/assets/img/advance.png',
 			'config/assets/img/backup.png',
-			'config/assets/img/form_logo.png',
+			'config/assets/img/form_logo_new.png',
 			'config/assets/img/little_arrow.png',
 			'config/assets/img/play.png',
 			'config/assets/libs/**',
@@ -1087,7 +1141,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 			'config/assets/css/odk-survey.css',
 			'config/assets/img/advance.png',
 			'config/assets/img/backup.png',
-			'config/assets/img/form_logo.png',
+			'config/assets/img/form_logo_new.png',
 			'config/assets/img/little_arrow.png',
 			'config/assets/img/play.png',
 			'config/assets/libs/**',
@@ -1166,7 +1220,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 			'config/assets/css/odk-survey.css',
 			'config/assets/img/advance.png',
 			'config/assets/img/backup.png',
-			'config/assets/img/form_logo.png',
+			'config/assets/img/form_logo_new.png',
 			'config/assets/img/little_arrow.png',
 			'config/assets/img/play.png',
 			'config/assets/libs/**',
@@ -1256,7 +1310,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 			'config/assets/css/odk-survey.css',
 			'config/assets/img/advance.png',
 			'config/assets/img/backup.png',
-			'config/assets/img/form_logo.png',
+			'config/assets/img/form_logo_new.png',
 			'config/assets/img/little_arrow.png',
 			'config/assets/img/play.png',
 			'config/assets/libs/**',
@@ -1418,7 +1472,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 			'config/assets/css/odk-survey.css',
 			'config/assets/img/advance.png',
 			'config/assets/img/backup.png',
-			'config/assets/img/form_logo.png',
+			'config/assets/img/form_logo_new.png',
 			'config/assets/img/little_arrow.png',
 			'config/assets/img/play.png',
 			'config/assets/libs/**',
@@ -1485,7 +1539,8 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
                 '**',
                 '!system/**',
 				'!data/**',
-				'!output/**');
+                '!output/**',
+                '!**/~$*.xlsx');
 
             // Now push these files to the phone.
             dirs.forEach(function(fileName) {
@@ -1797,7 +1852,9 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
             tableIds.forEach(function(tableId) {
                 var files = grunt.file.expand(
                     tablesConfig.tablesDir + '/' + tableId +
-                    '/' + COLLECT_FORMS + '/*');
+                    '/' + COLLECT_FORMS + '/*',
+                    '!' + tablesConfig.tablesDir + '/' + tableId +
+                    '/' + COLLECT_FORMS + '/~$*.xlsx');
                 files.forEach(function(file) {
                     var src = file;
                     // We basically want to push all the contents under
@@ -1805,7 +1862,7 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
 					// to /sdcard/odk/forms
 					// I.e., this folder should contain things like:
 					//  .../formid.xml
-					//  .../formid-media/form_logo.jpg
+					//  .../formid-media/form_logo_new.jpg
 					//  .../formid-media/...
 					//  .../formid2.xml
 					//
@@ -1949,7 +2006,8 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
             var dirs = grunt.file.expand(
                 {filter: 'isFile',
                  cwd: 'app' },
-                'system/**');
+                'system/**',
+                '!**/~$*.xlsx');
 
             // Now push these files to the phone.
             dirs.forEach(function(fileName) {
@@ -2063,4 +2121,97 @@ var zipAllFiles = function( destZipFile, filesList, completionFn ) {
         if (set === "off") grunt.option("force", false);
         if (set === "restore") grunt.option("force", previous_force_state);
     });
+
+    function deleteFilesList(grunt, workingDir, toBeDeleted) {
+        toBeDeleted.forEach(function (fileName) {
+            var dirToUse = workingDir;
+            if (!dirToUse.endsWith('/')) {
+                dirToUse = dirToUse + '/';
+            }
+
+            var src = dirToUse + fileName;
+            grunt.log.writeln('deleteTopLevel: deleting ' + src);
+            grunt.file.delete(src, {force: true});
+        });
+    }
+
+    var deleteTopLevel = function(grunt, dirToDelete) {
+        var toBeDeleted = grunt.file.expand(
+            {cwd: dirToDelete },
+            '*');
+        deleteFilesList(grunt, dirToDelete, toBeDeleted);
+    };
+
+    grunt.registerTask(
+        'empty',
+        'Remove unnecessary files to make an empty app-designer',
+        function() {
+
+            deleteTopLevel(grunt, tablesConfig.tablesDir);
+            deleteTopLevel(grunt, tablesConfig.assetsDir + '/csv');
+            deleteTopLevel(grunt, tablesConfig.dataDir);
+            deleteTopLevel(grunt, tablesConfig.appDir + '/' + tablesConfig.outputCsvDir);
+            deleteTopLevel(grunt, tablesConfig.appDir + '/' + tablesConfig.outputDbDir);
+            deleteTopLevel(grunt, tablesConfig.appDir + '/' + tablesConfig.outputDebugDir);
+            deleteTopLevel(grunt, tablesConfig.appDir + '/' + tablesConfig.outputPropsDir);
+
+            var assetFilesToDelete = grunt.file.expand(
+                {filter: 'isFile',
+                    cwd: tablesConfig.assetsDir },
+                '*.*',
+                '!favicon.ico',
+                'css/**',
+                '!css/odk-survey.css',
+                'csv/**',
+                'framework/**',
+                '!**/*.clean.*',
+                '!framework/forms/framework.clean/**',
+                'img/**',
+                '!img/play.png',
+                '!img/form_logo.png',
+                '!img/backup.png',
+                '!img/advance.png',
+                '!img/little_arrow.png',
+                'js/**',
+                '!js/util.js',
+                '!libs/**',
+                '!commonDefinitions.js',
+                '!index.html',
+                '!framework/forms/framework/formDef.json',
+                '!framework/forms/framework/framework.xlsx',
+                '!framework/frameworkDefinitions.js'
+            );
+
+            // Delete unnecessary files
+            deleteFilesList(grunt, tablesConfig.assetsDir, assetFilesToDelete);
+
+            // Find all instances of things with .clean in it
+            var cleanFilesToDelete = grunt.file.expand(
+                { cwd: tablesConfig.assetsDir,
+                    filter: 'isFile'},
+                '**/*.clean.*',
+                '**/*.clean/**'
+            );
+
+            // Copy *.clean files over to the correct directory
+            cleanFilesToDelete.forEach(function(fileName) {
+                var src = tablesConfig.assetsDir + '/' + fileName;
+                var dest = src;
+                var dest = dest.replace(new RegExp('.clean', 'g'), '');
+                grunt.log.writeln('copy ' + src + ' to ' + dest);
+                grunt.file.copy(src, dest);
+            });
+
+            // Delete all of the .clean files now
+            deleteFilesList(grunt, tablesConfig.assetsDir, cleanFilesToDelete);
+
+            // Delete all of the other framework directories
+            var assetsDirToDelete = grunt.file.expand(
+                {cwd: tablesConfig.assetsDir + '/framework/forms'},
+                '*',
+                '*.*',
+                '!framework/**');
+
+            deleteFilesList(grunt, tablesConfig.assetsDir + '/framework/forms', assetsDirToDelete);
+        });
 };

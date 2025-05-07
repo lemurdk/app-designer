@@ -1,13 +1,13 @@
 /**
  * All  the standard prompts available to a form designer.
  */
-define(['database','opendatakit','controller','backbone','moment','formulaFunctions','handlebars','promptTypes','jquery','underscore','d3','handlebarsHelpers','combodate'],
-function(database,  opendatakit,  controller,  Backbone,  moment,  formulaFunctions,  Handlebars,  promptTypes,  $,       _,           d3,   _hh) {
+define(['database','opendatakit','controller','backbone','moment','formulaFunctions','handlebars','promptTypes','jquery','underscore','d3','handlebarsHelpers','combodate','jqueryCalendars','jqueryCalendarsPlus','jqueryPlugin','jqueryCalendarsPicker', 'jqueryCalendarsCoptic', 'jqueryCalendarsEthiopian', 'jqueryCalendarsHebrew', 'jqueryCalendarsIslamic', 'jqueryCalendarsJulian', 'jqueryCalendarsMayan', 'jqueryCalendarsNanakshahi', 'jqueryCalendarsNepali', 'jqueryCalendarsPersian', 'jqueryCalendarsTaiwan', 'jqueryCalendarsThai', 'jqueryCalendarsUmmalqura'],
+function(database,  opendatakit,  controller,  Backbone,  moment,  formulaFunctions,  Handlebars,  promptTypes,  $,       _,           d3,   _hh, jqueryCalendars, jqueryCalendarsPlus, jqueryPlugin, jqueryCalendarsPicker, jqueryCalendarsCoptic, jqueryCalendarsEthiopian, jqueryCalendarsHebrew, jqueryCalendarsIslamic, jqueryCalendarsJulian, jqueryCalendarsMayan, jqueryCalendarsNanakshahi, jqueryCalendarsNepali, jqueryCalendarsPersian, jqueryCalendarsTaiwan, jqueryCalendarsThai, jqueryCalendarsUmmalqura) {
 'use strict';
 /* global odkCommon, odkSurvey */
 verifyLoad('prompts',
-    ['database','opendatakit','controller','backbone','moment', 'formulaFunctions','handlebars','promptTypes','jquery','underscore','d3', 'handlebarsHelpers','combodate'],
-    [ database,  opendatakit,  controller,  Backbone,  moment,   formulaFunctions,  Handlebars,  promptTypes,  $,       _,           d3,   _hh,           $.fn.combodate] );
+    ['database','opendatakit','controller','backbone','moment', 'formulaFunctions','handlebars','promptTypes','jquery','underscore','d3', 'handlebarsHelpers','combodate','jqueryCalendars','jqueryCalendarsPlus','jqueryPlugin','jqueryCalendarsPicker', 'jqueryCalendarsCoptic', 'jqueryCalendarsEthiopian', 'jqueryCalendarsHebrew', 'jqueryCalendarsIslamic', 'jqueryCalendarsJulian', 'jqueryCalendarsMayan', 'jqueryCalendarsNanakshahi', 'jqueryCalendarsNepali', 'jqueryCalendarsPersian', 'jqueryCalendarsTaiwan', 'jqueryCalendarsThai', 'jqueryCalendarsUmmalqura'],
+    [ database,  opendatakit,  controller,  Backbone,  moment,   formulaFunctions,  Handlebars,  promptTypes,  $,       _,           d3,   _hh,           $.fn.combodate, jqueryCalendars, jqueryCalendarsPlus, jqueryPlugin, jqueryCalendarsPicker, jqueryCalendarsCoptic, jqueryCalendarsEthiopian, jqueryCalendarsHebrew, jqueryCalendarsIslamic, jqueryCalendarsJulian, jqueryCalendarsMayan, jqueryCalendarsNanakshahi, jqueryCalendarsNepali, jqueryCalendarsPersian, jqueryCalendarsTaiwan, jqueryCalendarsThai, jqueryCalendarsUmmalqura] );
 
 promptTypes.base = Backbone.View.extend({
     className: "odk-base",
@@ -130,32 +130,32 @@ promptTypes.base = Backbone.View.extend({
                 require(['text!'+that.templatePath], function(source) {
                     try {
                         that.template = Handlebars.compile(source);
-                        ctxt.log('D',"prompts."+that.type+"._whenTemplateIsReady.success",
+                        odkCommon.log('D',"prompts."+that.type+"._whenTemplateIsReady.success",
                             " px: " + that.promptIdx);
                         // ensure that require is unwound
                         setTimeout(function() {
-                                ctxt.log('I',"prompts."+that.type+"._whenTemplateIsReady.success.setTimeout",
+                                odkCommon.log('I',"prompts."+that.type+"._whenTemplateIsReady.success.setTimeout",
                                             " px: " + that.promptIdx);
                                 ctxt.success();
                             },
                             0 );
                     } catch (e) {
-                        ctxt.log('E',"prompts."+that.type+"._whenTemplateIsReady.exception",
+                        odkCommon.log('E',"prompts."+that.type+"._whenTemplateIsReady.exception",
                             " px: " + that.promptIdx + " exception: " + e.message + " e: " + String(e));
                         ctxt.failure({message: "Error compiling handlebars template."});
                     }
                 }, function(err) {
-                    ctxt.log('E',"prompts."+that.type+"._whenTemplateIsReady.require.failure " + err.requireType + ' modules: ',
+                    odkCommon.log('E',"prompts."+that.type+"._whenTemplateIsReady.require.failure " + err.requireType + ' modules: ',
                         err.requireModules.toString() + " px: " + that.promptIdx);
                     ctxt.failure({message: "Error loading handlebars template."});
                 });
             } catch (e) {
-                ctxt.log('E',"prompts."+that.type+"._whenTemplateIsReady.require.exception",
+                odkCommon.log('E',"prompts."+that.type+"._whenTemplateIsReady.require.exception",
                     " px: " + that.promptIdx + " exception: " + e.message + " e: " + String(e));
                 ctxt.failure({message: "Error reading handlebars template."});
             }
         } else {
-            ctxt.log('E',"prompts." + that.type + "._whenTemplateIsReady.noTemplate", "px: " + that.promptIdx);
+            odkCommon.log('E',"prompts." + that.type + "._whenTemplateIsReady.noTemplate", "px: " + that.promptIdx);
             ctxt.failure({message: "Configuration error: No handlebars template found!"});
         }
     },
@@ -224,7 +224,11 @@ promptTypes.base = Backbone.View.extend({
                 currElString = currEl[0].innerHTML;
                 currElStringNoSpaces = currElString.replace(/\s/g, '');
             }
-            var toBeDrawnEl = that.template(that.renderContext);
+            var toBeDrawnEl = that.template(that.renderContext, {
+                // Subverting breaking change in handlebars v. 4.6 to allow access to "not own" properties (insecure)
+                allowProtoMethodsByDefault: true,
+                allowProtoPropertiesByDefault: true
+            });
             var tbdString = null;
             if (toBeDrawnEl !== null && toBeDrawnEl !== undefined) {
                 tbdString = toBeDrawnEl.replace(/\s/g, '');
@@ -396,7 +400,7 @@ promptTypes.base = Backbone.View.extend({
                 //This is a passive error because there could just be a problem
                 //with the content provider/network/remote service rather than with
                 //the form.
-                newctxt.log('W',"prompts." + this.type + ".configureRenderContext.error",
+                odkCommon.log('W',"prompts." + this.type + ".configureRenderContext.error",
                             "px: " + this.promptIdx + " Error fetching choices " + e);
                 that.renderContext.passiveError = "Error fetching choices.\n";
                 if(e.statusText) {
@@ -419,12 +423,12 @@ promptTypes.base = Backbone.View.extend({
                         newctxt.success("success");
                     //},
                     //function (err) {
-                    //    newctxt.log('E',"prompts."+that.type+".require.failure " + err.requireType + ' modules: ',
+                    //    odkCommon.log('E',"prompts."+that.type+".require.failure " + err.requireType + ' modules: ',
                     //        err.requireModules.toString() + " px: " + that.promptIdx);
                     //    newctxt.failure({message: "Error fetching choices from csv data."});
                     //});
                 } catch (e) {
-                    newctxt.log('E',"promptType." + that.type, "exception: " + e.message + " e: " + e.toString());
+                    odkCommon.log('E',"promptType." + that.type, "exception: " + e.message + " e: " + e.toString());
                     newctxt.failure({message: "Error reading choices from csv data."});
                 }
             };
@@ -469,7 +473,7 @@ promptTypes.opening = promptTypes.base.extend({
         ctxt.success();
     },
     renderContext: {
-        headerImg: requirejs.toUrl('../config/assets/img/form_logo.png'),
+        headerImg: requirejs.toUrl('../config/assets/img/form_logo_new.png'),
         backupImg: requirejs.toUrl('../config/assets/img/backup.png'),
         advanceImg: requirejs.toUrl('../config/assets/img/advance.png')
     },
@@ -511,7 +515,7 @@ promptTypes.finalize = promptTypes.base.extend({
         } else {
             // Now we are always going to display instance id
             // unless this decision changes ...
-            that.renderContext.display_field = ts.toISOString();
+            that.renderContext.display_field = ts?.toISOString();
         }
         if ( that._screen && that._screen._renderContext ) {
             that._screen._renderContext.enableForwardNavigation = false;
@@ -525,12 +529,12 @@ promptTypes.finalize = promptTypes.base.extend({
 
         var ctxt = that.controller.newContext(evt, that.type + ".saveIncomplete");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".saveIncomplete", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".saveIncomplete", "px: " + that.promptIdx);
             that.controller.saveIncomplete($.extend({},ctxt,{success:function() {
                     that.controller.leaveInstance(ctxt);
                 }}));
         }, failure: function(m) {
-            ctxt.log('D',"prompts." + that.type + ".saveIncomplete -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".saveIncomplete -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -541,10 +545,10 @@ promptTypes.finalize = promptTypes.base.extend({
 
         var ctxt = that.controller.newContext(evt, that.type + ".saveFinal");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".saveFinal", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".saveFinal", "px: " + that.promptIdx);
             that.controller.gotoFinalizeAndTerminateAction(ctxt);
         }, failure: function(m) {
-            ctxt.log('D',"prompts." + that.type + ".saveFinal -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".saveFinal -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     }
@@ -588,7 +592,7 @@ promptTypes.instances = promptTypes.base.extend({
     },
     configureRenderContext: function(ctxt) {
         var that = this;
-        ctxt.log('D',"prompts." + that.type + ".configureRenderContext", "px: " + that.promptIdx);
+        odkCommon.log('D',"prompts." + that.type + ".configureRenderContext", "px: " + that.promptIdx);
 
         // see if we are supposed to apply a query filter to this...
         var model = opendatakit.getCurrentModel();
@@ -637,7 +641,7 @@ promptTypes.instances = promptTypes.base.extend({
                 });
 
                 $.extend(that.renderContext, {
-                    headerImg: requirejs.toUrl('../config/assets/img/form_logo.png')
+                    headerImg: requirejs.toUrl('../config/assets/img/form_logo_new.png')
                 });
                 if ( that._screen && that._screen._renderContext ) {
                     that._screen._renderContext.showHeader = false;
@@ -655,10 +659,10 @@ promptTypes.instances = promptTypes.base.extend({
 
         var ctxt = that.controller.newContext(evt, that.type + ".createInstance");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".createInstance", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".createInstance", "px: " + that.promptIdx);
             that.controller.createInstance(ctxt);
         }, failure: function(m) {
-            ctxt.log('D',"prompts." + that.type + ".createInstance -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".createInstance -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -671,10 +675,10 @@ promptTypes.instances = promptTypes.base.extend({
         if ( instanceIdToOpen !== null && instanceIdToOpen !== undefined ) {
             var ctxt = that.controller.newContext(evt, that.type + ".openInstance");
             that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-                ctxt.log('D',"prompts." + that.type + ".openInstance", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".openInstance", "px: " + that.promptIdx);
                 that.controller.openInstance(ctxt, instanceIdToOpen);
             }, failure: function(m) {
-                ctxt.log('D',"prompts." + that.type + ".createInstance -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".createInstance -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
                 ctxt.failure(m);
             }}));
         }
@@ -698,7 +702,7 @@ promptTypes.instances = promptTypes.base.extend({
         if ( instanceIdToDelete !== null && instanceIdToDelete !== undefined ) {
             var ctxt = that.controller.newContext(that._cachedEvent, that.type + ".deleteInstance");
             that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-                ctxt.log('D',"prompts." + that.type + ".deleteInstance", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".deleteInstance", "px: " + that.promptIdx);
                 var model = opendatakit.getCurrentModel();
                 // in this case, we are our own 'linked' table.
                 database.delete_checkpoints_and_row($.extend({}, ctxt, {success: function() {
@@ -706,7 +710,7 @@ promptTypes.instances = promptTypes.base.extend({
                     }}),
                 model, instanceIdToDelete);
             }, failure: function(m) {
-                ctxt.log('D',"prompts." + that.type + ".deleteInstance -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".deleteInstance -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
                 ctxt.failure(m);
             }}));
         }
@@ -734,12 +738,12 @@ promptTypes.contents = promptTypes.base.extend({
         if ( selectedScreenPath !== null ) {
             var ctxt = that.controller.newContext(evt, that.type + ".selectContentsItem");
             that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-                ctxt.log('D',"prompts." + that.type + ".selectContentsItem: gotoScreenPath: " + selectedScreenPath,
+                odkCommon.log('D',"prompts." + that.type + ".selectContentsItem: gotoScreenPath: " + selectedScreenPath,
                     "px: " + that.promptIdx);
                 // TODO: allow user to specify whether or not this is an 'advancing' operation
                 that.controller.gotoScreenPath(ctxt, selectedScreenPath, true);
             }, failure: function(m) {
-                ctxt.log('D',"prompts." + that.type + ".selectContentsItem -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".selectContentsItem -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
                 ctxt.failure(m);
             }}));
         }
@@ -800,7 +804,7 @@ promptTypes._linked_type = promptTypes.base.extend({
                 that._linkedCachedInstanceName = null;
             }
             database.readTableDefinition($.extend({}, ctxt, {success:function(tlo) {
-                ctxt.log('D',"prompts." + that.type +
+                odkCommon.log('D',"prompts." + that.type +
                     'getlinkedModel.readTableDefinition.success', "px: " + that.promptIdx );
                 that._linkedCachedModel = tlo;
                 ctxt.success(tlo);
@@ -813,16 +817,16 @@ promptTypes._linked_type = promptTypes.base.extend({
             throw new Error("Promptpath does not match: " + promptPath + " vs. " + that.getPromptPath());
         }
         return function(ctxt, internalPromptContext, action, jsonObject) {
-            ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn', "px: " + that.promptIdx +
+            odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn', "px: " + that.promptIdx +
                 " promptPath: " + promptPath + " internalPromptContext: " + internalPromptContext + " action: " + action);
             if (jsonObject.status === -1 /* Activity.RESULT_OK */ ) {
-                ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK', "px: " + that.promptIdx +
+                odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK', "px: " + that.promptIdx +
                     " promptPath: " + promptPath + " internalPromptContext: " + internalPromptContext + " action: " + action);
                 that.enableButtons();
                 that.reRender(ctxt);
             }
             else {
-                ctxt.log('W',"prompts." + that.type + 'getCallback.actionFn.failureOutcome failure returned from intent',
+                odkCommon.log('W',"prompts." + that.type + 'getCallback.actionFn.failureOutcome failure returned from intent',
                     "px: " + that.promptIdx + " promptPath: " + promptPath + " internalPromptContext: " +
                     internalPromptContext + " action: " + action);
                 that.enableButtons();
@@ -863,7 +867,7 @@ promptTypes.linked_table = promptTypes._linked_type.extend({
     configureRenderContext: function(ctxt) {
         var that = this;
         var queryDefn = opendatakit.getQueriesDefinition(this.values_list);
-        ctxt.log('D',"prompts." + that.type + ".configureRenderContext", "px: " + that.promptIdx);
+        odkCommon.log('D',"prompts." + that.type + ".configureRenderContext", "px: " + that.promptIdx);
         that.renderContext.new_instance_text = ((that.display.new_instance_text !== null &&
                 that.display.new_instance_text !== undefined) ? that.display.new_instance_text : "New");
         that.getlinkedModel($.extend({},ctxt,{success:function(linkedModel) {
@@ -872,9 +876,9 @@ promptTypes.linked_table = promptTypes._linked_type.extend({
             var selArgs = queryDefn.selectionArgs();
             var ordBy = that.convertOrderBy(linkedModel);
             var displayElementName = that.getLinkedInstanceName();
-            ctxt.log('D',"prompts." + that.type + ".configureRenderContext.before.get_linked_instances", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext.before.get_linked_instances", "px: " + that.promptIdx);
             database.get_linked_instances($.extend({},ctxt,{success:function(instanceList) {
-                ctxt.log('D',"prompts." + that.type + ".configureRenderContext.success.get_linked_instances", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".configureRenderContext.success.get_linked_instances", "px: " + that.promptIdx);
                 var filteredInstanceList = _.filter(instanceList, function(instance) {
                     return that.choice_filter(instance);
                 });
@@ -907,7 +911,7 @@ promptTypes.linked_table = promptTypes._linked_type.extend({
 
 
 
-                ctxt.log('D',"prompts." + that.type + ".configureRenderContext.success.get_linked_instances.success", "px: " + that.promptIdx + " instanceList: " + instanceList.length);
+                odkCommon.log('D',"prompts." + that.type + ".configureRenderContext.success.get_linked_instances.success", "px: " + that.promptIdx + " instanceList: " + instanceList.length);
                 ctxt.success();
             }}), dbTableName, selString, selArgs, displayElementName, ordBy);
         }}));
@@ -995,7 +999,7 @@ promptTypes.linked_table = promptTypes._linked_type.extend({
 
         var ctxt = that.controller.newContext(that._cachedEvent, that.type + ".handleConfirmation");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".handleConfirmation", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".handleConfirmation", "px: " + that.promptIdx);
             that.getlinkedModel($.extend({},ctxt,{success:function(linkedModel) {
                 database.delete_checkpoints_and_row($.extend({},ctxt,{success:function() {
                         that.enableButtons();
@@ -1012,7 +1016,7 @@ promptTypes.linked_table = promptTypes._linked_type.extend({
                     }}), linkedModel, instanceId);
             }}));
         }, failure: function(m) {
-            ctxt.log('D',"prompts." + that.type + ".handleConfirmation -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".handleConfirmation -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             that.enableButtons();
             ctxt.failure(m);
         }}));
@@ -1090,16 +1094,16 @@ promptTypes.external_link = promptTypes.base.extend({
             throw new Error("Promptpath does not match: " + promptPath + " vs. " + that.getPromptPath());
         }
         return function(ctxt, internalPromptContext, action, jsonObject) {
-            ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn', "px: " + that.promptIdx +
+            odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn', "px: " + that.promptIdx +
                 " promptPath: " + promptPath + " internalPromptContext: " + internalPromptContext + " action: " + action);
             if (jsonObject.status === -1 /* Activity.RESULT_OK */ ) {
-                ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK', "px: " + that.promptIdx +
+                odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK', "px: " + that.promptIdx +
                     " promptPath: " + promptPath + " internalPromptContext: " + internalPromptContext + " action: " + action);
                 that.enableButtons();
                 that.reRender(ctxt);
             }
             else {
-                ctxt.log('W',"prompts." + that.type + 'getCallback.actionFn.failureOutcome failure returned from intent:',
+                odkCommon.log('W',"prompts." + that.type + 'getCallback.actionFn.failureOutcome failure returned from intent:',
                     "px: " + that.promptIdx + " promptPath: " + promptPath + " internalPromptContext: " +
                     internalPromptContext + " action: " + action);
                 that.enableButtons();
@@ -1137,12 +1141,12 @@ promptTypes.user_branch = promptTypes.base.extend({
         if ( newPath !== null && newPath !== undefined ) {
             var ctxt = that.controller.newContext(evt, that.type + ".selectBranchItem");
             that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-                ctxt.log('D',"prompts." + that.type + ".selectBranchItem: click gotoScreenPath: " + newPath);
+                odkCommon.log('D',"prompts." + that.type + ".selectBranchItem: click gotoScreenPath: " + newPath);
                 // TODO: allow user to specify whether or not this is an 'advancing' operation
                 that.controller.gotoScreenPath(ctxt,newPath,true);
             },
             failure:function(m) {
-                ctxt.log('D',"prompts." + that.type + ".selectBranchItem -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".selectBranchItem -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
                 ctxt.failure(m);
             }}));
         }
@@ -1151,7 +1155,7 @@ promptTypes.user_branch = promptTypes.base.extend({
     configureRenderContext: function(ctxt) {
         var that = this;
         var newctxt = $.extend({}, ctxt, {success: function(outcome) {
-            ctxt.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
                         "px: " + that.promptIdx);
             ctxt.success();
         }});
@@ -1305,9 +1309,12 @@ promptTypes.select = promptTypes._linked_type.extend({
         var matchedChoice = null;
         var choiceList = [];
         var newChoice = null;
-
         if (savedValue === null || savedValue === undefined)
             return choiceList;
+
+        if (!Array.isArray(savedValue)) {
+			savedValue = savedValue.split(',');
+		}
 
         for (var i = 0; i < savedValue.length; i++)
         {
@@ -1383,7 +1390,7 @@ promptTypes.select = promptTypes._linked_type.extend({
     configureRenderContext: function(ctxt) {
         var that = this;
         var newctxt = $.extend({}, ctxt, {success: function(outcome) {
-            ctxt.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
                         "px: " + that.promptIdx);
             that.updateRenderValue(that.parseSaveValue(that.getValue()));
             ctxt.success();
@@ -1393,7 +1400,7 @@ promptTypes.select = promptTypes._linked_type.extend({
         }});
 
          var populateChoicesViaQueryUsingLinkedTable = function(query, newctxt){
-            newctxt.log('D',"prompts." + that.type + ".configureRenderContext", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext", "px: " + that.promptIdx);
             that.getlinkedModel($.extend({},newctxt,{success:function(linkedModel) {
                 var dbTableName = linkedModel.table_id;
                 var selString = that.convertSelection(linkedModel);
@@ -1556,7 +1563,7 @@ promptTypes.select_one_integer = promptTypes.select_one.extend({
         that.updateRenderValue(formValue);
 
         // Just dynamically reRender
-        ctxt.log('D',"prompts." + that.type + ".modification: reRender", "px: " + that.promptIdx);
+        odkCommon.log('D',"prompts." + that.type + ".modification: reRender", "px: " + that.promptIdx);
         that.reRender(evt);
     },
     /**
@@ -1722,7 +1729,7 @@ promptTypes.input_type = promptTypes.base.extend({
     type: "input_type",
     templatePath: "templates/input_type.handlebars",
     inputAttributes: {
-        'placeholder':'not specified'
+        'placeholder':''
     },
     displayed: false,
     modified: false,
@@ -1945,16 +1952,10 @@ promptTypes.decimal = promptTypes.input_type.extend({
         }
     }
 });
-promptTypes.datetime = promptTypes.input_type.extend({
-    type: "datetime",
-    templatePath: "templates/datetimepicker.handlebars",
-    // TODO: Use a template?
+promptTypes.base_date = promptTypes.input_type.extend({
+    type: "base_date",
     usePicker: true,
     insideAfterRender: false,
-    timeFormat: "MM/DD/YYYY h:mm A",
-    timeTemplate: "YYYY / MM / DD  HH : mm",
-    showDate: true,
-    showTime: true,
     dtp: null,
     events: {
         "swipeleft input": "stopPropagation",
@@ -1968,11 +1969,11 @@ promptTypes.datetime = promptTypes.input_type.extend({
         if (that.modified === true) {
             var ctxt = that.controller.newContext(evt, that.type + ".loseFocus");
             that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-                ctxt.log('D',"prompts." + that.type + ".loseFocus: reRender", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".loseFocus: reRender", "px: " + that.promptIdx);
                 that.reRender(ctxt);
             },
             failure:function(m) {
-                ctxt.log('D',"prompts." + that.type + ".loseFocus -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".loseFocus -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
                 ctxt.failure(m);
             }}));
         }
@@ -2032,17 +2033,8 @@ promptTypes.datetime = promptTypes.input_type.extend({
         odkCommon.log('D',"prompts." + that.type + ".modification px: " + that.promptIdx);
         if ( !that.insideAfterRender ) {
             var formattedDateValue = that.$('input').combodate('getValue', null);
-            var value = null;
-            if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
-                if (that.type === "time") {
-                    var newDate = new Date();
-                    formattedDateValue.year(newDate.getUTCFullYear());
-                    formattedDateValue.month(newDate.getUTCMonth());
-                    formattedDateValue.date(newDate.getUTCDate());
-                }
-                value = new Date(formattedDateValue);
-            }
-            
+            var value = that.formatDBVal(formattedDateValue);
+
             //
             // we are using a date pop-up.  If an earlier action fails, we should not
             // attempt to apply the state changes of this pop-up. Tolerate the loss
@@ -2092,7 +2084,7 @@ promptTypes.datetime = promptTypes.input_type.extend({
                 }
             },
             failure:function(m) {
-                ctxt.log('D',"prompts." + that.type + ".modification -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+                odkCommon.log('D',"prompts." + that.type + ".modification -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
                 ctxt.failure(m);
             }}));
         }
@@ -2107,7 +2099,7 @@ promptTypes.datetime = promptTypes.input_type.extend({
             }
 
             that.$('input').combodate({format: this.timeFormat, template: this.timeTemplate});
-            
+
             var inputElement = that.$('input');
             that.dtp = inputElement.data('DateTimePicker');
 
@@ -2125,10 +2117,32 @@ promptTypes.datetime = promptTypes.input_type.extend({
         return null;
     }
 });
+promptTypes.datetime = promptTypes.base_date.extend({
+    type: "datetime",
+    templatePath: "templates/datetimepicker.handlebars",
+    timeFormat: "YYYY/MM/DD h:mm A",
+    timeTemplate: "YYYY / MM / DD  HH : mm",
+    showDate: true,
+    showTime: true,
+    formatDBVal: function(formattedDateValue) {
+        var that = this;
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            if (that.type === "time") {
+                var newDate = new Date();
+                formattedDateValue.year(newDate.getUTCFullYear());
+                formattedDateValue.month(newDate.getUTCMonth());
+                formattedDateValue.date(newDate.getUTCDate());
+            }
+            outputValue = new Date(formattedDateValue);
+        }
+        return outputValue;
+    }
+});
 promptTypes.date = promptTypes.datetime.extend({
     type: "date",
     showTime: false,
-    timeFormat: "MM/DD/YYYY",
+    timeFormat: "YYYY/MM/DD",
     timeTemplate: "YYYY / MM / DD"
 });
 promptTypes.time = promptTypes.datetime.extend({
@@ -2142,6 +2156,529 @@ promptTypes.time = promptTypes.datetime.extend({
         var value_tod = (value.valueOf() % 86400000);
         return (ref_tod === value_tod);
     }
+});
+promptTypes.birthdate = promptTypes.date.extend({
+    // TODO: REMOVE THIS. IT HAS BEEN DEPRACATED IN FAVOR OF BIRTH_DATE
+    type: "birth_date",
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').combodate({format: this.timeFormat, template: this.timeTemplate, maxYear: new Date().getFullYear(), hideCurrentMonth: true, hideCurrentDay: true });
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+});
+promptTypes.date_no_time = promptTypes.base_date.extend({
+    type: "date_no_time",
+    showTime: false,
+    timeFormat: "YYYY/MM/DD",
+    timeTemplate: "YYYY / MM / DD",
+    dbDateFormat: "YYYY-MM-DD",
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            outputValue = formattedDateValue.format(this.dbDateFormat);
+        }
+        return outputValue;
+    },
+})
+promptTypes.birth_date = promptTypes.date_no_time.extend({
+    type: "birth_date",
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').combodate({format: this.timeFormat, template: this.timeTemplate, maxYear: new Date().getFullYear(), hideCurrentMonth: true, hideCurrentDay: true });
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+});
+
+promptTypes.date_year_only = promptTypes.date_no_time.extend({
+    type: "date",
+    showTime: false,
+    timeFormat: "YYYY",
+    timeTemplate: "YYYY"
+});
+
+promptTypes.date_month_only = promptTypes.date_no_time.extend({
+    type: "date",
+    showTime: false,
+    timeFormat: "MM",
+    timeTemplate: "MM"
+});
+
+promptTypes.date_month_and_year_only = promptTypes.date_no_time.extend({
+    type: "date",
+    showTime: false,
+    timeFormat: "YYYY/MM",
+    timeTemplate: "YYYY / MM"
+});
+
+promptTypes.non_gregorian_calendar = promptTypes.base_date.extend({
+    type: "string",
+    templatePath: "templates/datetimepicker.handlebars",
+
+    configureRenderContext: function(ctxt) {
+        var that = this;
+        var renderContext = that.renderContext;
+        if(that.detectNativeDatePicker()){
+            renderContext.inputAttributes.type = that.type;
+            that.usePicker = false;
+            ctxt.success();
+        } else {
+            var dateValue = that.getValue();
+            var userTimeFormat  = renderContext.inputAttributes.timeFormat;
+            if (userTimeFormat !== null && userTimeFormat !== undefined) {
+                that.timeFormat = userTimeFormat;
+            }
+            if (dateValue !== undefined && dateValue !== null) {
+                renderContext.value = dateValue;
+            }
+            ctxt.success();
+        }
+    },
+
+    modification: function(evt) {
+        var that = this;
+        odkCommon.log('D',"prompts." + that.type + ".modification px: " + that.promptIdx);
+        if ( !that.insideAfterRender ) {
+            var formattedDateValue = that.$('input').val();
+            var value = that.formatDBVal(formattedDateValue);
+
+            //
+            // we are using a date pop-up.  If an earlier action fails, we should not
+            // attempt to apply the state changes of this pop-up. Tolerate the loss
+            // of whatever the user tried to pick. They shouldn't move so fast.
+
+            var ctxt = that.controller.newContext(evt, that.type + ".modification");
+            that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
+
+                odkCommon.log('D',"prompts." + that.type + ".modification: determine if reRendering ", "px: " + that.promptIdx);
+                var ref = that.getValue();
+
+                var rerender = false;
+                if ( ref === null || ref === undefined ) {
+                    rerender = ( value !== null && value !== undefined );
+                } else if ( value === null || value === undefined ) {
+                    rerender = ( ref !== null && ref !== undefined );
+                } else {
+                    rerender = !(that.sameValue(ref, value));
+                }
+
+                var renderContext = that.renderContext;
+                if ( value === undefined || value === null ) {
+                    renderContext.value = '';
+                } else {
+                    renderContext.value = formattedDateValue;
+                }
+
+                // track original value
+                var originalValue = that.getValue();
+                that.setValueDeferredChange(value);
+                renderContext.invalid = !that.validateValue();
+                if ( renderContext.invalid ) {
+                    value = originalValue;
+                    formattedDateValue = moment(value).format(that.timeFormat);
+                    // restore it...
+                    that.setValueDeferredChange(originalValue);
+                    rerender = true;
+                }
+
+                renderContext.value = formattedDateValue;
+                if ( rerender ) {
+                    odkCommon.log('D',"prompts." + that.type + ".modification: reRender", "px: " + that.promptIdx);
+                    that.reRender(ctxt);
+                }  else {
+                    // We are now done with this
+                    ctxt.success();
+                }
+            },
+            failure:function(m) {
+                odkCommon.log('D',"prompts." + that.type + ".modification -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+                ctxt.failure(m);
+            }}));
+        }
+    },
+});
+
+promptTypes.coptic_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('coptic'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('coptic').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.ethiopian_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('ethiopian'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('ethiopian').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.hebrew_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('hebrew'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('hebrew').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.islamic_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('islamic'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('islamic').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.julian_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('julian'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('julian').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.mayan_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('mayan'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('mayan').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.nanakshahi_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('nanakshahi'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('nanakshahi').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.nepali_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('nepali'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('nepali').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.persian_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('persian'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('persian').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.taiwan_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('taiwan'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('taiwan').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.thai_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('thai'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('thai').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
+});
+
+promptTypes.ummalqura_calendar_picker = promptTypes.non_gregorian_calendar.extend({
+    afterRender: function() {
+        var that = this;
+        if(that.usePicker){
+            that.insideAfterRender = true;
+
+            if (that.dtp !== null && that.dtp !== undefined) {
+                that.dtp.destroy();
+            }
+
+            that.$('input').calendarsPicker({calendar: $.calendars.instance('ummalqura'), dateFormat: 'yyyy/mm/dd'});
+
+            var inputElement = that.$('input');
+            that.dtp = inputElement.data('DateTimePicker');
+
+            that.insideAfterRender = false;
+        }
+    },
+
+    formatDBVal: function(formattedDateValue) {
+        var outputValue = null;
+        if (formattedDateValue !== null && formattedDateValue !== undefined && !(_.isEmpty(formattedDateValue))) {
+            var julianDate = $.calendars.instance('ummalqura').parseDate('yyyy/mm/dd', formattedDateValue).toJD();
+            var gregorianDate = $.calendars.instance('gregorian').fromJD(julianDate);
+            outputValue = gregorianDate.formatDate('yyyy/mm/dd');
+        }
+        return outputValue;
+    },
 });
 /**
  * Media is an abstract object used as a base for image/audio/video
@@ -2220,10 +2757,10 @@ promptTypes.media = promptTypes.base.extend({
             throw new Error("Promptpath does not match: " + promptPath + " vs. " + that.getPromptPath());
         }
         return function(ctxt, internalPromptContext, action, jsonObject) {
-            ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn', "px: " + that.promptIdx +
+            odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn', "px: " + that.promptIdx +
                 " promptPath: " + promptPath + " internalPromptContext: " + internalPromptContext + " action: " + action);
             if (jsonObject.status === -1 /* Activity.RESULT_OK */ ) {
-                ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK', "px: " + that.promptIdx +
+                odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK', "px: " + that.promptIdx +
                     " promptPath: " + promptPath + " internalPromptContext: " + internalPromptContext + " action: " + action);
                 var uriFragment = (jsonObject.result !== null && jsonObject.result !== undefined) ? jsonObject.result.uriFragment : null;
                 var contentType = (jsonObject.result !== null && jsonObject.result !== undefined) ? jsonObject.result.contentType : null;
@@ -2240,7 +2777,7 @@ promptTypes.media = promptTypes.base.extend({
                 that.reRender(ctxt);
             }
             else {
-                ctxt.log('W',"prompts." + that.type + 'getCallback.actionFn.failureOutcome',
+                odkCommon.log('W',"prompts." + that.type + 'getCallback.actionFn.failureOutcome',
                     "px: " + that.promptIdx +
                     " failure returned from intent" +
                     " promptPath: " + promptPath + " internalPromptContext: " + internalPromptContext + " action: " + action);
@@ -2410,11 +2947,11 @@ promptTypes.launch_intent = promptTypes.base.extend({
             throw new Error("Promptpath does not match: " + promptPath + " vs. " + that.getPromptPath());
         }
         return function(ctxt, internalPromptContext, action, jsonObject) {
-            ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn',
+            odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn',
                 "px: " + that.promptIdx + " promptPath: " + promptPath + " internalPromptContext: " +
                 internalPromptContext + " action: " + action);
             if (jsonObject.status === -1 ) { // Activity.RESULT_OK
-                ctxt.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK',
+                odkCommon.log('D',"prompts." + that.type + 'getCallback.actionFn.resultOK',
                     "px: " + that.promptIdx + " promptPath: " + promptPath + " internalPromptContext: " +
                     internalPromptContext + " action: " + action);
                 if (jsonObject.result !== null && jsonObject.result !== undefined) {
@@ -2423,7 +2960,7 @@ promptTypes.launch_intent = promptTypes.base.extend({
                     that.reRender(ctxt);
                 }
             } else {
-                ctxt.log('E',"prompts." + that.type + 'getCallback.actionFn.failureOutcome',
+                odkCommon.log('E',"prompts." + that.type + 'getCallback.actionFn.failureOutcome',
                     "px: " + that.promptIdx + " promptPath: " + promptPath + " internalPromptContext: " +
                     internalPromptContext + " action: " + action);
                 ctxt.failure({message: "Action canceled."});
@@ -2566,12 +3103,12 @@ promptTypes.bargraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_y_up");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_up: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_up: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight + (that.vHeight * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -2579,12 +3116,12 @@ promptTypes.bargraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_y_down");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_down: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_down: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight - (that.vHeight * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -2592,12 +3129,12 @@ promptTypes.bargraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_x_up");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_up: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_up: reRender", "px: " + that.promptIdx);
             that.vWidth = that.vWidth + (that.vWidth * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -2605,19 +3142,19 @@ promptTypes.bargraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_x_down");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_down: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_down: reRender", "px: " + that.promptIdx);
             that.vWidth = that.vWidth - (that.vWidth * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
     configureRenderContext: function(ctxt) {
         var that = this;
         var newctxt = $.extend({}, ctxt, {success: function(outcome) {
-            ctxt.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
                         "px: " + that.promptIdx);
             ctxt.success();
         },
@@ -2761,12 +3298,12 @@ promptTypes.linegraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_y_up");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_up: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_up: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight + (that.vHeight * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -2774,12 +3311,12 @@ promptTypes.linegraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_y_down");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_down: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_down: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight - (that.vHeight * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -2787,12 +3324,12 @@ promptTypes.linegraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_x_up");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_up: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_up: reRender", "px: " + that.promptIdx);
             that.vWidth = that.vWidth + (that.vWidth * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -2800,19 +3337,19 @@ promptTypes.linegraph = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_x_down");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_down: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_down: reRender", "px: " + that.promptIdx);
             that.vWidth = that.vWidth - (that.vWidth * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
     configureRenderContext: function(ctxt) {
         var that = this;
         var newctxt = $.extend({}, ctxt, {success: function(outcome) {
-            ctxt.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
                         "px: " + that.promptIdx);
             ctxt.success();
         },
@@ -3018,14 +3555,14 @@ promptTypes.piechart = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_up");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_up: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_up: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight + (that.vHeight * 0.1);
             that.vWidth = that.vWidth + (that.vWidth * 0.1);
             that.vRadius = that.vRadius * 1.1;
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -3033,21 +3570,21 @@ promptTypes.piechart = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_down");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_down: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_down: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight - (that.vHeight * 0.1);
             that.vWidth = that.vWidth - (that.vWidth * 0.1);
             that.vRadius = that.vRadius * 0.9;
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
     configureRenderContext: function(ctxt) {
         var that = this;
         var newctxt = $.extend({}, ctxt, {success: function(outcome) {
-            ctxt.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
                         "px: " + that.promptIdx);
             ctxt.success();
         },
@@ -3169,12 +3706,12 @@ promptTypes.scatterplot = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_y_up");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_up: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_up: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight + (that.vHeight * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -3182,12 +3719,12 @@ promptTypes.scatterplot = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_y_down");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_down: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_down: reRender", "px: " + that.promptIdx);
             that.vHeight = that.vHeight - (that.vHeight * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_y_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_y_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -3195,12 +3732,12 @@ promptTypes.scatterplot = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_x_up");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_up: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_up: reRender", "px: " + that.promptIdx);
             that.vWidth = that.vWidth + (that.vWidth * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_up -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
@@ -3208,19 +3745,19 @@ promptTypes.scatterplot = promptTypes.base.extend({
         var that = this;
         var ctxt = that.controller.newContext(evt, that.type + ".scale_x_down");
         that.controller.enqueueTriggeringContext($.extend({},ctxt,{success:function() {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_down: reRender", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_down: reRender", "px: " + that.promptIdx);
             that.vWidth = that.vWidth - (that.vWidth * 0.2);
             that.reRender(ctxt);
         },
         failure:function(m) {
-            ctxt.log('D',"prompts." + that.type + ".scale_x_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
+            odkCommon.log('D',"prompts." + that.type + ".scale_x_down -- prior event terminated with an error -- aborting!", "px: " + that.promptIdx);
             ctxt.failure(m);
         }}));
     },
     configureRenderContext: function(ctxt) {
         var that = this;
         var newctxt = $.extend({}, ctxt, {success: function(outcome) {
-            ctxt.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
+            odkCommon.log('D',"prompts." + that.type + ".configureRenderContext." + outcome,
                         "px: " + that.promptIdx);
             ctxt.success();
         },

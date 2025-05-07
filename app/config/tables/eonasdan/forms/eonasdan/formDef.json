@@ -2,6 +2,16 @@
   "xlsx": {
     "survey": [
       {
+        "type": "birth_date",
+        "name": "example0",
+        "display": {
+          "prompt": {
+            "text": "Birthday"
+          }
+        },
+        "_row_num": 2
+      },
+      {
         "type": "datetime",
         "name": "example1",
         "display": {
@@ -9,7 +19,7 @@
             "text": "Date and Time"
           }
         },
-        "_row_num": 2
+        "_row_num": 3
       },
       {
         "type": "date",
@@ -22,7 +32,7 @@
         "inputAttributes": {
           "timeFormat": "YYYY/DD/MM"
         },
-        "_row_num": 3
+        "_row_num": 4
       },
       {
         "type": "time",
@@ -35,7 +45,27 @@
         "inputAttributes": {
           "timeFormat": "HH:mm"
         },
-        "_row_num": 4
+        "_row_num": 5
+      },
+      {
+        "type": "ethiopian_calendar_picker",
+        "name": "example4",
+        "display": {
+          "prompt": {
+            "text": "Ethiopian Calendar"
+          }
+        },
+        "_row_num": 6
+      },
+      {
+        "type": "islamic_calendar_picker",
+        "name": "example5",
+        "display": {
+          "prompt": {
+            "text": "Islamic Calendar"
+          }
+        },
+        "_row_num": 7
       }
     ],
     "settings": [
@@ -84,7 +114,8 @@
       "uri": "formula",
       "callback": "formula(context)",
       "choice_filter": "formula(choice_item)",
-      "templatePath": "requirejs_path"
+      "templatePath": "requirejs_path",
+      "hideInContents": "formula"
     },
     "settings": {
       "form_id": {
@@ -152,10 +183,21 @@
     "queries": {},
     "calculates": {},
     "model": {
-      "example1": {
+      "example0": {
         "_defn": [
           {
             "_row_num": 2,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementType": "date_no_time",
+        "elementKey": "example0"
+      },
+      "example1": {
+        "_defn": [
+          {
+            "_row_num": 3,
             "section_name": "survey"
           }
         ],
@@ -166,7 +208,7 @@
       "example2": {
         "_defn": [
           {
-            "_row_num": 3,
+            "_row_num": 4,
             "section_name": "survey"
           }
         ],
@@ -177,13 +219,35 @@
       "example3": {
         "_defn": [
           {
-            "_row_num": 4,
+            "_row_num": 5,
             "section_name": "survey"
           }
         ],
         "type": "string",
         "elementType": "time",
         "elementKey": "example3"
+      },
+      "example4": {
+        "_defn": [
+          {
+            "_row_num": 6,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementType": "ethiopian_calendar",
+        "elementKey": "example4"
+      },
+      "example5": {
+        "_defn": [
+          {
+            "_row_num": 7,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementType": "islamic_calendar",
+        "elementKey": "example5"
       }
     },
     "section_names": [
@@ -197,6 +261,21 @@
         "reachable_sections": {},
         "prompts": [
           {
+            "type": "birth_date",
+            "name": "example0",
+            "display": {
+              "prompt": {
+                "text": "Birthday"
+              }
+            },
+            "_row_num": 2,
+            "__rowNum__": 1,
+            "_token_type": "prompt",
+            "_type": "birth_date",
+            "_branch_label_enclosing_screen": "survey/_screen2",
+            "promptIdx": 0
+          },
+          {
             "type": "datetime",
             "name": "example1",
             "display": {
@@ -204,12 +283,12 @@
                 "text": "Date and Time"
               }
             },
-            "_row_num": 2,
-            "__rowNum__": 1,
+            "_row_num": 3,
+            "__rowNum__": 2,
             "_token_type": "prompt",
             "_type": "datetime",
-            "_branch_label_enclosing_screen": "survey/_screen2",
-            "promptIdx": 0
+            "_branch_label_enclosing_screen": "survey/_screen3",
+            "promptIdx": 1
           },
           {
             "type": "date",
@@ -222,12 +301,12 @@
             "inputAttributes": {
               "timeFormat": "YYYY/DD/MM"
             },
-            "_row_num": 3,
-            "__rowNum__": 2,
+            "_row_num": 4,
+            "__rowNum__": 3,
             "_token_type": "prompt",
             "_type": "date",
-            "_branch_label_enclosing_screen": "survey/_screen3",
-            "promptIdx": 1
+            "_branch_label_enclosing_screen": "survey/_screen4",
+            "promptIdx": 2
           },
           {
             "type": "time",
@@ -240,20 +319,50 @@
             "inputAttributes": {
               "timeFormat": "HH:mm"
             },
-            "_row_num": 4,
-            "__rowNum__": 3,
+            "_row_num": 5,
+            "__rowNum__": 4,
             "_token_type": "prompt",
             "_type": "time",
-            "_branch_label_enclosing_screen": "survey/_screen4",
-            "promptIdx": 2
+            "_branch_label_enclosing_screen": "survey/_screen5",
+            "promptIdx": 3
+          },
+          {
+            "type": "ethiopian_calendar_picker",
+            "name": "example4",
+            "display": {
+              "prompt": {
+                "text": "Ethiopian Calendar"
+              }
+            },
+            "_row_num": 6,
+            "__rowNum__": 5,
+            "_token_type": "prompt",
+            "_type": "ethiopian_calendar_picker",
+            "_branch_label_enclosing_screen": "survey/_screen6",
+            "promptIdx": 4
+          },
+          {
+            "type": "islamic_calendar_picker",
+            "name": "example5",
+            "display": {
+              "prompt": {
+                "text": "Islamic Calendar"
+              }
+            },
+            "_row_num": 7,
+            "__rowNum__": 6,
+            "_token_type": "prompt",
+            "_type": "islamic_calendar_picker",
+            "_branch_label_enclosing_screen": "survey/_screen7",
+            "promptIdx": 5
           },
           {
             "_token_type": "prompt",
             "type": "contents",
             "_type": "contents",
-            "_row_num": 5,
-            "_branch_label_enclosing_screen": "survey/_screen5",
-            "promptIdx": 3
+            "_row_num": 8,
+            "_branch_label_enclosing_screen": "survey/_screen8",
+            "promptIdx": 6
           }
         ],
         "validation_tag_map": {
@@ -279,33 +388,54 @@
             "operationIdx": 2
           },
           {
-            "_token_type": "exit_section",
-            "clause": "exit section",
-            "_row_num": 5,
-            "operationIdx": 3
-          },
-          {
             "_row_num": 5,
             "_token_type": "begin_screen",
             "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 3
+          },
+          {
+            "_row_num": 6,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(4);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 4
+          },
+          {
+            "_row_num": 7,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 5
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 8,
+            "operationIdx": 6
+          },
+          {
+            "_row_num": 8,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(6);\n\nreturn activePromptIndicies;\n}\n",
             "screen": {
               "hideInBackHistory": true
             },
-            "operationIdx": 4
+            "operationIdx": 7
           },
           {
             "_token_type": "resume",
             "clause": "resume",
-            "_row_num": 5,
-            "operationIdx": 5
+            "_row_num": 8,
+            "operationIdx": 8
           }
         ],
         "branch_label_map": {
           "_screen2": 0,
           "_screen3": 1,
           "_screen4": 2,
-          "_contents": 4,
-          "_screen5": 4
+          "_screen5": 3,
+          "_screen6": 4,
+          "_screen7": 5,
+          "_contents": 7,
+          "_screen8": 7
         }
       },
       "initial": {
@@ -487,10 +617,24 @@
       }
     },
     "dataTableModel": {
-      "example1": {
+      "example0": {
         "_defn": [
           {
             "_row_num": 2,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementType": "date_no_time",
+        "elementKey": "example0",
+        "elementName": "example0",
+        "elementSet": "data",
+        "elementPath": "example0"
+      },
+      "example1": {
+        "_defn": [
+          {
+            "_row_num": 3,
             "section_name": "survey"
           }
         ],
@@ -504,7 +648,7 @@
       "example2": {
         "_defn": [
           {
-            "_row_num": 3,
+            "_row_num": 4,
             "section_name": "survey"
           }
         ],
@@ -518,7 +662,7 @@
       "example3": {
         "_defn": [
           {
-            "_row_num": 4,
+            "_row_num": 5,
             "section_name": "survey"
           }
         ],
@@ -528,6 +672,34 @@
         "elementName": "example3",
         "elementSet": "data",
         "elementPath": "example3"
+      },
+      "example4": {
+        "_defn": [
+          {
+            "_row_num": 6,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementType": "ethiopian_calendar",
+        "elementKey": "example4",
+        "elementName": "example4",
+        "elementSet": "data",
+        "elementPath": "example4"
+      },
+      "example5": {
+        "_defn": [
+          {
+            "_row_num": 7,
+            "section_name": "survey"
+          }
+        ],
+        "type": "string",
+        "elementType": "islamic_calendar",
+        "elementKey": "example5",
+        "elementName": "example5",
+        "elementSet": "data",
+        "elementPath": "example5"
       },
       "_id": {
         "type": "string",

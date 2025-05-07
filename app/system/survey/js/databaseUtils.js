@@ -475,7 +475,7 @@ return {
 
             if ( value === undefined || value === null ) {
                 if ( jsonType.isNotNullable ) {
-                    throw new Error("unexpected null value for non-nullable field");
+                    throw new Error(`unexpected null value for non-nullable field: ${jsonType.elementName}<${jsonType.type}>`);
                 }
                 return null;
             }
@@ -494,7 +494,7 @@ return {
 
         if ( value === undefined || value === null ) {
             if ( jsonType.isNotNullable ) {
-                throw new Error("unexpected null value for non-nullable field");
+                throw new Error(`unexpected null value for non-nullable field: ${jsonType.elementName}<${jsonType.type}>`);
             }
             return null;
         }
@@ -504,6 +504,12 @@ return {
         //
         if ( value === "" ) {
             throw new Error("unexpected empty (zero-length string) value for field");
+        }
+        
+        function convertGregorianDateToTargetDate(value, targetCalendar) {
+            var julianDate = $.calendars.instance('gregorian').parseDate('yyyy/mm/dd', value).toJD();
+            var targetDate = $.calendars.instance(targetCalendar).fromJD(julianDate);
+            return targetDate.formatDate('yyyy/mm/dd');
         }
 
         if ( jsonType.type === 'array' ) {
@@ -552,7 +558,9 @@ return {
         } else if ( jsonType.type === 'number' ) {
             return Number(value);
         } else if ( jsonType.type === 'string' ) {
-            if ( jsonType.elementType === 'date' ||
+            if ( jsonType.elementType === 'date_no_time' ) {
+                return moment(value);
+            } else if ( jsonType.elementType === 'date' ||
                  jsonType.elementType === 'dateTime' ) {
                 // convert from a nanosecond-extended iso8601-style UTC date yyyy-mm-ddTHH:MM:SS.sssssssss
                 // this does not preserve the nanosecond field...
@@ -561,6 +569,36 @@ return {
                 // convert from a nanosecond-extended iso8601-style LOCAL TIME ZONE time HH:MM:SS.sssssssss
                 // this does not preserve the nanosecond field...
                 return odkCommon.toDateFromOdkTime(new Date(), value);
+            } else if ( jsonType.elementType === 'date_year_only' ) {
+                return moment(value).format('YYYY');
+            } else if ( jsonType.elementType === 'date_month_only' ) {
+                return moment(value).format('MM');
+            } else if ( jsonType.elementType === 'date_month_and_year_only' ) {
+                return moment(value).format('YYYY/MM');
+            }else if ( jsonType.elementType === 'coptic_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'coptic');
+            } else if ( jsonType.elementType === 'ethiopian_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'ethiopian');
+            } else if ( jsonType.elementType === 'hebrew_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'hebrew');
+            } else if ( jsonType.elementType === 'islamic_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'islamic');
+            } else if ( jsonType.elementType === 'julian_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'julian');
+            } else if ( jsonType.elementType === 'mayan_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'mayan');
+            } else if ( jsonType.elementType === 'nanakshahi_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'nanakshahi');
+            } else if ( jsonType.elementType === 'nepali_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'nepali');
+            } else if ( jsonType.elementType === 'persian_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'persian');
+            } else if ( jsonType.elementType === 'taiwan_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'taiwan');
+            } else if ( jsonType.elementType === 'thai_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'thai');
+            } else if ( jsonType.elementType === 'ummalqura_calendar' ) {
+                return convertGregorianDateToTargetDate(value, 'ummalqura');
             } else {
                 return value;
             }

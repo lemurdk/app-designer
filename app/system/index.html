@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" id="theme" href="libs/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../config/assets/css/odk-survey.css" />
     <link rel="stylesheet" type="text/css" id="theme" href="libs/spinner/waitMe.css" />
+    <link rel="stylesheet" type="text/css" href="../config/assets/css/jquery.calendars.picker.css" />
 	<script type="text/javascript" src="../config/assets/framework/frameworkDefinitions.js"></script>
 	<script type="text/javascript" src="../config/assets/commonDefinitions.js"></script>
     <script type="text/javascript" src="js/odkCommon.js"></script>
@@ -16,7 +17,8 @@
     <script type="text/javascript" src="tables/js/odkTables.js"></script>
     <script type="text/javascript" src="survey/js/odkSurvey.js"></script>
     <script type="text/javascript" src="survey/js/odkSurveyStateManagement.js"></script>
-    <noscript>This page requires javascript and a Chrome or WebKit browser</noscript>
+    <script src="/node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm/sqlite3.js"></script>
+    <noscript>This page requires javascript</noscript>
 </head>
 <body>
 <div id="block-ui"></div>
@@ -30,6 +32,6 @@
 </div>
 </div>
 <!-- move load of main.js to body since it is now dependent on odkXxx.js having been loaded -->
-<script type="text/javascript" data-main="survey/js/main" src="libs/require.2.3.3.js"></script>
+<script type="text/javascript" data-main="survey/js/main" src="libs/require.2.3.6.js"></script>
 </body>
 </html>
